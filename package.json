@@ -1,0 +1,25 @@
+{
+  "name": "evergolf",
+  "version": "0.0.1",
+  "description": "A golf simulator for the rest of us.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Evertras/evergolf.git"
+  },
+  "author": "Brandon Fulljames",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/Evertras/evergolf/issues"
+  },
+  "homepage": "https://github.com/Evertras/evergolf#readme",
+  "devDependencies": {
+    "prettier": "2.8.6"
+  }
+}
