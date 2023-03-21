@@ -6,11 +6,11 @@ import "./App.css";
 function App() {
   return (
     <React.Fragment>
-    <div className="App">
-      <header className="App-header">
-        <img src="course/chiba-shimin/holes/1.png" alt="hole" />
-      </header>
-    </div>
+      <div className="App">
+        <header className="App-header">
+          <img src="course/chiba-shimin/holes/1.png" alt="hole" />
+        </header>
+      </div>
     </React.Fragment>
   );
 }
