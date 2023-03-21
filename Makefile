@@ -14,6 +14,10 @@ lint: node_modules
 lint-fix: node_modules
 	@npx prettier --write .
 
+# Alias for muscle memory
+.PHONY: fmt
+fmt: lint-fix
+
 .PHONY: test
 test: node_modules
 	@npm test
