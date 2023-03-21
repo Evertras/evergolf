@@ -8,6 +8,10 @@ build: node_modules
 
 .PHONY: lint
 lint: node_modules
+	@npx prettier --check .
+
+.PHONY: lint-fix
+lint-fix: node_modules
 	@npx prettier --write .
 
 .PHONY: test
