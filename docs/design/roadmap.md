@@ -2,13 +2,13 @@
 
 This is a projected roadmap of milestones to hit. Very rough, no promises.
 
-## v0.1.0 - Boilerplate
+## v0.1.0 - Boilerplate (Complete)
 
 This is purely setup boilerplate to make everything else easier later.
 
 Requirements:
 
-- [ ] Automated prod deployment to https://golf.evertras.com
+- [x] Automated prod deployment to https://golf.evertras.com
 - [x] Automated dev deployment to https://devgolf.evertras.com
 - [x] Page built using expected pipeline viewable at above
   - [x] This page has some simple javascript placeholder
