@@ -1,6 +1,7 @@
 import React from 'react';
 //import logo from "./logo.svg";
 import './App.css';
+import Hole from './components/Hole';
 
 //<img src={logo} className="App-logo" alt="logo" />
 function App() {
@@ -8,7 +9,7 @@ function App() {
     <React.Fragment>
       <div className="App">
         <header className="App-header">
-          <img src="course/chiba-shimin/holes/1.png" alt="hole" />
+          <Hole imgSrc="course/chiba-shimin/holes/1.png" />
         </header>
       </div>
     </React.Fragment>
