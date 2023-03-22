@@ -1,7 +1,7 @@
 import React from 'react';
 //import logo from "./logo.svg";
 import './App.css';
-import Hole from './components/Hole';
+import Hole from 'components/Hole';
 
 //<img src={logo} className="App-logo" alt="logo" />
 function App() {
