@@ -1,0 +1,24 @@
+div {
+  position: static;
+  width: 100vw;
+}
+
+img {
+  left: 0;
+}
+
+.container {
+  position: relative;
+  background-color: salmon;
+  overflow: hidden;
+}
+
+.hole {
+  position: absolute;
+}
+
+.pin {
+  width: 40px;
+  position: absolute;
+}
+

@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import pin from "./pin.svg"
+import "./Hole.css"
 
 export interface HoleProps {
   imgSrc: string;
@@ -11,8 +13,9 @@ const Hole = (props: HoleProps) => {
   });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
-    const x = e.pageX - e.currentTarget.offsetLeft;
-    const y = e.pageY - e.currentTarget.offsetTop;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.pageX - rect.left;
+    const y = e.pageY - rect.top;
     const width = e.currentTarget.width;
     const height = e.currentTarget.height;
 
@@ -30,11 +33,22 @@ const Hole = (props: HoleProps) => {
       <div>
         X: {xPercent}%, Y: {yPercent}%
       </div>
-      <img
-        src={props.imgSrc}
-        alt={props.imgSrc}
-        onMouseMove={handleMouseMove}
-      />
+      <div className="container">
+        <img
+          src={props.imgSrc}
+          alt={props.imgSrc}
+          onMouseMove={handleMouseMove}
+        />
+        <img
+          src={pin}
+          alt="pin"
+          className="pin"
+          style={{
+            left: xPercent + "%",
+            top: yPercent + "%",
+          }}
+        />
+      </div>
     </React.Fragment>
   );
 };
