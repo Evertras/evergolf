@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Text } from '@pixi/react';
 import { TextStyle, TextStyleFill } from 'pixi.js';
 import Line, { LineProps } from '../Line';
-import Circle from '../Circle';
+import Arc from '../Arc';
 
 export interface YardageMeasurementProps extends LineProps {
   textColor: TextStyleFill;
@@ -18,26 +18,40 @@ const YardageMeasurement = (props: YardageMeasurementProps) => {
   const distance = Math.sqrt(diffX * diffX + diffY * diffY);
   const rotation = Math.atan(diffY / diffX);
 
+  const degreesOff = 5;
+  const radiansOff = degreesOff * (Math.PI / 180);
+  let startAngle = rotation - radiansOff;
+  let endAngle = rotation + radiansOff;
+
+  if (diffX > 0) {
+    startAngle = startAngle + Math.PI;
+    endAngle = endAngle + Math.PI;
+  }
+
   return (
     <React.Fragment>
       <Container>
         <Line {...props} />
         {props.showRings &&
           [...Array(Math.floor(distance / 50))].map((_, i) => (
-            <Circle
+            <Arc
               key={i}
               loc={props.start}
               radiusPixels={(i + 1) * 50}
               strokeColor={props.color}
               strokeThickness={1}
+              startAngle={startAngle}
+              endAngle={endAngle}
             />
           ))}
         {props.showRings && (
-          <Circle
+          <Arc
             loc={props.start}
             radiusPixels={distance}
             strokeColor={props.color}
             strokeThickness={3}
+            startAngle={startAngle}
+            endAngle={endAngle}
           />
         )}
         <Text
