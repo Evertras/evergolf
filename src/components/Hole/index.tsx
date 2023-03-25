@@ -89,9 +89,11 @@ const Hole = ({ data }: HoleProps) => {
         <Container x={0} y={400}>
           <Text
             text={
+              'Pos: (' +
               mouseCoords.xYards.toFixed(0) +
-              ' x ' +
-              mouseCoords.yYards.toFixed(0)
+              ', ' +
+              mouseCoords.yYards.toFixed(0) +
+              ')'
             }
             style={
               new TextStyle({

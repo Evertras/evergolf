@@ -13,7 +13,7 @@ const YardageMeasurement = (props: YardageMeasurementProps) => {
   const diffX = props.start.xYards - props.end.xYards;
   const diffY = props.start.yYards - props.end.yYards;
   const distance = Math.sqrt(diffX * diffX + diffY * diffY);
-  const rotation = 0;
+  const rotation = Math.atan(diffY / diffX);
 
   return (
     <Container>
