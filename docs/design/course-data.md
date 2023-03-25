@@ -24,11 +24,11 @@ Hole map data contains the following information.
 
 | Field         | Type         | Description                                                                                                    |
 | ------------- | ------------ | -------------------------------------------------------------------------------------------------------------- |
-| imgSrc        | string       | The raw background image of the hole, which exactly matches the aspect ratio of `widthYards` and `heightYards` |
-| par           | number       | The par for the hole                                                                                           |
+| imgSrcURL        | string       | The raw background image of the hole, which exactly matches the aspect ratio of `widthYards` and `heightYards` |
+| imgPixelsPerYard | number       | How many pixels in the image there are per real yard                                                           |
 | widthYards    | number       | The width of the hole in yards                                                                                 |
 | heightYards   | number       | The height of the hole in yards                                                                                |
-| pixelsPerYard | number       | How many pixels in the image there are per real yard                                                           |
+| par           | number       | The par for the hole                                                                                           |
 | pinLocations  | coordYards[] | Potential positions for pins                                                                                   |
 
 |
