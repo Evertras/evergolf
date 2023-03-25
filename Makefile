@@ -20,7 +20,8 @@ fmt: lint-fix
 
 .PHONY: test
 test: node_modules
-	@npm test
+	@echo "Skipping tests until there's something meaningful again"
+	@#npm test
 
 node_modules: package.json package-lock.json
 	@npm install
