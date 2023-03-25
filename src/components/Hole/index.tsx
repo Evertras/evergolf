@@ -3,6 +3,7 @@ import { TextStyle } from 'pixi.js';
 import { Container, Sprite, Stage, Text } from '@pixi/react';
 import './Hole.css';
 import Circle from 'components/drawing/Circle';
+import Line from 'components/drawing/Line';
 
 export interface HoleProps {
   data: HoleData;
@@ -38,6 +39,10 @@ const Hole = ({ data }: HoleProps) => {
   const pinRadius = 5 / overallScale;
   const teeMarkerRadius = 5 / overallScale;
 
+  // TODO: Select somehow
+  const pinLocation = data.pinLocations[0];
+  const teeLocation = data.teeLocations.white;
+
   return (
     <React.Fragment>
       <div>千葉市民ゴルフ＃１</div>
@@ -55,15 +60,27 @@ const Hole = ({ data }: HoleProps) => {
             anchor={{ x: 0, y: 0 }}
             scale={imgScale}
           />
+          <Circle loc={pinLocation} radiusPixels={pinRadius} color="cyan" />
           <Circle
-            loc={data.pinLocations[0]}
-            radiusPixels={pinRadius}
-            color="cyan"
-          />
-          <Circle
-            loc={data.teeLocations.white}
+            loc={teeLocation}
             radiusPixels={teeMarkerRadius}
             color="white"
+          />
+
+          {
+            // Measurement lines
+          }
+          <Line
+            start={teeLocation}
+            end={mouseCoords}
+            color="white"
+            thickness={1}
+          />
+          <Line
+            start={pinLocation}
+            end={mouseCoords}
+            color="cyan"
+            thickness={1}
           />
         </Container>
         <Container x={0} y={400}>
