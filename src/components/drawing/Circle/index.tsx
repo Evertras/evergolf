@@ -13,7 +13,7 @@ const Circle = (props: CircleProps) => {
     (g: PIXIGraphics) => {
       g.clear();
       g.beginFill(props.color);
-      g.lineStyle(0.5, 'white');
+      g.lineStyle(1, 'black');
       g.drawCircle(props.loc.xYards, props.loc.yYards, props.radiusPixels);
       g.endFill();
     },
