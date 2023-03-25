@@ -4,6 +4,7 @@ import { Container, Sprite, Stage, Text } from '@pixi/react';
 import './Hole.css';
 import Circle from 'components/drawing/Circle';
 import Line from 'components/drawing/Line';
+import YardageMeasurement from 'components/drawing/YardageMeasurement';
 
 export interface HoleProps {
   data: HoleData;
@@ -70,16 +71,18 @@ const Hole = ({ data }: HoleProps) => {
           {
             // Measurement lines
           }
-          <Line
+          <YardageMeasurement
             start={teeLocation}
             end={mouseCoords}
             color="white"
+            textColor="white"
             thickness={1}
           />
-          <Line
+          <YardageMeasurement
             start={pinLocation}
             end={mouseCoords}
             color="cyan"
+            textColor="cyan"
             thickness={1}
           />
         </Container>
