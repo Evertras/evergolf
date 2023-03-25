@@ -1,10 +1,30 @@
-import React, {useState} from 'react';
-import pin from "./pin.svg"
+import React, {useCallback, useState} from 'react';
+import {TextStyle, Graphics as PIXIGraphics} from 'pixi.js';
+import {Container, Graphics, Sprite, Stage, Text} from '@pixi/react';
 import "./Hole.css"
 
 export interface HoleProps {
   imgSrc: string;
 }
+
+export interface PinProps {
+  x: number;
+  y: number;
+}
+
+const Pin = (props: PinProps) => {
+  const draw = useCallback(
+    (g: PIXIGraphics) => {
+      g.clear();
+      g.beginFill(0xf00000);
+      g.drawCircle(props.x, props.y, 10)
+      g.endFill();
+    },
+    [props],
+  );
+
+  return <Graphics draw={draw} />;
+};
 
 const Hole = (props: HoleProps) => {
   const [mouseCoords, setMouseCoords] = useState({
@@ -33,22 +53,35 @@ const Hole = (props: HoleProps) => {
       <div>
         X: {xPercent}%, Y: {yPercent}%
       </div>
-      <div className="container">
-        <img
-          src={props.imgSrc}
-          alt={props.imgSrc}
-          onMouseMove={handleMouseMove}
+      <Stage
+        options={{
+          //backgroundAlpha: 0,
+        }}
+      >
+        <Sprite
+          image={props.imgSrc}
+          x={400}
+          y={270}
+          width={100}
+          height={100}
+          anchor={{x: 0.5, y: 0.5}}
         />
-        <img
-          src={pin}
-          alt="pin"
-          className="pin"
-          style={{
-            left: xPercent + "%",
-            top: yPercent + "%",
-          }}
+        <Pin
+          x={300}
+          y={400}
         />
-      </div>
+        <Container x={400} y={500}>
+          <Text
+            text="Stuff"
+            anchor={{x: 0.5, y: 0.5}}
+            style={
+              new TextStyle({
+                fill: '0xfff',
+              })
+            }
+          />
+        </Container>
+      </Stage>
     </React.Fragment>
   );
 };
