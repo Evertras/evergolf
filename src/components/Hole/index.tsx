@@ -60,11 +60,11 @@ const Hole = ({ data }: HoleProps) => {
             anchor={{ x: 0, y: 0 }}
             scale={imgScale}
           />
-          <Circle loc={pinLocation} radiusPixels={pinRadius} color="cyan" />
+          <Circle loc={pinLocation} radiusPixels={pinRadius} fillColor="cyan" />
           <Circle
             loc={teeLocation}
             radiusPixels={teeMarkerRadius}
-            color="white"
+            fillColor="white"
           />
 
           {
@@ -75,6 +75,7 @@ const Hole = ({ data }: HoleProps) => {
             end={mouseCoords}
             color="white"
             textColor="white"
+            showRings={true}
             thickness={1}
           />
           <YardageMeasurement
@@ -82,6 +83,7 @@ const Hole = ({ data }: HoleProps) => {
             end={mouseCoords}
             color="cyan"
             textColor="cyan"
+            showRings={false}
             thickness={1}
           />
         </Container>
