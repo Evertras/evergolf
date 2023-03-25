@@ -3,7 +3,6 @@ import { TextStyle } from 'pixi.js';
 import { Container, Sprite, Stage, Text } from '@pixi/react';
 import './Hole.css';
 import Circle from 'components/drawing/Circle';
-import Line from 'components/drawing/Line';
 import YardageMeasurement from 'components/drawing/YardageMeasurement';
 
 export interface HoleProps {
