@@ -27,6 +27,8 @@ const YardageMeasurement = (props: YardageMeasurementProps) => {
         style={
           new TextStyle({
             fill: props.textColor,
+            stroke: 'black',
+            strokeThickness: 2,
             fontSize: '10pt',
           })
         }
