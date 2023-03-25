@@ -22,14 +22,14 @@ The `coordYards` type is used here to mark a spot on the hole map.
 
 Hole map data contains the following information.
 
-| Field         | Type         | Description                                                                                                    |
-| ------------- | ------------ | -------------------------------------------------------------------------------------------------------------- |
+| Field            | Type         | Description                                                                                                    |
+| ---------------- | ------------ | -------------------------------------------------------------------------------------------------------------- |
 | imgSrcURL        | string       | The raw background image of the hole, which exactly matches the aspect ratio of `widthYards` and `heightYards` |
 | imgPixelsPerYard | number       | How many pixels in the image there are per real yard                                                           |
-| widthYards    | number       | The width of the hole in yards                                                                                 |
-| heightYards   | number       | The height of the hole in yards                                                                                |
-| par           | number       | The par for the hole                                                                                           |
-| pinLocations  | coordYards[] | Potential positions for pins                                                                                   |
+| widthYards       | number       | The width of the hole in yards                                                                                 |
+| heightYards      | number       | The height of the hole in yards                                                                                |
+| par              | number       | The par for the hole                                                                                           |
+| pinLocations     | coordYards[] | Potential positions for pins                                                                                   |
 
 |
 | teeLocations | `string` -> `coordYards` map | A mapping of a tee name (such as `"blue"`) with an actual location on the map |
