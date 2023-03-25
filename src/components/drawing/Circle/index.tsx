@@ -5,15 +5,17 @@ import { useCallback } from 'react';
 export interface CircleProps {
   loc: Coords;
   radiusPixels: number;
-  color: ColorSource;
+  fillColor?: ColorSource;
+  strokeColor?: ColorSource;
+  strokeThickness?: number;
 }
 
 const Circle = (props: CircleProps) => {
   const draw = useCallback(
     (g: PIXIGraphics) => {
       g.clear();
-      g.beginFill(props.color);
-      g.lineStyle(1, 'black');
+      g.beginFill(props.fillColor || 'white', props.fillColor ? 1 : 0);
+      g.lineStyle(props.strokeThickness || 1, props.strokeColor || 'black');
       g.drawCircle(props.loc.xYards, props.loc.yYards, props.radiusPixels);
       g.endFill();
     },
