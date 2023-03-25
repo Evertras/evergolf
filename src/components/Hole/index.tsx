@@ -1,7 +1,7 @@
-import React, {useCallback, useState} from 'react';
-import {TextStyle, Graphics as PIXIGraphics} from 'pixi.js';
-import {Container, Graphics, Sprite, Stage, Text} from '@pixi/react';
-import "./Hole.css"
+import React, { useCallback, useState } from 'react';
+import { TextStyle, Graphics as PIXIGraphics } from 'pixi.js';
+import { Container, Graphics, Sprite, Stage, Text } from '@pixi/react';
+import './Hole.css';
 
 export interface HoleProps {
   imgSrc: string;
@@ -17,10 +17,10 @@ const Pin = (props: PinProps) => {
     (g: PIXIGraphics) => {
       g.clear();
       g.beginFill(0xf00000);
-      g.drawCircle(props.x, props.y, 10)
+      g.drawCircle(props.x, props.y, 10);
       g.endFill();
     },
-    [props],
+    [props]
   );
 
   return <Graphics draw={draw} />;
@@ -54,26 +54,23 @@ const Hole = (props: HoleProps) => {
         X: {xPercent}%, Y: {yPercent}%
       </div>
       <Stage
-        options={{
-          //backgroundAlpha: 0,
-        }}
+        width={1000}
+        options={
+          {
+            //backgroundAlpha: 0,
+          }
+        }
       >
         <Sprite
           image={props.imgSrc}
-          x={400}
-          y={270}
-          width={100}
-          height={100}
-          anchor={{x: 0.5, y: 0.5}}
+          anchor={{ x: 0, y: 0 }}
+          scale={[0.25, 0.25]}
         />
-        <Pin
-          x={300}
-          y={400}
-        />
+        <Pin x={300} y={400} />
         <Container x={400} y={500}>
           <Text
             text="Stuff"
-            anchor={{x: 0.5, y: 0.5}}
+            anchor={{ x: 0.5, y: 0.5 }}
             style={
               new TextStyle({
                 fill: '0xfff',
