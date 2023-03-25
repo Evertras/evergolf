@@ -54,7 +54,7 @@ const Hole = ({ data }: HoleProps) => {
           backgroundAlpha: 0,
         }}
       >
-        <Container scale={overallScale}>
+        <Container interactiveChildren={false} scale={overallScale}>
           <Sprite
             image={data.imgSrcURL}
             anchor={{ x: 0, y: 0 }}
@@ -87,7 +87,7 @@ const Hole = ({ data }: HoleProps) => {
             thickness={1}
           />
         </Container>
-        <Container x={0} y={400}>
+        <Container interactiveChildren={false} x={0} y={400}>
           <Text
             text={
               'Pos: (' +
