@@ -4,6 +4,9 @@ import { Container, Sprite, Stage, Text } from '@pixi/react';
 import './Hole.css';
 import Circle from 'components/drawing/Circle';
 import YardageMeasurement from 'components/drawing/YardageMeasurement';
+import { terrainAtPoint, terrainSVGID } from 'terrain';
+
+import { ReactComponent as HoleSVG } from 'data/course/chiba-shimin/hole-1.svg';
 
 export interface HoleProps {
   data: HoleData;
@@ -26,7 +29,6 @@ const Hole = ({ data }: HoleProps) => {
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    console.log(e);
     const x = e.pageX - rect.left;
     const y = e.pageY - rect.top;
 
@@ -42,6 +44,20 @@ const Hole = ({ data }: HoleProps) => {
   // TODO: Select somehow
   const pinLocation = data.pinLocations[0];
   const teeLocation = data.teeLocations.white;
+
+  let terrain = terrainAtPoint(
+    mouseCoords.xYards,
+    mouseCoords.yYards,
+    imgScale
+  );
+
+  const debugText =
+    'Pos: (' +
+    mouseCoords.xYards.toFixed(0) +
+    ', ' +
+    mouseCoords.yYards.toFixed(0) +
+    ')\nTerrain: ' +
+    terrain;
 
   return (
     <React.Fragment>
@@ -89,13 +105,7 @@ const Hole = ({ data }: HoleProps) => {
         </Container>
         <Container interactiveChildren={false} x={0} y={400}>
           <Text
-            text={
-              'Pos: (' +
-              mouseCoords.xYards.toFixed(0) +
-              ', ' +
-              mouseCoords.yYards.toFixed(0) +
-              ')'
-            }
+            text={debugText}
             style={
               new TextStyle({
                 fill: 'white',
@@ -104,6 +114,14 @@ const Hole = ({ data }: HoleProps) => {
           />
         </Container>
       </Stage>
+      <HoleSVG
+        id={terrainSVGID}
+        height={1}
+        style={{
+          visibility: 'hidden',
+          position: 'absolute',
+        }}
+      />
     </React.Fragment>
   );
 };
