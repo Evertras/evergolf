@@ -20,8 +20,19 @@ fmt: lint-fix
 
 .PHONY: test
 test: node_modules
-	@echo "Skipping tests until there's something meaningful again"
-	@#npm test
+	@npm test -- --watchAll=false
+
+.PHONY: test-dev
+test-dev: node_modules
+	@npm test
+
+.PHONY: test-coverage
+test-coverage: node_modules
+	@npm test -- --coverage --watchAll=false
+
+.PHONY: test-coverage-dev
+test-coverage-dev: node_modules
+	@npm test -- --coverage
 
 .PHONY: clean
 clean:

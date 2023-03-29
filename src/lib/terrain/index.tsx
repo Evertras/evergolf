@@ -75,9 +75,16 @@ function pointInTerrain(terrainType: Terrain, point: DOMPoint): boolean {
 export function terrainAtPoint(
   xYards: number,
   yYards: number,
-  imgScale: number
+  imgYardsPerPixel: number = 1
 ): Terrain {
-  const point = new DOMPoint(xYards / imgScale, yYards / imgScale);
+  const point = new DOMPoint(
+    xYards / imgYardsPerPixel,
+    yYards / imgYardsPerPixel
+  );
+
+  if (pointInTerrain(Terrain.Green, point)) {
+    return Terrain.Green;
+  }
 
   if (pointInTerrain(Terrain.Trees, point)) {
     return Terrain.Trees;
@@ -89,10 +96,6 @@ export function terrainAtPoint(
 
   if (pointInTerrain(Terrain.Bunker, point)) {
     return Terrain.Bunker;
-  }
-
-  if (pointInTerrain(Terrain.Green, point)) {
-    return Terrain.Green;
   }
 
   if (pointInTerrain(Terrain.Fairway, point)) {
