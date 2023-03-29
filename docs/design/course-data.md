@@ -42,5 +42,7 @@ Google Earth.
 
 ## Terrain data
 
-TBD: Basic idea is to use separate image maps to highlight different terrain
-types, not sure how to parse that in JS yet. Figure out later.
+Terrain data is stored as a simple SVG with closed paths around all terrain
+types. The paths MUST be grouped by an SVG `<g>` element with ID that matches
+what's found in [in the enum here](../../src/lib/terrain.tsx). For now the
+colors, etc. don't matter.

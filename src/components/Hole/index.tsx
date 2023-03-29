@@ -4,7 +4,7 @@ import { Container, Sprite, Stage, Text } from '@pixi/react';
 import './Hole.css';
 import Circle from 'components/drawing/Circle';
 import YardageMeasurement from 'components/drawing/YardageMeasurement';
-import { terrainAtPoint, terrainSVGID } from 'terrain';
+import { terrainAtPoint, terrainSVGID } from 'lib/terrain';
 
 import { ReactComponent as HoleSVG } from 'data/course/chiba-shimin/hole-1.svg';
 
