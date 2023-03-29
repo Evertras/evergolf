@@ -35,9 +35,11 @@ Requirements:
 - [ ] Preset list of shots (can be short with just As Intended outcomes)
 - [ ] Player can select a shot and a directional target
 - [ ] Player can hit preset shots and ball advances
-- [ ] If the ball is on the green, 2 putt and display score
-- [ ] Some distance data is visible
-  - [ ] Moving the mouse over the course displays distance to the player and hole
+- [ ] If the ball is on the green, 2 putt and display total hole score
+- [ ] If the ball is less than minimum yardage, automatically hit onto green
+- [ ] Previous shots are shown as tracers
+- [ ] Moving the mouse over the course displays distance to the player and hole
+- [ ] Current stroke total is shown
 
 ## v0.4.0 - Short game
 
