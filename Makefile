@@ -23,6 +23,10 @@ test: node_modules
 	@echo "Skipping tests until there's something meaningful again"
 	@#npm test
 
+.PHONY: clean
+clean:
+	rm -rf node_modules
+
 node_modules: package.json package-lock.json
 	@npm install
 	@npx husky install
