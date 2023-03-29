@@ -1,22 +1,22 @@
 .PHONY: dev
-dev: node_modules .husky
+dev: node_modules
 	@npm start
 
 .PHONY: build
-build: node_modules .husky
+build: node_modules
 	@npm run build
 
 .PHONY: lint
-lint: node_modules .husky
+lint: node_modules
 	@npx prettier --check .
 
 .PHONY: lint-fix
-lint-fix: node_modules .husky
+lint-fix: node_modules
 	@npx prettier --write .
 
 # Alias for muscle memory
-.PHONY: fmt .husky
-fmt: lint-fix .husky
+.PHONY: fmt 
+fmt: lint-fix
 
 .PHONY: test
 test: node_modules
@@ -25,7 +25,5 @@ test: node_modules
 
 node_modules: package.json package-lock.json
 	@npm install
-	@touch node_modules
-
-.husky: node_modules
 	@npx husky install
+	@touch node_modules
