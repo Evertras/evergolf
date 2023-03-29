@@ -15,7 +15,7 @@ lint-fix: node_modules
 	@npx prettier --write .
 
 # Alias for muscle memory
-.PHONY: fmt
+.PHONY: fmt 
 fmt: lint-fix
 
 .PHONY: test
@@ -23,6 +23,11 @@ test: node_modules
 	@echo "Skipping tests until there's something meaningful again"
 	@#npm test
 
+.PHONY: clean
+clean:
+	rm -rf node_modules
+
 node_modules: package.json package-lock.json
 	@npm install
+	@npx husky install
 	@touch node_modules
