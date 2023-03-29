@@ -20,11 +20,11 @@ Have a hole visible with a top down view, and some basic data about it.
 
 Requirements:
 
-- [ ] A hole is visible in a top down view (pull from Google Earth)
-- [ ] The hole has boundaries marking fairway, rough, hazards, green, etc.
-- [ ] The player is put on the tee (only one tee for now)
-- [ ] Mousing over the hole displays what type of terrain is under the cursor
-- [ ] Mousing over displays distance between player and cursor, and hole and cursor
+- [x] A hole is visible in a top down view (pull from Google Earth)
+- [x] The hole has boundaries marking fairway, rough, hazards, green, etc.
+- [x] The player is put on the tee (only one tee for now)
+- [x] Mousing over the hole displays what type of terrain is under the cursor
+- [x] Mousing over displays distance between player and cursor, and hole and cursor
 
 ## v0.3.0 - Playable long shots
 
