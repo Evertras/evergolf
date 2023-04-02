@@ -93,6 +93,7 @@ describe('a 100y shot that can be pushed or pulled 5 degrees', () => {
     ${90}
     ${180}
     ${270}
+    ${359}
     ${723}
     ${-720}
     ${45}
@@ -143,6 +144,100 @@ describe('a 100y shot that can be pushed or pulled 5 degrees', () => {
 
       expect(Math.abs(angleDegrees)).toBeLessThanOrEqual(degreeVariance);
       expect(result.endDegrees).toBeCloseTo(result.startDegrees);
+
+      degreeCounters[Math.floor(angleDegrees + degreeVariance)]++;
+    }
+
+    // We don't care how many went each direction for now, we just care that
+    // SOME went in each general bucket
+    for (let counter of degreeCounters) {
+      expect(counter).not.toEqual(0);
+    }
+  });
+});
+
+describe('a 100y shot that can be spun 5 degrees in either direction', () => {
+  const carryYards = 100;
+  const degreeVariance = 5;
+  const shot: Shot = {
+    potentialOutcomes: [
+      {
+        startDegreesLeftmost: 0,
+        startDegreesRightmost: 0,
+        sidespinDegreeLeftmost: -degreeVariance,
+        sidespinDegreeRightmost: degreeVariance,
+        carryYardsMin: carryYards,
+        carryYardsMax: carryYards,
+      },
+    ],
+  };
+
+  test.each`
+    shotDirectionDegrees
+    ${0}
+    ${90}
+    ${180}
+    ${270}
+    ${359}
+    ${723}
+    ${-720}
+    ${45}
+    ${77}
+  `(
+    'going $shotDirectionDegrees° always takes off a bit of distance from curving',
+    ({ shotDirectionDegrees }) => {
+      const iterations = 100;
+      let totalDistance = 0;
+
+      for (let i = 0; i < iterations; i++) {
+        const result = hitShot(shot, sourceOrigin, shotDirectionDegrees);
+
+        expect(result.source).toEqual(sourceOrigin);
+
+        totalDistance += yardsBetween(result.landingSpot, result.source);
+      }
+
+      const avgDistance = totalDistance / iterations;
+
+      // Theoretically brittle due to randomness but for now with 100 iterations...
+      expect(avgDistance).toBeLessThan(carryYards * 0.999);
+      expect(avgDistance).toBeGreaterThan(carryYards * 0.95);
+    }
+  );
+
+  test('goes some mixture of all degrees in either direction', () => {
+    const maxYardsY =
+      carryYards * Math.sin(degreesToRadians(degreeVariance)) +
+      sourceOrigin.yYards;
+    const minYardsY = -maxYardsY;
+    const degreeCounters = [
+      0, // -4.999 - -4
+      0, // -3.999 - -3
+      0, // -2.999 - -2
+      0, // -1.999 - -1
+      0, // -0.999 - 0
+      0, // 0 - 0.999
+      0, // 1 - 1.999
+      0, // 2 - 2.999
+      0, // 3 - 3.999
+      0, // 4 - 4.999
+    ];
+
+    // Sanity check the test itself
+    expect(minYardsY).toBeLessThan(maxYardsY);
+
+    for (let i = 0; i < 1000; i++) {
+      const result = hitShot(shot, sourceOrigin, 0);
+      expect(result.landingSpot.yYards).toBeGreaterThanOrEqual(minYardsY);
+      expect(result.landingSpot.yYards).toBeLessThanOrEqual(maxYardsY);
+
+      const angleDegrees = radiansToDegrees(
+        Math.asin(
+          (sourceOrigin.yYards - result.landingSpot.yYards) / carryYards
+        )
+      );
+
+      expect(Math.abs(angleDegrees)).toBeLessThanOrEqual(degreeVariance);
 
       degreeCounters[Math.floor(angleDegrees + degreeVariance)]++;
     }

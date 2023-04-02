@@ -59,16 +59,19 @@ export function hitShot(
       startDegrees
   );
 
-  const totalDistanceSpread = outcome.carryYardsMax - outcome.carryYardsMin;
-  const totalDistanceYards =
-    Math.random() * totalDistanceSpread + outcome.carryYardsMin;
-
   // For now, we cheat a little in figuring out an exact path in favor of getting
   // something that's close enough and easy to draw later.
-  const avgDirectionDegrees = avgDegrees(startDegrees, endDegrees);
-  const avgDirectionRadians = degreesToRadians(avgDirectionDegrees);
-  const xDistanceYards = Math.cos(avgDirectionRadians) * totalDistanceYards;
-  const yDistanceYards = Math.sin(avgDirectionRadians) * totalDistanceYards;
+  const endRadians = degreesToRadians(endDegrees);
+  const distanceModifier = Math.cos(
+    degreesToRadians(startDegrees - endDegrees) * 2
+  );
+  const totalDistanceSpread = outcome.carryYardsMax - outcome.carryYardsMin;
+  const totalDistanceYards =
+    (Math.random() * totalDistanceSpread + outcome.carryYardsMin) *
+    distanceModifier;
+
+  const xDistanceYards = Math.cos(endRadians) * totalDistanceYards;
+  const yDistanceYards = Math.sin(endRadians) * totalDistanceYards;
 
   const landingSpot = {
     xYards: source.xYards + xDistanceYards,
