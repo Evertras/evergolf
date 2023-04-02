@@ -1,5 +1,5 @@
 import { yardsBetween } from 'lib/coords';
-import { degreesToRadians, radiansToDegrees } from 'lib/math';
+import { boundDegrees, degreesToRadians, radiansToDegrees } from 'lib/math';
 import { Shot, hitShot } from '.';
 
 // Start at a point other than (0, 0) to make sure default 0s aren't being
@@ -156,7 +156,7 @@ describe('a 100y shot that can be pushed or pulled 5 degrees', () => {
   });
 });
 
-describe('a 100y shot that can be spun 5 degrees in either direction', () => {
+describe('a 100y shot that can be spun 5° in either direction', () => {
   const carryYards = 100;
   const degreeVariance = 5;
   const shot: Shot = {
@@ -193,6 +193,9 @@ describe('a 100y shot that can be spun 5 degrees in either direction', () => {
         const result = hitShot(shot, sourceOrigin, shotDirectionDegrees);
 
         expect(result.source).toEqual(sourceOrigin);
+        expect(result.startDegrees).toBeCloseTo(
+          boundDegrees(shotDirectionDegrees)
+        );
 
         totalDistance += yardsBetween(result.landingSpot, result.source);
       }
