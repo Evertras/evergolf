@@ -28,12 +28,14 @@ describe('a perfect 100y straight shot', () => {
   };
 
   test.each`
-    shotDirectionDegrees | expectedXYards                      | expectedYYards
-    ${0}                 | ${sourceOrigin.xYards + carryYards} | ${sourceOrigin.yYards}
-    ${90}                | ${sourceOrigin.xYards}              | ${sourceOrigin.yYards + carryYards}
-    ${180}               | ${sourceOrigin.xYards - 100}        | ${sourceOrigin.yYards}
-    ${270}               | ${sourceOrigin.xYards}              | ${sourceOrigin.yYards - 100}
-    ${720}               | ${sourceOrigin.xYards + 100}        | ${sourceOrigin.yYards}
+    shotDirectionDegrees | expectedXYards                                     | expectedYYards
+    ${0}                 | ${sourceOrigin.xYards + carryYards}                | ${sourceOrigin.yYards}
+    ${90}                | ${sourceOrigin.xYards}                             | ${sourceOrigin.yYards + carryYards}
+    ${180}               | ${sourceOrigin.xYards - carryYards}                | ${sourceOrigin.yYards}
+    ${270}               | ${sourceOrigin.xYards}                             | ${sourceOrigin.yYards - carryYards}
+    ${720}               | ${sourceOrigin.xYards + carryYards}                | ${sourceOrigin.yYards}
+    ${-720}              | ${sourceOrigin.xYards + carryYards}                | ${sourceOrigin.yYards}
+    ${45}                | ${sourceOrigin.xYards + carryYards / Math.sqrt(2)} | ${sourceOrigin.yYards + carryYards / Math.sqrt(2)}
   `(
     '$shotDirectionDegrees° goes to ($expectedXYards, $expectedYYards)',
     ({ shotDirectionDegrees, expectedXYards, expectedYYards }) => {
