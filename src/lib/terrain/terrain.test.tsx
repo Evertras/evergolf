@@ -11,5 +11,3 @@ test('all terrain enums are unique', () => {
     seen.push(terrain);
   }
 });
-
-export {};

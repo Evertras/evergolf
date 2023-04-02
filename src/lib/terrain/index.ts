@@ -73,13 +73,12 @@ function pointInTerrain(terrainType: Terrain, point: DOMPoint): boolean {
 
 // TODO: This is brittle but works for now...
 export function terrainAtPoint(
-  xYards: number,
-  yYards: number,
+  coords: Coords,
   imgYardsPerPixel: number = 1
 ): Terrain {
   const point = new DOMPoint(
-    xYards / imgYardsPerPixel,
-    yYards / imgYardsPerPixel
+    coords.xYards / imgYardsPerPixel,
+    coords.yYards / imgYardsPerPixel
   );
 
   if (pointInTerrain(Terrain.Green, point)) {

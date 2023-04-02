@@ -13,7 +13,7 @@ export interface HoleProps {
 }
 
 const Hole = ({ data }: HoleProps) => {
-  const [mouseCoords, setMouseCoords] = useState({
+  const [mouseCoords, setMouseCoords] = useState<Coords>({
     xYards: 0,
     yYards: 0,
   });
@@ -45,11 +45,7 @@ const Hole = ({ data }: HoleProps) => {
   const pinLocation = data.pinLocations[0];
   const teeLocation = data.teeLocations.white;
 
-  let terrain = terrainAtPoint(
-    mouseCoords.xYards,
-    mouseCoords.yYards,
-    imgScale
-  );
+  let terrain = terrainAtPoint(mouseCoords, imgScale);
 
   const debugText =
     'Pos: (' +
