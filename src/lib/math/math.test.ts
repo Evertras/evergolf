@@ -1,4 +1,9 @@
-import { avgDegrees, boundDegrees, degreesToRadians } from '.';
+import {
+  avgDegrees,
+  boundDegrees,
+  degreesToRadians,
+  radiansToDegrees,
+} from '.';
 
 describe('degreesToRadians', () => {
   test.each`
@@ -13,6 +18,22 @@ describe('degreesToRadians', () => {
     const actualRadians = degreesToRadians(degrees);
 
     expect(actualRadians).toBeCloseTo(radians);
+  });
+});
+
+describe('radiansToDegrees', () => {
+  test.each`
+    degrees | radians
+    ${0}    | ${0}
+    ${90}   | ${Math.PI / 2}
+    ${180}  | ${Math.PI}
+    ${270}  | ${(Math.PI * 3) / 2}
+    ${360}  | ${Math.PI * 2}
+    ${-90}  | ${-Math.PI / 2}
+  `('$radians radians converts to $degrees° ', ({ degrees, radians }) => {
+    const actualDegrees = radiansToDegrees(radians);
+
+    expect(actualDegrees).toBeCloseTo(degrees);
   });
 });
 

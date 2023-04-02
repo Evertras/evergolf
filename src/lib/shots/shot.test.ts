@@ -1,4 +1,5 @@
 import { yardsBetween } from 'lib/coords';
+import { degreesToRadians, radiansToDegrees } from 'lib/math';
 import { Shot, hitShot } from '.';
 
 // Start at a point other than (0, 0) to make sure default 0s aren't being
@@ -56,4 +57,87 @@ describe('a perfect 100y straight shot', () => {
       expect(result.landingSpot.yYards).toBeCloseTo(expectedYYards);
     }
   );
+});
+
+describe('a 100y shot that can be pushed or pulled 5 degrees', () => {
+  const carryYards = 100;
+  const degreeVariance = 5;
+  const shot: Shot = {
+    potentialOutcomes: [
+      {
+        startDegreesLeftmost: -degreeVariance,
+        startDegreesRightmost: degreeVariance,
+        sidespinDegreeLeftmost: 0,
+        sidespinDegreeRightmost: 0,
+        carryYardsMin: carryYards,
+        carryYardsMax: carryYards,
+      },
+    ],
+  };
+
+  test.each`
+    shotDirectionDegrees
+    ${0}
+    ${90}
+    ${180}
+    ${270}
+    ${723}
+    ${-720}
+    ${45}
+    ${77}
+  `(
+    'going $shotDirectionDegrees° always goes the expected carry distance',
+    ({ shotDirectionDegrees }) => {
+      const result = hitShot(shot, sourceOrigin, shotDirectionDegrees);
+
+      expect(result.source).toEqual(sourceOrigin);
+
+      const totalDistance = yardsBetween(result.landingSpot, result.source);
+      expect(totalDistance).toBeCloseTo(carryYards);
+    }
+  );
+
+  test('goes some mixture of all degrees in either direction', () => {
+    const maxYardsY =
+      carryYards * Math.sin(degreesToRadians(degreeVariance)) +
+      sourceOrigin.yYards;
+    const minYardsY = -maxYardsY;
+    const degreeCounters = [
+      0, // -4.999 - -4
+      0, // -3.999 - -3
+      0, // -2.999 - -2
+      0, // -1.999 - -1
+      0, // -0.999 - -0
+      0, // 0 - 0.999
+      0, // 1 - 1.999
+      0, // 2 - 2.999
+      0, // 3 - 3.999
+      0, // 4 - 4.999
+    ];
+
+    // Sanity check the test itself
+    expect(minYardsY).toBeLessThan(maxYardsY);
+
+    for (let i = 0; i < 10000; i++) {
+      const result = hitShot(shot, sourceOrigin, 0);
+      expect(result.landingSpot.yYards).toBeGreaterThanOrEqual(minYardsY);
+      expect(result.landingSpot.yYards).toBeLessThanOrEqual(maxYardsY);
+
+      const angleDegrees = radiansToDegrees(
+        Math.asin(
+          (sourceOrigin.yYards - result.landingSpot.yYards) / carryYards
+        )
+      );
+
+      expect(Math.abs(angleDegrees)).toBeLessThanOrEqual(degreeVariance);
+
+      degreeCounters[Math.floor(angleDegrees + degreeVariance)]++;
+    }
+
+    // We don't care how many went each direction for now, we just care that
+    // SOME went in each general bucket
+    for (let counter of degreeCounters) {
+      expect(counter).not.toEqual(0);
+    }
+  });
 });

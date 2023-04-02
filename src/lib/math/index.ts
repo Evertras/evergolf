@@ -3,6 +3,11 @@ export function degreesToRadians(degrees: number): number {
   return degrees * (Math.PI / 180);
 }
 
+// Converts radians to degrees
+export function radiansToDegrees(radians: number): number {
+  return radians * (180 / Math.PI);
+}
+
 // Bounds a degree value to be 0° <= degrees < 360°
 export function boundDegrees(degrees: number): number {
   return (degrees + 720) % 360;
