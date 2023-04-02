@@ -249,3 +249,39 @@ describe('a 100y shot that can be spun 5 degrees in either direction', () => {
     }
   });
 });
+
+describe('a 100y shot that can only draw left 5°', () => {
+  const carryYards = 100;
+  const degreeVariance = 5;
+  const shot: Shot = {
+    potentialOutcomes: [
+      {
+        startDegreesLeftmost: 0,
+        startDegreesRightmost: 0,
+        sidespinDegreeLeftmost: -degreeVariance,
+        sidespinDegreeRightmost: 0,
+        carryYardsMin: carryYards,
+        carryYardsMax: carryYards,
+      },
+    ],
+  };
+
+  test('only goes left', () => {
+    const iterations = 100;
+    let totalDistanceOffsetY = 0;
+
+    for (let i = 0; i < iterations; i++) {
+      const result = hitShot(shot, sourceOrigin, 0);
+
+      expect(result.landingSpot.yYards).toBeLessThanOrEqual(
+        sourceOrigin.yYards
+      );
+
+      totalDistanceOffsetY += result.source.yYards - result.landingSpot.yYards;
+    }
+
+    const avgOffsetY = totalDistanceOffsetY / iterations;
+
+    expect(avgOffsetY).toBeGreaterThan(1);
+  });
+});
