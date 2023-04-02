@@ -142,6 +142,7 @@ describe('a 100y shot that can be pushed or pulled 5 degrees', () => {
       );
 
       expect(Math.abs(angleDegrees)).toBeLessThanOrEqual(degreeVariance);
+      expect(result.endDegrees).toBeCloseTo(result.startDegrees);
 
       degreeCounters[Math.floor(angleDegrees + degreeVariance)]++;
     }
