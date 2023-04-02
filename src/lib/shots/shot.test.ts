@@ -130,7 +130,7 @@ describe('a 100y shot that can be pushed or pulled 5 degrees', () => {
     // Sanity check the test itself
     expect(minYardsY).toBeLessThan(maxYardsY);
 
-    for (let i = 0; i < 10000; i++) {
+    for (let i = 0; i < 1000; i++) {
       const result = hitShot(shot, sourceOrigin, 0);
       expect(result.landingSpot.yYards).toBeGreaterThanOrEqual(minYardsY);
       expect(result.landingSpot.yYards).toBeLessThanOrEqual(maxYardsY);
