@@ -23,23 +23,20 @@ describe('a perfect 100y straight shot', () => {
     ],
   };
 
-  /*
-    ${180} | ${{xYards: sourceOrigin.xYards - 100, yYards: sourceOrigin.yYards}}
-    ${270} | ${{xYards: sourceOrigin.xYards , yYards: sourceOrigin.yYards - 100}}
-    ${720} | ${{xYards: sourceOrigin.xYards + 100, yYards: sourceOrigin.yYards}}
-  */
-
   const boundDegrees = (deg: number): number => {
     return (deg + 720) % 360;
   };
 
   test.each`
-    shotDirectionDegrees | expectedLandingSpot
-    ${0}                 | ${{ xYards: sourceOrigin.xYards + carryYards, yYards: sourceOrigin.yYards }}
-    ${90}                | ${{ xYards: sourceOrigin.xYards, yYards: sourceOrigin.yYards + carryYards }}
+    shotDirectionDegrees | expectedXYards                      | expectedYYards
+    ${0}                 | ${sourceOrigin.xYards + carryYards} | ${sourceOrigin.yYards}
+    ${90}                | ${sourceOrigin.xYards}              | ${sourceOrigin.yYards + carryYards}
+    ${180}               | ${sourceOrigin.xYards - 100}        | ${sourceOrigin.yYards}
+    ${270}               | ${sourceOrigin.xYards}              | ${sourceOrigin.yYards - 100}
+    ${720}               | ${sourceOrigin.xYards + 100}        | ${sourceOrigin.yYards}
   `(
-    '$shotDirectionDegrees degrees goes to $expectedLandingSpot',
-    ({ shotDirectionDegrees, expectedLandingSpot }) => {
+    '$shotDirectionDegrees° goes to ($expectedXYards, $expectedYYards)',
+    ({ shotDirectionDegrees, expectedXYards, expectedYYards }) => {
       const result = hitShot(shot, sourceOrigin, shotDirectionDegrees);
 
       expect(result.source).toEqual(sourceOrigin);
@@ -53,8 +50,8 @@ describe('a perfect 100y straight shot', () => {
       expect(boundDegrees(result.endDegrees)).toBeCloseTo(
         boundDegrees(shotDirectionDegrees)
       );
-      expect(result.landingSpot.xYards).toBeCloseTo(expectedLandingSpot.xYards);
-      expect(result.landingSpot.yYards).toBeCloseTo(expectedLandingSpot.yYards);
+      expect(result.landingSpot.xYards).toBeCloseTo(expectedXYards);
+      expect(result.landingSpot.yYards).toBeCloseTo(expectedYYards);
     }
   );
 });
