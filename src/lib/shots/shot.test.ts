@@ -9,6 +9,18 @@ const sourceOrigin: Coords = {
   yYards: 50,
 };
 
+describe('a shot with no possible outcomes', () => {
+  test('throws when hit', () => {
+    expect(() => {
+      const badShot: Shot = {
+        potentialOutcomes: [],
+      };
+
+      hitShot(badShot, sourceOrigin, 0);
+    }).toThrow();
+  });
+});
+
 describe('a perfect 100y straight shot', () => {
   const carryYards = 100;
   const shot: Shot = {
