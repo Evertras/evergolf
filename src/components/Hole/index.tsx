@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { TextStyle } from 'pixi.js';
-import { Container, Sprite, Stage, Text } from '@pixi/react';
+import { Container, Sprite, Stage } from '@pixi/react';
 import './Hole.css';
 import Circle from 'components/drawing/Circle';
 import YardageMeasurement from 'components/drawing/YardageMeasurement';
-import { terrainAtPoint, terrainSVGID } from 'lib/terrain';
+import { terrainSVGID } from 'lib/terrain';
 
 import { ReactComponent as HoleSVG } from 'data/course/chiba-shimin/hole-1.svg';
 import { radiansToDegrees } from 'lib/math';
@@ -84,30 +83,20 @@ const Hole = ({ bag, data }: HoleProps) => {
   const pinRadius = 5 / overallScale;
   const teeMarkerRadius = 5 / overallScale;
 
-  let terrain = terrainAtPoint(mouseCoords, imgScale);
+  // Keeping for reference
+  // let terrain = terrainAtPoint(mouseCoords, imgScale);
 
   const selectedShot = bag[selectedShotIndex];
   const expectedOutcome = selectedShot.potentialOutcomes[0];
-  const debugText =
-    'Pos: (' +
-    mouseCoords.xYards.toFixed(0) +
-    ', ' +
-    mouseCoords.yYards.toFixed(0) +
-    ')\nTerrain: ' +
-    terrain +
-    '\nHitting: ' +
-    selectedShot.name +
-    ' (' +
-    expectedOutcome.carryYardsMin +
-    '-' +
-    expectedOutcome.carryYardsMax +
-    ' yd)' +
-    '\nScore: ' +
-    currentScore;
 
   return (
     <React.Fragment>
-      <div>千葉市民ゴルフ＃１- Par {data.par}</div>
+      <h2>千葉市民ゴルフ＃１- Par {data.par}</h2>
+      <div>
+        Hitting {selectedShot.name} ({expectedOutcome.carryYardsMin} -{' '}
+        {expectedOutcome.carryYardsMax} yd)
+      </div>
+      <div>Strokes: {currentScore}</div>
       <ShotSelector
         shots={bag}
         onSelectIndex={setSelectedShotIndex}
@@ -177,16 +166,6 @@ const Hole = ({ bag, data }: HoleProps) => {
             textColor="cyan"
             showRings={false}
             thickness={1}
-          />
-        </Container>
-        <Container interactiveChildren={false} x={0} y={400}>
-          <Text
-            text={debugText}
-            style={
-              new TextStyle({
-                fill: 'white',
-              })
-            }
           />
         </Container>
       </Stage>
