@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { TextStyle } from 'pixi.js';
-import { Container, Sprite, Stage, Text } from '@pixi/react';
+import { Container, Sprite, Stage } from '@pixi/react';
 import './Hole.css';
 import Circle from 'components/drawing/Circle';
 import YardageMeasurement from 'components/drawing/YardageMeasurement';
