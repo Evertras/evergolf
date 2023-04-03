@@ -1,6 +1,6 @@
 import { yardsBetween } from 'lib/coords';
 import { boundDegrees, degreesToRadians, radiansToDegrees } from 'lib/math';
-import { Shot, hitShot } from '.';
+import { hitShot } from '.';
 
 // Start at a point other than (0, 0) to make sure default 0s aren't being
 // used anywhere and x and y are being treated differently
