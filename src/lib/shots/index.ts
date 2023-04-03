@@ -6,8 +6,8 @@ export function hitShot(
   source: Coords,
   initialDirectionDegrees: number
 ): ShotResult {
-  if (shot.potentialOutcomes.length == 0) {
-    throw 'shot has no outcomes';
+  if (shot.potentialOutcomes.length === 0) {
+    throw new Error('shot has no outcomes');
   }
 
   const outcome =
