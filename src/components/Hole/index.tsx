@@ -10,6 +10,7 @@ import { ReactComponent as HoleSVG } from 'data/course/chiba-shimin/hole-1.svg';
 import { radiansToDegrees } from 'lib/math';
 import { hitShot } from 'lib/shots';
 import ShotSelector from 'components/ShotSelector';
+import ShotTracer from 'components/drawing/ShotTracer';
 
 export interface HoleProps {
   data: HoleData;
@@ -120,12 +121,31 @@ const Hole = ({ bag, data }: HoleProps) => {
             anchor={{ x: 0, y: 0 }}
             scale={imgScale}
           />
+
+          {
+            // Shot tracers
+          }
+          {shotsTaken.map((result) => (
+            <ShotTracer shotResult={result} />
+          ))}
+
+          {
+            // Pin
+          }
           <Circle loc={pinLocation} radiusPixels={pinRadius} fillColor="cyan" />
+
+          {
+            // Tees
+          }
           <Circle
             loc={teeLocation}
             radiusPixels={teeMarkerRadius}
             fillColor="white"
           />
+
+          {
+            // Ball
+          }
           <Circle
             loc={ballLocation}
             radiusPixels={teeMarkerRadius}
