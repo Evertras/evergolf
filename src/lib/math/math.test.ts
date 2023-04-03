@@ -30,7 +30,7 @@ describe('radiansToDegrees', () => {
     ${270}  | ${(Math.PI * 3) / 2}
     ${360}  | ${Math.PI * 2}
     ${-90}  | ${-Math.PI / 2}
-  `('$radians radians converts to $degrees° ', ({ degrees, radians }) => {
+  `('$radians radians converts to $degrees°', ({ degrees, radians }) => {
     const actualDegrees = radiansToDegrees(radians);
 
     expect(actualDegrees).toBeCloseTo(degrees);
@@ -61,6 +61,7 @@ describe('avgDegrees (for angles 180° or less close to each other)', () => {
     ${90}  | ${180} | ${135}
     ${359} | ${359} | ${359}
     ${1}   | ${359} | ${0}
+    ${4}   | ${359} | ${1.5}
   `('$first° and $second° average to $avg°', ({ first, second, avg }) => {
     const actualAvg = avgDegrees(first, second);
 
