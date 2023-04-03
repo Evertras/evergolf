@@ -13,6 +13,7 @@ describe('a shot with no possible outcomes', () => {
   test('throws when hit', () => {
     expect(() => {
       const badShot: Shot = {
+        name: 'test shot',
         potentialOutcomes: [],
       };
 
@@ -24,6 +25,7 @@ describe('a shot with no possible outcomes', () => {
 describe('a perfect 100y straight shot', () => {
   const carryYards = 100;
   const shot: Shot = {
+    name: 'perfect 100y',
     potentialOutcomes: [
       {
         startDegreesLeftmost: 0,
@@ -75,6 +77,7 @@ describe('a 100y shot that can be pushed or pulled 5 degrees', () => {
   const carryYards = 100;
   const degreeVariance = 5;
   const shot: Shot = {
+    name: '100y pushpull',
     potentialOutcomes: [
       {
         startDegreesLeftmost: -degreeVariance,
@@ -160,6 +163,7 @@ describe('a 100y shot that can be spun 5° in either direction', () => {
   const carryYards = 100;
   const degreeVariance = 5;
   const shot: Shot = {
+    name: '100y spinner',
     potentialOutcomes: [
       {
         startDegreesLeftmost: 0,
@@ -257,6 +261,7 @@ describe('a 100y shot that can only draw left 5°', () => {
   const carryYards = 100;
   const degreeVariance = 5;
   const shot: Shot = {
+    name: '100y draw',
     potentialOutcomes: [
       {
         startDegreesLeftmost: 0,

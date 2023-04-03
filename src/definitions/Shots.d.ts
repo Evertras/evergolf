@@ -1,4 +1,5 @@
 interface Shot {
+  name: string;
   potentialOutcomes: ShotPotentialOutcome[];
 }
 

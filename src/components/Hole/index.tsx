@@ -9,12 +9,14 @@ import { terrainAtPoint, terrainSVGID } from 'lib/terrain';
 import { ReactComponent as HoleSVG } from 'data/course/chiba-shimin/hole-1.svg';
 import { radiansToDegrees } from 'lib/math';
 import { hitShot } from 'lib/shots';
+import ShotSelector from 'components/ShotSelector';
 
 export interface HoleProps {
   data: HoleData;
+  bag: Shot[];
 }
 
-const Hole = ({ data }: HoleProps) => {
+const Hole = ({ bag, data }: HoleProps) => {
   // TODO: Select somehow
   const pinLocation = data.pinLocations[0];
   const teeLocation = data.teeLocations.white;
@@ -28,6 +30,12 @@ const Hole = ({ data }: HoleProps) => {
     xYards: teeLocation.xYards,
     yYards: teeLocation.yYards,
   });
+
+  const [selectedShotIndex, setSelectedShotIndex] = useState<number>(0);
+
+  const [shotsTaken, setShotsTaken] = useState<ShotResult[]>([]);
+
+  const currentScore = shotsTaken.length;
 
   const holeViewWidthPixels = 1000;
   const holeViewHeightPixels = 600;
@@ -61,20 +69,13 @@ const Hole = ({ data }: HoleProps) => {
 
     const targetDegrees = radiansToDegrees(Math.atan2(yDiff, xDiff));
 
-    const shot: Shot = {
-      potentialOutcomes: [
-        {
-          startDegreesLeftmost: 0,
-          startDegreesRightmost: 0,
-          sidespinDegreeLeftmost: 0,
-          sidespinDegreeRightmost: 0,
-          carryYardsMin: 50,
-          carryYardsMax: 50,
-        },
-      ],
-    };
+    const shotResult = hitShot(
+      bag[selectedShotIndex],
+      ballLocation,
+      targetDegrees
+    );
 
-    const shotResult = hitShot(shot, ballLocation, targetDegrees);
+    setShotsTaken([...shotsTaken, shotResult]);
 
     setBallLocation(shotResult.landingSpot);
   };
@@ -90,11 +91,20 @@ const Hole = ({ data }: HoleProps) => {
     ', ' +
     mouseCoords.yYards.toFixed(0) +
     ')\nTerrain: ' +
-    terrain;
+    terrain +
+    '\nHitting: ' +
+    bag[selectedShotIndex].name +
+    '\nScore: ' +
+    currentScore;
 
   return (
     <React.Fragment>
       <div>千葉市民ゴルフ＃１</div>
+      <ShotSelector
+        shots={bag}
+        onSelectIndex={setSelectedShotIndex}
+        currentSelectedIndex={selectedShotIndex}
+      />
       <Stage
         width={holeViewWidthPixels}
         height={holeViewHeightPixels}
