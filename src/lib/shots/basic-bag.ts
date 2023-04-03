@@ -5,10 +5,10 @@ export const basicBag: Shot[] = [
     name: '58°',
     potentialOutcomes: [
       {
-        startDegreesLeftmost: -4,
-        startDegreesRightmost: 4,
-        sidespinDegreeLeftmost: -1,
-        sidespinDegreeRightmost: 1,
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
         carryYardsMin: 80,
         carryYardsMax: 85,
       },
@@ -18,10 +18,10 @@ export const basicBag: Shot[] = [
     name: '54°',
     potentialOutcomes: [
       {
-        startDegreesLeftmost: -4,
-        startDegreesRightmost: 4,
-        sidespinDegreeLeftmost: -1,
-        sidespinDegreeRightmost: 1,
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
         carryYardsMin: 90,
         carryYardsMax: 95,
       },
@@ -31,12 +31,12 @@ export const basicBag: Shot[] = [
     name: 'GW',
     potentialOutcomes: [
       {
-        startDegreesLeftmost: -4,
-        startDegreesRightmost: 4,
-        sidespinDegreeLeftmost: -1,
-        sidespinDegreeRightmost: 1,
-        carryYardsMin: 95,
-        carryYardsMax: 105,
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
+        carryYardsMin: 100,
+        carryYardsMax: 115,
       },
     ],
   },
@@ -44,12 +44,12 @@ export const basicBag: Shot[] = [
     name: 'PW',
     potentialOutcomes: [
       {
-        startDegreesLeftmost: -3,
-        startDegreesRightmost: 3,
-        sidespinDegreeLeftmost: -1,
-        sidespinDegreeRightmost: 1,
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
         carryYardsMin: 120,
-        carryYardsMax: 125,
+        carryYardsMax: 130,
       },
     ],
   },
@@ -57,12 +57,12 @@ export const basicBag: Shot[] = [
     name: '9i',
     potentialOutcomes: [
       {
-        startDegreesLeftmost: -3,
-        startDegreesRightmost: 3,
-        sidespinDegreeLeftmost: -1,
-        sidespinDegreeRightmost: 1,
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
         carryYardsMin: 130,
-        carryYardsMax: 135,
+        carryYardsMax: 140,
       },
     ],
   },
@@ -70,12 +70,12 @@ export const basicBag: Shot[] = [
     name: '8i',
     potentialOutcomes: [
       {
-        startDegreesLeftmost: -3,
-        startDegreesRightmost: 3,
-        sidespinDegreeLeftmost: -1,
-        sidespinDegreeRightmost: 1,
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
         carryYardsMin: 140,
-        carryYardsMax: 145,
+        carryYardsMax: 150,
       },
     ],
   },
@@ -83,12 +83,90 @@ export const basicBag: Shot[] = [
     name: '7i',
     potentialOutcomes: [
       {
-        startDegreesLeftmost: -3,
-        startDegreesRightmost: 3,
-        sidespinDegreeLeftmost: -1,
-        sidespinDegreeRightmost: 1,
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
         carryYardsMin: 150,
-        carryYardsMax: 155,
+        carryYardsMax: 160,
+      },
+    ],
+  },
+  {
+    name: '6i',
+    potentialOutcomes: [
+      {
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
+        carryYardsMin: 160,
+        carryYardsMax: 170,
+      },
+    ],
+  },
+  {
+    name: '5i',
+    potentialOutcomes: [
+      {
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
+        carryYardsMin: 170,
+        carryYardsMax: 180,
+      },
+    ],
+  },
+  {
+    name: '4i',
+    potentialOutcomes: [
+      {
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
+        carryYardsMin: 180,
+        carryYardsMax: 190,
+      },
+    ],
+  },
+  {
+    name: '3i',
+    potentialOutcomes: [
+      {
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
+        carryYardsMin: 190,
+        carryYardsMax: 200,
+      },
+    ],
+  },
+  {
+    name: '5W',
+    potentialOutcomes: [
+      {
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
+        carryYardsMin: 200,
+        carryYardsMax: 230,
+      },
+    ],
+  },
+  {
+    name: 'D',
+    potentialOutcomes: [
+      {
+        startDegreesLeftmost: -5,
+        startDegreesRightmost: 5,
+        sidespinDegreeLeftmost: -5,
+        sidespinDegreeRightmost: 5,
+        carryYardsMin: 230,
+        carryYardsMax: 250,
       },
     ],
   },
