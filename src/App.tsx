@@ -3,6 +3,7 @@ import './App.css';
 import Hole from 'components/Hole';
 import GitHubLink from 'components/GitHubLink';
 import chibaShimin from 'data/course/chiba-shimin/course.json';
+import { basicBag } from 'lib/shots/basic-bag';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
           <div className="GitHubLogo">
             <GitHubLink />
           </div>
-          <Hole data={chibaShimin.holes[0]} />
+          <Hole bag={basicBag} data={chibaShimin.holes[0]} />
         </header>
       </div>
     </React.Fragment>
