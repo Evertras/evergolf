@@ -3,6 +3,7 @@ interface HoleData {
   imgPixelsPerYard: number;
   widthYards: number;
   heightYards: number;
+  par: number;
   teeLocations: {
     [name: string]: Coords;
   };
