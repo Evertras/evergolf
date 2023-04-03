@@ -107,7 +107,7 @@ const Hole = ({ bag, data }: HoleProps) => {
 
   return (
     <React.Fragment>
-      <div>千葉市民ゴルフ＃１</div>
+      <div>千葉市民ゴルフ＃１- Par {data.par}</div>
       <ShotSelector
         shots={bag}
         onSelectIndex={setSelectedShotIndex}
