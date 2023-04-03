@@ -7,15 +7,26 @@ import YardageMeasurement from 'components/drawing/YardageMeasurement';
 import { terrainAtPoint, terrainSVGID } from 'lib/terrain';
 
 import { ReactComponent as HoleSVG } from 'data/course/chiba-shimin/hole-1.svg';
+import { radiansToDegrees } from 'lib/math';
+import { hitShot } from 'lib/shots';
 
 export interface HoleProps {
   data: HoleData;
 }
 
 const Hole = ({ data }: HoleProps) => {
+  // TODO: Select somehow
+  const pinLocation = data.pinLocations[0];
+  const teeLocation = data.teeLocations.white;
+
   const [mouseCoords, setMouseCoords] = useState<Coords>({
     xYards: 0,
     yYards: 0,
+  });
+
+  const [ballLocation, setBallLocation] = useState<Coords>({
+    xYards: teeLocation.xYards,
+    yYards: teeLocation.yYards,
   });
 
   const holeViewWidthPixels = 1000;
@@ -38,12 +49,38 @@ const Hole = ({ data }: HoleProps) => {
     });
   };
 
+  const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const target: Coords = {
+      xYards: (e.pageX - rect.left) / overallScale,
+      yYards: (e.pageY - rect.top) / overallScale,
+    };
+
+    const xDiff = target.xYards - ballLocation.xYards;
+    const yDiff = target.yYards - ballLocation.yYards;
+
+    const targetDegrees = radiansToDegrees(Math.atan2(yDiff, xDiff));
+
+    const shot: Shot = {
+      potentialOutcomes: [
+        {
+          startDegreesLeftmost: 0,
+          startDegreesRightmost: 0,
+          sidespinDegreeLeftmost: 0,
+          sidespinDegreeRightmost: 0,
+          carryYardsMin: 50,
+          carryYardsMax: 50,
+        },
+      ],
+    };
+
+    const shotResult = hitShot(shot, ballLocation, targetDegrees);
+
+    setBallLocation(shotResult.landingSpot);
+  };
+
   const pinRadius = 5 / overallScale;
   const teeMarkerRadius = 5 / overallScale;
-
-  // TODO: Select somehow
-  const pinLocation = data.pinLocations[0];
-  const teeLocation = data.teeLocations.white;
 
   let terrain = terrainAtPoint(mouseCoords, imgScale);
 
@@ -62,6 +99,7 @@ const Hole = ({ data }: HoleProps) => {
         width={holeViewWidthPixels}
         height={holeViewHeightPixels}
         onMouseMove={handleMouseMove}
+        onMouseDown={handleMouseDown}
         options={{
           backgroundAlpha: 0,
         }}
@@ -78,12 +116,17 @@ const Hole = ({ data }: HoleProps) => {
             radiusPixels={teeMarkerRadius}
             fillColor="white"
           />
+          <Circle
+            loc={ballLocation}
+            radiusPixels={teeMarkerRadius}
+            fillColor="white"
+          />
 
           {
             // Measurement lines
           }
           <YardageMeasurement
-            start={teeLocation}
+            start={ballLocation}
             end={mouseCoords}
             color="white"
             textColor="white"
