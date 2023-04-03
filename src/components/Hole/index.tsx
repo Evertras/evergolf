@@ -86,6 +86,8 @@ const Hole = ({ bag, data }: HoleProps) => {
 
   let terrain = terrainAtPoint(mouseCoords, imgScale);
 
+  const selectedShot = bag[selectedShotIndex];
+  const expectedOutcome = selectedShot.potentialOutcomes[0];
   const debugText =
     'Pos: (' +
     mouseCoords.xYards.toFixed(0) +
@@ -94,7 +96,12 @@ const Hole = ({ bag, data }: HoleProps) => {
     ')\nTerrain: ' +
     terrain +
     '\nHitting: ' +
-    bag[selectedShotIndex].name +
+    selectedShot.name +
+    ' (' +
+    expectedOutcome.carryYardsMin +
+    '-' +
+    expectedOutcome.carryYardsMax +
+    ' yd)' +
     '\nScore: ' +
     currentScore;
 
