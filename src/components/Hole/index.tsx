@@ -102,7 +102,6 @@ const Hole = ({ bag, data }: HoleProps) => {
 
   return (
     <React.Fragment>
-      <h2>千葉市民ゴルフ＃１- Par {data.par}</h2>
       <div>
         Hitting {selectedShot.name} ({expectedOutcome.carryYardsMin} -{' '}
         {expectedOutcome.carryYardsMax} yd)

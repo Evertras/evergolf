@@ -7,9 +7,14 @@ export interface RoundProps {
 }
 
 const Round = ({ bag, course }: RoundProps) => {
+  const currentHole = course.holes[1];
+
   return (
     <React.Fragment>
-      <Hole bag={bag} data={course.holes[1]} />
+      <h2>
+        {course.name} # {currentHole.holeNumber} (Par {currentHole.par})
+      </h2>
+      <Hole bag={bag} data={currentHole} />
     </React.Fragment>
   );
 };
