@@ -1,8 +1,10 @@
 {
+  "name": "千葉市民ゴルフ",
   "holes": [
     {
-      "imgSrcURL": "course/chiba-shimin/holes/1.png",
+      "imgSrcURL": "course/chiba-shimin/holes/1/bg.png",
       "imgPixelsPerYard": 8.27817745,
+      "holeNumber": 1,
       "par": 4,
       "widthYards": 417,
       "heightYards": 135.778679,
@@ -16,6 +18,26 @@
         {
           "xYards": 380,
           "yYards": 60
+        }
+      ]
+    },
+    {
+      "imgSrcURL": "course/chiba-shimin/holes/2/bg.png",
+      "imgPixelsPerYard": 7.7736,
+      "par": 4,
+      "holeNumber": 2,
+      "widthYards": 424,
+      "heightYards": 151.02427,
+      "teeLocations": {
+        "white": {
+          "xYards": 67,
+          "yYards": 76
+        }
+      },
+      "pinLocations": [
+        {
+          "xYards": 390,
+          "yYards": 115
         }
       ]
     }

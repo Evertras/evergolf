@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import Hole from 'components/Hole';
 import GitHubLink from 'components/GitHubLink';
 import chibaShimin from 'data/course/chiba-shimin/course.json';
 import { basicBag } from 'lib/shots/basic-bag';
+import Round from 'components/Round';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
           <div className="GitHubLogo">
             <GitHubLink />
           </div>
-          <Hole bag={basicBag} data={chibaShimin.holes[0]} />
+          <Round bag={basicBag} course={chibaShimin} />
         </header>
       </div>
     </React.Fragment>
