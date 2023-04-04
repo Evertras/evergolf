@@ -3,7 +3,7 @@ import { Container, Sprite, Stage } from '@pixi/react';
 import './Hole.css';
 import Circle from 'components/drawing/Circle';
 import YardageMeasurement from 'components/drawing/YardageMeasurement';
-import { terrainSVGID } from 'lib/terrain';
+import { Terrain, terrainAtPoint, terrainSVGID } from 'lib/terrain';
 
 import { ReactComponent as HoleSVG } from 'data/course/chiba-shimin/hole-1.svg';
 import { radiansToDegrees } from 'lib/math';
@@ -14,6 +14,12 @@ import ShotTracer from 'components/drawing/ShotTracer';
 export interface HoleProps {
   data: HoleData;
   bag: Shot[];
+}
+
+interface ShotHistory {
+  result: ShotResult;
+  terrain: Terrain;
+  strokes: number;
 }
 
 const Hole = ({ bag, data }: HoleProps) => {
@@ -33,9 +39,9 @@ const Hole = ({ bag, data }: HoleProps) => {
 
   const [selectedShotIndex, setSelectedShotIndex] = useState<number>(0);
 
-  const [shotsTaken, setShotsTaken] = useState<ShotResult[]>([]);
+  const [shotsTaken, setShotsTaken] = useState<ShotHistory[]>([]);
 
-  const currentScore = shotsTaken.length;
+  const currentScore = shotsTaken.reduce((total, s) => total + s.strokes, 0);
 
   const holeViewWidthPixels = 1000;
   const holeViewHeightPixels = 600;
@@ -69,22 +75,27 @@ const Hole = ({ bag, data }: HoleProps) => {
 
     const targetDegrees = radiansToDegrees(Math.atan2(yDiff, xDiff));
 
-    const shotResult = hitShot(
-      bag[selectedShotIndex],
-      ballLocation,
-      targetDegrees
-    );
+    const result = hitShot(bag[selectedShotIndex], ballLocation, targetDegrees);
 
-    setShotsTaken([...shotsTaken, shotResult]);
+    const terrain = terrainAtPoint(result.landingSpot, imgScale);
+    const strokes = terrain === Terrain.OutOfBounds ? 2 : 1;
 
-    setBallLocation(shotResult.landingSpot);
+    setShotsTaken([
+      ...shotsTaken,
+      {
+        result,
+        strokes,
+        terrain,
+      },
+    ]);
+
+    if (terrain !== Terrain.OutOfBounds) {
+      setBallLocation(result.landingSpot);
+    }
   };
 
   const pinRadius = 5 / overallScale;
   const teeMarkerRadius = 5 / overallScale;
-
-  // Keeping for reference
-  // let terrain = terrainAtPoint(mouseCoords, imgScale);
 
   const selectedShot = bag[selectedShotIndex];
   const expectedOutcome = selectedShot.potentialOutcomes[0];
@@ -121,8 +132,8 @@ const Hole = ({ bag, data }: HoleProps) => {
           {
             // Shot tracers
           }
-          {shotsTaken.map((result) => (
-            <ShotTracer shotResult={result} />
+          {shotsTaken.map(({ result }, i) => (
+            <ShotTracer key={i} shotResult={result} />
           ))}
 
           {
