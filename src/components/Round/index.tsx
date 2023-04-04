@@ -12,7 +12,7 @@ const Round = ({ bag, course }: RoundProps) => {
   return (
     <React.Fragment>
       <h2>
-        {course.name} # {currentHole.holeNumber} (Par {currentHole.par})
+        {course.name} #{currentHole.holeNumber} (Par {currentHole.par})
       </h2>
       <Hole bag={bag} data={currentHole} />
     </React.Fragment>
