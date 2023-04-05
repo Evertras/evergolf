@@ -1,0 +1,16 @@
+.RoundToolbar {
+  display: flex;
+  flex-direction: row;
+}
+
+.RoundToolbar > div {
+  padding: 10px;
+  background-color: salmon;
+  border-radius: 0.5em;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.RoundToolbar > div:hover {
+  background-color: darksalmon;
+}

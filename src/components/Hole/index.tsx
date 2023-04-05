@@ -14,9 +14,11 @@ import TerrainSVG from 'components/TerrainSVG';
 export interface HoleProps {
   data: HoleData;
   bag: Shot[];
+  shotsTaken: ShotHistory[];
+  takeShot: (shot: ShotHistory) => void;
 }
 
-const Hole = ({ bag, data }: HoleProps) => {
+const Hole = ({ bag, data, shotsTaken, takeShot }: HoleProps) => {
   // TODO: Select somehow
   const pinLocation = data.pinLocations[0];
   const teeLocation = data.teeLocations.white;
@@ -27,8 +29,6 @@ const Hole = ({ bag, data }: HoleProps) => {
   });
 
   const [selectedShotIndex, setSelectedShotIndex] = useState<number>(0);
-
-  const [shotsTaken, setShotsTaken] = useState<ShotHistory[]>([]);
 
   const hittableShots = shotsTaken.filter((s) =>
     isTerrainHittableFrom(s.terrainTo)
@@ -82,15 +82,12 @@ const Hole = ({ bag, data }: HoleProps) => {
     const terrainTo = terrainAtPoint(result.landingSpot, imgScale);
     const strokes = terrainTo === Terrain.OutOfBounds ? 2 : 1;
 
-    setShotsTaken([
-      ...shotsTaken,
-      {
-        result,
-        strokes,
-        terrainFrom,
-        terrainTo,
-      },
-    ]);
+    takeShot({
+      result,
+      strokes,
+      terrainFrom,
+      terrainTo,
+    });
   };
 
   const pinRadius = 5 / overallScale;
