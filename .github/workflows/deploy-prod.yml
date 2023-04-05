@@ -31,6 +31,8 @@ jobs:
           node-version: 18
           cache: 'npm'
       - name: Build
+        env:
+          REACT_APP_GTAG: ${{ secrets.REACT_APP_GTAG }}
         run: make build
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
