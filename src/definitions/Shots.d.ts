@@ -26,3 +26,10 @@ interface ShotResult {
   startDegrees: number;
   endDegrees: number;
 }
+
+interface ShotHistory {
+  result: ShotResult;
+  terrainFrom: Terrain;
+  terrainTo: Terrain;
+  strokes: number;
+}
