@@ -16,12 +16,6 @@ export interface HoleProps {
   bag: Shot[];
 }
 
-interface ShotHistory {
-  result: ShotResult;
-  terrain: Terrain;
-  strokes: number;
-}
-
 const Hole = ({ bag, data }: HoleProps) => {
   // TODO: Select somehow
   const pinLocation = data.pinLocations[0];
@@ -37,7 +31,7 @@ const Hole = ({ bag, data }: HoleProps) => {
   const [shotsTaken, setShotsTaken] = useState<ShotHistory[]>([]);
 
   const hittableShots = shotsTaken.filter((s) =>
-    isTerrainHittableFrom(s.terrain)
+    isTerrainHittableFrom(s.terrainTo)
   );
 
   const ballLocation: Coords =
@@ -81,15 +75,20 @@ const Hole = ({ bag, data }: HoleProps) => {
 
     const result = hitShot(bag[selectedShotIndex], ballLocation, targetDegrees);
 
-    const terrain = terrainAtPoint(result.landingSpot, imgScale);
-    const strokes = terrain === Terrain.OutOfBounds ? 2 : 1;
+    const terrainFrom =
+      hittableShots.length > 0
+        ? hittableShots[hittableShots.length - 1].terrainTo
+        : Terrain.Fairway;
+    const terrainTo = terrainAtPoint(result.landingSpot, imgScale);
+    const strokes = terrainTo === Terrain.OutOfBounds ? 2 : 1;
 
     setShotsTaken([
       ...shotsTaken,
       {
         result,
         strokes,
-        terrain,
+        terrainFrom,
+        terrainTo,
       },
     ]);
   };
