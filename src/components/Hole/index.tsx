@@ -3,7 +3,7 @@ import { Container, Sprite, Stage } from '@pixi/react';
 import './Hole.css';
 import Circle from 'components/drawing/Circle';
 import YardageMeasurement from 'components/drawing/YardageMeasurement';
-import { Terrain, terrainAtPoint } from 'lib/terrain';
+import { isTerrainHittableFrom, Terrain, terrainAtPoint } from 'lib/terrain';
 
 import { radiansToDegrees } from 'lib/math';
 import { hitShot } from 'lib/shots';
@@ -36,13 +36,13 @@ const Hole = ({ bag, data }: HoleProps) => {
 
   const [shotsTaken, setShotsTaken] = useState<ShotHistory[]>([]);
 
-  const nonPenaltyShots = shotsTaken.filter(
-    (s) => s.terrain !== Terrain.OutOfBounds
+  const hittableShots = shotsTaken.filter((s) =>
+    isTerrainHittableFrom(s.terrain)
   );
 
   const ballLocation: Coords =
-    nonPenaltyShots.length > 0
-      ? nonPenaltyShots[nonPenaltyShots.length - 1].result.landingSpot
+    hittableShots.length > 0
+      ? hittableShots[hittableShots.length - 1].result.landingSpot
       : teeLocation;
 
   const currentScore = shotsTaken.reduce((total, s) => total + s.strokes, 0);
