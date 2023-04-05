@@ -1,4 +1,4 @@
-import { Terrain } from '.';
+import { isTerrainHittableFrom, Terrain } from '.';
 
 test('all terrain enums are unique', () => {
   const seen: string[] = [];
@@ -10,4 +10,17 @@ test('all terrain enums are unique', () => {
     expect(seen).not.toContain(terrain);
     seen.push(terrain);
   }
+});
+
+test.each`
+  terrain                | hittable
+  ${Terrain.OutOfBounds} | ${false}
+  ${Terrain.Rough}       | ${true}
+  ${Terrain.Fairway}     | ${true}
+  ${Terrain.Green}       | ${true}
+  ${Terrain.Bunker}      | ${true}
+  ${Terrain.BigTree}     | ${true}
+  ${Terrain.Trees}       | ${true}
+`('$terrain is hittable: $hittable', ({ terrain, hittable }) => {
+  expect(isTerrainHittableFrom(terrain)).toEqual(hittable);
 });

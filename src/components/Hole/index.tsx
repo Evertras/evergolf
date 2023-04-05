@@ -3,7 +3,7 @@ import { Container, Sprite, Stage } from '@pixi/react';
 import './Hole.css';
 import Circle from 'components/drawing/Circle';
 import YardageMeasurement from 'components/drawing/YardageMeasurement';
-import { Terrain, terrainAtPoint } from 'lib/terrain';
+import { isTerrainHittableFrom, Terrain, terrainAtPoint } from 'lib/terrain';
 
 import { radiansToDegrees } from 'lib/math';
 import { hitShot } from 'lib/shots';
@@ -32,14 +32,18 @@ const Hole = ({ bag, data }: HoleProps) => {
     yYards: 0,
   });
 
-  const [ballLocation, setBallLocation] = useState<Coords>({
-    xYards: teeLocation.xYards,
-    yYards: teeLocation.yYards,
-  });
-
   const [selectedShotIndex, setSelectedShotIndex] = useState<number>(0);
 
   const [shotsTaken, setShotsTaken] = useState<ShotHistory[]>([]);
+
+  const hittableShots = shotsTaken.filter((s) =>
+    isTerrainHittableFrom(s.terrain)
+  );
+
+  const ballLocation: Coords =
+    hittableShots.length > 0
+      ? hittableShots[hittableShots.length - 1].result.landingSpot
+      : teeLocation;
 
   const currentScore = shotsTaken.reduce((total, s) => total + s.strokes, 0);
 
@@ -88,10 +92,6 @@ const Hole = ({ bag, data }: HoleProps) => {
         terrain,
       },
     ]);
-
-    if (terrain !== Terrain.OutOfBounds) {
-      setBallLocation(result.landingSpot);
-    }
   };
 
   const pinRadius = 5 / overallScale;

@@ -71,6 +71,10 @@ function pointInTerrain(terrainType: Terrain, point: DOMPoint): boolean {
   return false;
 }
 
+export function isTerrainHittableFrom(terrain: Terrain): boolean {
+  return terrain !== Terrain.OutOfBounds;
+}
+
 // TODO: This is brittle but works for now...
 export function terrainAtPoint(
   coords: Coords,
