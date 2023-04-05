@@ -32,14 +32,18 @@ const Hole = ({ bag, data }: HoleProps) => {
     yYards: 0,
   });
 
-  const [ballLocation, setBallLocation] = useState<Coords>({
-    xYards: teeLocation.xYards,
-    yYards: teeLocation.yYards,
-  });
-
   const [selectedShotIndex, setSelectedShotIndex] = useState<number>(0);
 
   const [shotsTaken, setShotsTaken] = useState<ShotHistory[]>([]);
+
+  const nonPenaltyShots = shotsTaken.filter(
+    (s) => s.terrain !== Terrain.OutOfBounds
+  );
+
+  const ballLocation: Coords =
+    nonPenaltyShots.length > 0
+      ? nonPenaltyShots[nonPenaltyShots.length - 1].result.landingSpot
+      : teeLocation;
 
   const currentScore = shotsTaken.reduce((total, s) => total + s.strokes, 0);
 
@@ -88,10 +92,6 @@ const Hole = ({ bag, data }: HoleProps) => {
         terrain,
       },
     ]);
-
-    if (terrain !== Terrain.OutOfBounds) {
-      setBallLocation(result.landingSpot);
-    }
   };
 
   const pinRadius = 5 / overallScale;
