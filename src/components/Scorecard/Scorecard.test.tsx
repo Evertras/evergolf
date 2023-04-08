@@ -59,7 +59,8 @@ test('Scorecard shows basic score on finished hole', () => {
         },
         terrainFrom: Terrain.Green,
         terrainTo: Terrain.Hole,
-        strokes: 1,
+        // 8 putts just to get unique numbers on card to check
+        strokes: 8,
       },
     ],
   ];
@@ -82,9 +83,11 @@ test('Scorecard shows basic score on finished hole', () => {
 
   render(<Scorecard course={course} shotsTaken={shotHistory} />);
 
-  const scoreDiv = screen.getByText('2');
-
+  const scoreDiv = screen.getByText('9');
   expect(scoreDiv).toBeInTheDocument();
+
+  const puttsDiv = screen.getByText('8');
+  expect(puttsDiv).toBeInTheDocument();
 
   /*
   const relativeDiv = screen.getByText('-1');

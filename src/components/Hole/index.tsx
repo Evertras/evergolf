@@ -5,10 +5,11 @@ import YardageMeasurement from 'components/drawing/YardageMeasurement';
 import { isTerrainHittableFrom, Terrain, terrainAtPoint } from 'lib/terrain';
 
 import { radiansToDegrees } from 'lib/math';
-import { hitShot } from 'lib/shots';
+import { hitShot, putt } from 'lib/shots';
 import ShotSelector from 'components/ShotSelector';
 import ShotTracer from 'components/drawing/ShotTracer';
 import TerrainSVG from 'components/TerrainSVG';
+import { feetBetween } from 'lib/coords';
 
 export interface HoleProps {
   data: HoleData;
@@ -16,9 +17,17 @@ export interface HoleProps {
   shotsTaken: ShotHistory[];
   takeShot: (shot: ShotHistory) => void;
   tees: string;
+  puttingHandicap: number;
 }
 
-const Hole = ({ bag, data, shotsTaken, takeShot, tees }: HoleProps) => {
+const Hole = ({
+  bag,
+  data,
+  shotsTaken,
+  takeShot,
+  tees,
+  puttingHandicap,
+}: HoleProps) => {
   // TODO: Select somehow
   const pinLocation = data.pinLocations[0];
   const teeLocation = data.teeLocations[tees];
@@ -45,6 +54,10 @@ const Hole = ({ bag, data, shotsTaken, takeShot, tees }: HoleProps) => {
 
   const holeViewWidthPixels = 1000;
   const holeViewHeightPixels = holeViewWidthPixels / imgRatio;
+  const holeComplete =
+    shotsTaken &&
+    shotsTaken.length > 0 &&
+    shotsTaken[shotsTaken.length - 1].terrainTo === Terrain.Hole;
 
   const imgScale = 1 / data.imgPixelsPerYard;
   const overallScale = Math.min(
@@ -64,6 +77,11 @@ const Hole = ({ bag, data, shotsTaken, takeShot, tees }: HoleProps) => {
   };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    // We can only hit if we're still playing the hole
+    if (holeComplete) {
+      return;
+    }
+
     const rect = e.currentTarget.getBoundingClientRect();
     const target: Coords = {
       xYards: (e.pageX - rect.left) / overallScale,
@@ -90,6 +108,21 @@ const Hole = ({ bag, data, shotsTaken, takeShot, tees }: HoleProps) => {
       terrainFrom,
       terrainTo,
     });
+
+    // Auto putt out
+    const putts = putt(
+      feetBetween(result.landingSpot, pinLocation),
+      puttingHandicap
+    );
+
+    if (terrainTo === Terrain.Green) {
+      takeShot({
+        result,
+        strokes: putts,
+        terrainFrom: Terrain.Green,
+        terrainTo: Terrain.Hole,
+      });
+    }
   };
 
   const pinRadius = 5 / overallScale;

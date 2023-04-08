@@ -7,9 +7,10 @@ export interface RoundProps {
   bag: Shot[];
   course: CourseData;
   tees: string;
+  puttingHandicap: number;
 }
 
-const Round = ({ bag, course, tees }: RoundProps) => {
+const Round = ({ bag, course, tees, puttingHandicap }: RoundProps) => {
   const [currentHoleNumber, setCurrentHoleNumber] = useState(1);
 
   const [shotHistoryByHole, setShotHistoryByHole] = useState(
@@ -62,6 +63,7 @@ const Round = ({ bag, course, tees }: RoundProps) => {
         shotsTaken={shotHistoryByHole[currentHoleNumber - 1]}
         takeShot={takeShot}
         tees={tees}
+        puttingHandicap={puttingHandicap}
       />
       <Scorecard course={course} shotsTaken={shotHistoryByHole} />
     </React.Fragment>
