@@ -32,14 +32,14 @@ Have a hole and let the player make some preset shots at it.
 
 Requirements:
 
-- [ ] Preset list of shots (can be short with just As Intended outcomes)
-- [ ] Player can select a shot and a directional target
-- [ ] Player can hit preset shots and ball advances
-- [ ] If the ball is on the green, 2 putt and display total hole score
-- [ ] If the ball is less than minimum yardage, automatically hit onto green
-- [ ] Previous shots are shown as tracers
-- [ ] Moving the mouse over the course displays distance to the player and hole
-- [ ] Current stroke total is shown
+- [x] Preset list of shots (can be short with just As Intended outcomes)
+- [x] Player can select a shot and a directional target
+- [x] Player can hit preset shots and ball advances
+- [x] If the ball is on the green, 2 putt and display total hole score
+- [x] If the ball is less than minimum yardage, automatically hit onto green
+- [x] Previous shots are shown as tracers
+- [x] Moving the mouse over the course displays distance to the player and hole
+- [x] Current stroke total is shown
 
 ## v0.4.0 - Short game
 
@@ -52,18 +52,6 @@ Requirements:
   - [ ] A target can be selected when chipping
   - [ ] The chip happens based on Rule of 12 distances + some dispersion
 - [ ] Bunker shots work with simple chance dispersion
-
-## v0.5.0 - 3 hole round
-
-Have 3 holes to play through.
-
-This should be scalable to 18 easily, but just play 3 holes for testing for now.
-
-Requirements:
-
-- [ ] Create 3 holes (par 3, 4, 5)
-- [ ] Finishing one hole leads to the next
-- [ ] A final scorecard is shown after the 3rd hole
 
 ## Future TBD
 
