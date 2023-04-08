@@ -9,3 +9,7 @@ export function yardsBetween(a: Coords, b: Coords): number {
 
   return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
 }
+
+export function feetBetween(a: Coords, b: Coords): number {
+  return yardsBetween(a, b) * 3;
+}

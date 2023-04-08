@@ -1,3 +1,4 @@
+import { Terrain } from 'lib/terrain';
 import React from 'react';
 import styles from './Scorecard.module.css';
 
@@ -33,8 +34,17 @@ const Scorecard = ({ course, shotsTaken }: ScorecardProps) => {
           <tr>
             <td>Score</td>
             {scores.map((score, i) => (
-              <td key={i}>{score}</td>
+              <td key={i}>{score > 0 ? score : '-'}</td>
             ))}
+          </tr>
+          <tr>
+            <td>Putts</td>
+            {shotsTaken.map((taken, i) => {
+              const putts = taken.filter((s) => s.terrainTo === Terrain.Hole);
+              return (
+                <td key={i}>{putts.length === 0 ? '-' : putts[0].strokes}</td>
+              );
+            })}
           </tr>
         </tbody>
       </table>
