@@ -112,6 +112,34 @@
           "yYards": 45
         }
       ]
+    },
+    {
+      "imgSrcURL": "course/chiba-shimin/holes/5/bg.png",
+      "imgPixelsPerYard": 8.3299492385,
+      "par": 4,
+      "holeNumber": 5,
+      "widthYards": 394,
+      "heightYards": 134.45460085,
+      "teeLocations": {
+        "blue": {
+          "xYards": 28,
+          "yYards": 45
+        },
+        "white": {
+          "xYards": 70,
+          "yYards": 55
+        },
+        "red": {
+          "xYards": 118,
+          "yYards": 60
+        }
+      },
+      "pinLocations": [
+        {
+          "xYards": 345,
+          "yYards": 35
+        }
+      ]
     }
   ]
 }
