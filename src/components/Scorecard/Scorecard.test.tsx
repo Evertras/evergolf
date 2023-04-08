@@ -23,7 +23,7 @@ test('Scorecard still shows hole numbers when no shots have been taken', () => {
     ],
   };
 
-  render(<Scorecard course={course} shotsTaken={shotHistory} />);
+  render(<Scorecard course={course} shotsTaken={shotHistory} activeHole={1} />);
 
   for (let holeNumber = 1; holeNumber <= numHoles; holeNumber++) {
     // May have overlap with par, just make sure something is there
@@ -81,7 +81,7 @@ test('Scorecard shows basic score on finished hole', () => {
     ],
   };
 
-  render(<Scorecard course={course} shotsTaken={shotHistory} />);
+  render(<Scorecard course={course} shotsTaken={shotHistory} activeHole={1} />);
 
   // Also have the total score
   const scoreDivs = screen.getAllByText('9');
@@ -158,7 +158,7 @@ test('Scorecard shows penalized score on finished hole', () => {
     ],
   };
 
-  render(<Scorecard course={course} shotsTaken={shotHistory} />);
+  render(<Scorecard course={course} shotsTaken={shotHistory} activeHole={1} />);
 
   const scoreDivs = screen.getAllByText('4');
 
