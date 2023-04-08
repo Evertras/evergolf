@@ -1,0 +1,8 @@
+.scorePositive {
+  color: black;
+}
+
+.scoreNegative {
+  color: red;
+  font-weight: bold;
+}

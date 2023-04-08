@@ -83,17 +83,20 @@ test('Scorecard shows basic score on finished hole', () => {
 
   render(<Scorecard course={course} shotsTaken={shotHistory} />);
 
-  const scoreDiv = screen.getByText('9');
-  expect(scoreDiv).toBeInTheDocument();
+  // Also have the total score
+  const scoreDivs = screen.getAllByText('9');
+  expect(scoreDivs).toHaveLength(2);
+  expect(scoreDivs[0]).toBeInTheDocument();
 
-  const puttsDiv = screen.getByText('8');
-  expect(puttsDiv).toBeInTheDocument();
+  // Also have the total putts
+  const puttsDivs = screen.getAllByText('8');
+  expect(scoreDivs).toHaveLength(2);
+  expect(puttsDivs[0]).toBeInTheDocument();
 
-  /*
-  const relativeDiv = screen.getByText('-1');
-
-  expect(relativeDiv).toBeInTheDocument();
-  */
+  // Also have the total score
+  const relativeDivs = screen.getAllByText('+6');
+  expect(relativeDivs).toHaveLength(2);
+  expect(relativeDivs[0]).toBeInTheDocument();
 });
 
 test('Scorecard shows penalized score on finished hole', () => {
@@ -157,7 +160,8 @@ test('Scorecard shows penalized score on finished hole', () => {
 
   render(<Scorecard course={course} shotsTaken={shotHistory} />);
 
-  const scoreDiv = screen.getByText('4');
+  const scoreDivs = screen.getAllByText('4');
 
-  expect(scoreDiv).toBeInTheDocument();
+  expect(scoreDivs).toHaveLength(2);
+  expect(scoreDivs[0]).toBeInTheDocument();
 });
