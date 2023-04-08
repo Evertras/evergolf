@@ -41,8 +41,10 @@ const Hole = ({ bag, data, shotsTaken, takeShot }: HoleProps) => {
 
   const currentScore = shotsTaken.reduce((total, s) => total + s.strokes, 0);
 
+  const imgRatio = data.widthYards / data.heightYards;
+
   const holeViewWidthPixels = 1000;
-  const holeViewHeightPixels = 600;
+  const holeViewHeightPixels = holeViewWidthPixels / imgRatio;
 
   const imgScale = 1 / data.imgPixelsPerYard;
   const overallScale = Math.min(
@@ -114,7 +116,8 @@ const Hole = ({ bag, data, shotsTaken, takeShot }: HoleProps) => {
         onMouseMove={handleMouseMove}
         onMouseDown={handleMouseDown}
         options={{
-          backgroundAlpha: 0,
+          backgroundAlpha: 1,
+          backgroundColor: 'darkgrey',
         }}
       >
         <Container interactiveChildren={false} scale={overallScale}>
