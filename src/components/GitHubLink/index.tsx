@@ -1,5 +1,5 @@
 import React from 'react';
-import './GitHubLink.css';
+import styles from './GitHubLink.module.css';
 import { ReactComponent as GitHubSVG } from 'icons/github-mark-white.svg';
 
 const GitHubLink = () => {
@@ -9,9 +9,9 @@ const GitHubLink = () => {
   return (
     <React.Fragment>
       <a target="_blank" href="https://github.com/Evertras/evergolf">
-        <div className="GitHubLinkBG">
+        <div className={styles.gitHubLinkBG}>
           <GitHubSVG height={100} />
-          <div className="GitHubLink">Code here!</div>
+          <div className={styles.gitHubLink}>Code here!</div>
         </div>
       </a>
     </React.Fragment>

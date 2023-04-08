@@ -1,9 +1,9 @@
-.RoundToolbar {
+.roundToolbar {
   display: flex;
   flex-direction: row;
 }
 
-.RoundToolbar > div {
+.roundToolbar > div {
   padding: 10px;
   background-color: salmon;
   border-radius: 0.5em;
@@ -11,6 +11,6 @@
   cursor: pointer;
 }
 
-.RoundToolbar > div:hover {
+.roundToolbar > div:hover {
   background-color: darksalmon;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import './ShotSelector.css';
+import styles from './ShotSelector.module.css';
 
 export interface ShotSelectorProps {
   shots: Shot[];
@@ -14,7 +14,7 @@ const ShotSelector = ({
 }: ShotSelectorProps) => {
   return (
     <React.Fragment>
-      <ul className="ShotSelector">
+      <ul className={styles.shotSelectorList}>
         {shots.map((s, i) => (
           <li
             key={i}

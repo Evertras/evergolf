@@ -1,4 +1,4 @@
-div.GitHubLinkBG {
+div.gitHubLinkBG {
   border: 6px solid #666;
   border-right: none;
   border-top-left-radius: 20px;
@@ -6,6 +6,6 @@ div.GitHubLinkBG {
   padding: 0.75em;
 }
 
-div.GitHubLink {
+div.gitHubLink {
   margin-top: 0.25em;
 }

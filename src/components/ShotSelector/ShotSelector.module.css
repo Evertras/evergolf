@@ -1,21 +1,21 @@
-ul.ShotSelector {
+.shotSelectorList {
   top: 0;
   left: 0;
   position: fixed;
 }
 
-ul.ShotSelector > li {
+.shotSelectorList > li {
   cursor: pointer;
   list-style-type: none;
   border-radius: 5px;
   padding: 3px;
 }
 
-ul.ShotSelector > li.unselected:hover {
+.shotSelectorList > li.unselected:hover {
   background-color: #555;
 }
 
-ul.ShotSelector > li.current {
+.shotSelectorList > li.current {
   background-color: white;
   color: black;
 }
