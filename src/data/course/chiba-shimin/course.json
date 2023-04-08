@@ -9,6 +9,10 @@
       "widthYards": 417,
       "heightYards": 135.778679,
       "teeLocations": {
+        "blue": {
+          "xYards": 24,
+          "yYards": 52
+        },
         "white": {
           "xYards": 62,
           "yYards": 52
@@ -29,6 +33,10 @@
       "widthYards": 424,
       "heightYards": 151.02427,
       "teeLocations": {
+        "blue": {
+          "xYards": 20,
+          "yYards": 81
+        },
         "white": {
           "xYards": 67,
           "yYards": 76
@@ -49,15 +57,19 @@
       "widthYards": 202,
       "heightYards": 83.2950714,
       "teeLocations": {
-        "white": {
+        "blue": {
           "xYards": 40,
           "yYards": 30
+        },
+        "white": {
+          "xYards": 70,
+          "yYards": 35
         }
       },
       "pinLocations": [
         {
           "xYards": 160,
-          "yYards": 32
+          "yYards": 40
         }
       ]
     }

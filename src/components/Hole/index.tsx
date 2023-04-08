@@ -15,12 +15,13 @@ export interface HoleProps {
   bag: Shot[];
   shotsTaken: ShotHistory[];
   takeShot: (shot: ShotHistory) => void;
+  tees: string;
 }
 
-const Hole = ({ bag, data, shotsTaken, takeShot }: HoleProps) => {
+const Hole = ({ bag, data, shotsTaken, takeShot, tees }: HoleProps) => {
   // TODO: Select somehow
   const pinLocation = data.pinLocations[0];
-  const teeLocation = data.teeLocations.white;
+  const teeLocation = data.teeLocations[tees];
 
   const [mouseCoords, setMouseCoords] = useState<Coords>({
     xYards: 0,
