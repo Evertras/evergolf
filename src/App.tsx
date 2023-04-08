@@ -13,7 +13,7 @@ function App() {
           <div className="GitHubLogo">
             <GitHubLink />
           </div>
-          <Round bag={basicBag} course={chibaShimin} tees={'blue'} />
+          <Round bag={basicBag} course={chibaShimin} tees={'white'} />
         </header>
       </div>
     </React.Fragment>

@@ -16,6 +16,10 @@
         "white": {
           "xYards": 62,
           "yYards": 52
+        },
+        "red": {
+          "xYards": 108,
+          "yYards": 57
         }
       },
       "pinLocations": [
@@ -40,6 +44,10 @@
         "white": {
           "xYards": 67,
           "yYards": 76
+        },
+        "red": {
+          "xYards": 106,
+          "yYards": 78.5
         }
       },
       "pinLocations": [
@@ -62,6 +70,10 @@
           "yYards": 30
         },
         "white": {
+          "xYards": 70,
+          "yYards": 35
+        },
+        "red": {
           "xYards": 70,
           "yYards": 35
         }
