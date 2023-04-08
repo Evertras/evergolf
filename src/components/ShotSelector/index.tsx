@@ -18,7 +18,9 @@ const ShotSelector = ({
         {shots.map((s, i) => (
           <li
             key={i}
-            className={currentSelectedIndex === i ? 'current' : 'unselected'}
+            className={
+              currentSelectedIndex === i ? styles.current : styles.unselected
+            }
             onMouseDown={() => onSelectIndex(i)}
           >
             {s.name}
