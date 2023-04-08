@@ -6,9 +6,10 @@ import styles from './Round.module.css';
 export interface RoundProps {
   bag: Shot[];
   course: CourseData;
+  tees: string;
 }
 
-const Round = ({ bag, course }: RoundProps) => {
+const Round = ({ bag, course, tees }: RoundProps) => {
   const [currentHoleNumber, setCurrentHoleNumber] = useState(1);
 
   const [shotHistoryByHole, setShotHistoryByHole] = useState(
@@ -60,6 +61,7 @@ const Round = ({ bag, course }: RoundProps) => {
         data={currentHoleData}
         shotsTaken={shotHistoryByHole[currentHoleNumber - 1]}
         takeShot={takeShot}
+        tees={tees}
       />
       <Scorecard course={course} shotsTaken={shotHistoryByHole} />
     </React.Fragment>
