@@ -192,23 +192,27 @@ const Hole = ({
 
           {
             // Measurement lines
+            holeComplete ? null : (
+              <React.Fragment>
+                <YardageMeasurement
+                  start={ballLocation}
+                  end={mouseCoords}
+                  color="white"
+                  textColor="white"
+                  showRings={true}
+                  thickness={1}
+                />
+                <YardageMeasurement
+                  start={pinLocation}
+                  end={mouseCoords}
+                  color="cyan"
+                  textColor="cyan"
+                  showRings={false}
+                  thickness={1}
+                />
+              </React.Fragment>
+            )
           }
-          <YardageMeasurement
-            start={ballLocation}
-            end={mouseCoords}
-            color="white"
-            textColor="white"
-            showRings={true}
-            thickness={1}
-          />
-          <YardageMeasurement
-            start={pinLocation}
-            end={mouseCoords}
-            color="cyan"
-            textColor="cyan"
-            showRings={false}
-            thickness={1}
-          />
         </Container>
       </Stage>
       <TerrainSVG holeNumber={data.holeNumber} />
