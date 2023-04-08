@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReactComponent as Hole1 } from 'data/course/chiba-shimin/terrain/1.svg';
 import { ReactComponent as Hole2 } from 'data/course/chiba-shimin/terrain/2.svg';
+import { ReactComponent as Hole3 } from 'data/course/chiba-shimin/terrain/3.svg';
 import { terrainSVGID } from 'lib/terrain';
 
 // Potentially interesting: https://ryanhutzley.medium.com/dynamic-svg-imports-in-create-react-app-d6d411f6d6c6
@@ -11,7 +12,7 @@ export interface TerrainSVGProps {
   holeNumber: number;
 }
 
-const sources = [Hole1, Hole2];
+const sources = [Hole1, Hole2, Hole3];
 
 const TerrainSVG = ({ holeNumber }: TerrainSVGProps) => {
   const Component = sources[holeNumber - 1];
