@@ -6,6 +6,7 @@ export enum Terrain {
   Fairway = 'Fairway',
   Bunker = 'Bunkers',
   Green = 'Green',
+  Hole = 'Hole',
 
   OutOfBounds = 'OutOfBounds',
 }
