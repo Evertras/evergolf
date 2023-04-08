@@ -5,11 +5,11 @@ import YardageMeasurement from 'components/drawing/YardageMeasurement';
 import { isTerrainHittableFrom, Terrain, terrainAtPoint } from 'lib/terrain';
 
 import { radiansToDegrees } from 'lib/math';
-import { hitShot, putt } from 'lib/shots';
+import { approachShot, hitShot, putt } from 'lib/shots';
 import ShotSelector from 'components/ShotSelector';
 import ShotTracer from 'components/drawing/ShotTracer';
 import TerrainSVG from 'components/TerrainSVG';
-import { feetBetween } from 'lib/coords';
+import { feetBetween, yardsBetween } from 'lib/coords';
 
 export interface HoleProps {
   data: HoleData;
@@ -93,11 +93,11 @@ const Hole = ({
 
     const result = hitShot(bag[selectedShotIndex], ballLocation, targetDegrees);
 
-    const terrainFrom =
+    let terrainFrom =
       hittableShots.length > 0
         ? hittableShots[hittableShots.length - 1].terrainTo
         : Terrain.Fairway;
-    const terrainTo = terrainAtPoint(result.landingSpot, imgScale);
+    let terrainTo = terrainAtPoint(result.landingSpot, imgScale);
     const strokes = terrainTo === Terrain.OutOfBounds ? 2 : 1;
 
     takeShot({
@@ -107,13 +107,47 @@ const Hole = ({
       terrainTo,
     });
 
-    // Auto putt out
-    const putts = putt(
-      feetBetween(result.landingSpot, pinLocation),
-      puttingHandicap
-    );
+    // TODO: Figure out better from bag, or redo this when we tackle short game
+    const minDistance = 80;
+
+    // Auto approach (with a short circuit safety valve to avoid infinite)
+    let approachAttempts = 0;
+    let approachFrom = result.landingSpot;
+    let location = result.landingSpot;
+
+    while (
+      terrainTo !== Terrain.Green &&
+      yardsBetween(result.landingSpot, pinLocation) < minDistance &&
+      approachAttempts < 10
+    ) {
+      approachAttempts++;
+
+      // TODO: use separate short game handicap for approximating
+      const approachResult = approachShot(
+        approachFrom,
+        pinLocation,
+        puttingHandicap
+      );
+      terrainFrom = terrainAtPoint(location, imgScale);
+      terrainTo = terrainAtPoint(approachResult.landingSpot, imgScale);
+      location = approachResult.landingSpot;
+      approachFrom = location;
+
+      takeShot({
+        result: approachResult,
+        strokes: 1,
+        terrainFrom,
+        terrainTo,
+      });
+    }
 
     if (terrainTo === Terrain.Green) {
+      // Auto putt out
+      const putts = putt(
+        feetBetween(result.landingSpot, pinLocation),
+        puttingHandicap
+      );
+
       takeShot({
         result,
         strokes: putts,
