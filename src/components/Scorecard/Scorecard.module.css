@@ -1,0 +1,17 @@
+.scorecardTable {
+  background-color: #ffe;
+  color: black;
+  border-collapse: collapse;
+}
+
+.scorecardTable th,
+td {
+  border: 1px solid black;
+  padding: 0.3em;
+  text-align: center;
+}
+
+.scorecardTable th,
+td:first-child {
+  text-align: right;
+}

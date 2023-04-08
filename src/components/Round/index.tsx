@@ -1,4 +1,5 @@
 import Hole from 'components/Hole';
+import Scorecard from 'components/Scorecard';
 import React, { useState } from 'react';
 import './Round.css';
 
@@ -60,6 +61,7 @@ const Round = ({ bag, course }: RoundProps) => {
         shotsTaken={shotHistoryByHole[currentHoleNumber - 1]}
         takeShot={takeShot}
       />
+      <Scorecard course={course} shotsTaken={shotHistoryByHole} />
     </React.Fragment>
   );
 };
