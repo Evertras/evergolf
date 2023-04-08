@@ -16,7 +16,7 @@ function App() {
           <Round
             bag={basicBag}
             course={chibaShimin}
-            tees={'red'}
+            tees={'white'}
             puttingHandicap={15}
           />
         </header>
