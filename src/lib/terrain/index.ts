@@ -7,6 +7,7 @@ export enum Terrain {
   Bunker = 'Bunkers',
   Green = 'Green',
   Hole = 'Hole',
+  Water = 'Water',
 
   OutOfBounds = 'OutOfBounds',
 }
@@ -73,7 +74,7 @@ function pointInTerrain(terrainType: Terrain, point: DOMPoint): boolean {
 }
 
 export function isTerrainHittableFrom(terrain: Terrain): boolean {
-  return terrain !== Terrain.OutOfBounds;
+  return terrain !== Terrain.OutOfBounds && terrain !== Terrain.Water;
 }
 
 // TODO: This is brittle but works for now...
@@ -88,6 +89,10 @@ export function terrainAtPoint(
 
   if (pointInTerrain(Terrain.Green, point)) {
     return Terrain.Green;
+  }
+
+  if (pointInTerrain(Terrain.Water, point)) {
+    return Terrain.Water;
   }
 
   if (pointInTerrain(Terrain.Trees, point)) {

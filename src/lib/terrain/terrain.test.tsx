@@ -21,6 +21,7 @@ test.each`
   ${Terrain.Bunker}      | ${true}
   ${Terrain.BigTree}     | ${true}
   ${Terrain.Trees}       | ${true}
+  ${Terrain.Water}       | ${false}
 `('$terrain is hittable: $hittable', ({ terrain, hittable }) => {
   expect(isTerrainHittableFrom(terrain)).toEqual(hittable);
 });
