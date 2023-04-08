@@ -137,7 +137,6 @@ const Hole = ({
         Hitting {selectedShot.name} ({expectedOutcome.carryYardsMin} -{' '}
         {expectedOutcome.carryYardsMax} yd)
       </div>
-      <div>Strokes: {currentScore}</div>
       <ShotSelector
         shots={bag}
         onSelectIndex={setSelectedShotIndex}
