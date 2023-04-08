@@ -48,8 +48,6 @@ const Hole = ({
       ? hittableShots[hittableShots.length - 1].result.landingSpot
       : teeLocation;
 
-  const currentScore = shotsTaken.reduce((total, s) => total + s.strokes, 0);
-
   const imgRatio = data.widthYards / data.heightYards;
 
   const holeViewWidthPixels = 1000;
