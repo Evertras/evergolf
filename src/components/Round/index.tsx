@@ -65,7 +65,11 @@ const Round = ({ bag, course, tees, puttingHandicap }: RoundProps) => {
         tees={tees}
         puttingHandicap={puttingHandicap}
       />
-      <Scorecard course={course} shotsTaken={shotHistoryByHole} />
+      <Scorecard
+        course={course}
+        activeHole={currentHoleNumber}
+        shotsTaken={shotHistoryByHole}
+      />
     </React.Fragment>
   );
 };

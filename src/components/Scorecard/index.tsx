@@ -6,9 +6,10 @@ import styles from './Scorecard.module.css';
 export interface ScorecardProps {
   course: CourseData;
   shotsTaken: ShotHistory[][];
+  activeHole?: number;
 }
 
-const Scorecard = ({ course, shotsTaken }: ScorecardProps) => {
+const Scorecard = ({ course, shotsTaken, activeHole }: ScorecardProps) => {
   const isFinished = (hist: ShotHistory[]) =>
     hist && hist.length > 0 && hist[hist.length - 1].terrainTo === Terrain.Hole;
 
@@ -39,6 +40,10 @@ const Scorecard = ({ course, shotsTaken }: ScorecardProps) => {
     0
   );
 
+  const cellClass = (hole: number): string => {
+    return activeHole && activeHole === hole ? styles.activeHole : '';
+  };
+
   return (
     <React.Fragment>
       <div>Score</div>
@@ -47,14 +52,18 @@ const Scorecard = ({ course, shotsTaken }: ScorecardProps) => {
           <tr>
             <th>Hole</th>
             {course.holes.map((hole, i) => (
-              <th key={i}>{hole.holeNumber}</th>
+              <th key={i} className={cellClass(hole.holeNumber)}>
+                {hole.holeNumber}
+              </th>
             ))}
             <th>Total</th>
           </tr>
           <tr>
             <th>Par</th>
             {course.holes.map((hole, i) => (
-              <th key={i}>{hole.par}</th>
+              <th key={i} className={cellClass(hole.holeNumber)}>
+                {hole.par}
+              </th>
             ))}
             <th>{totalPar}</th>
           </tr>
@@ -63,7 +72,7 @@ const Scorecard = ({ course, shotsTaken }: ScorecardProps) => {
           <tr>
             <td>Score</td>
             {scores.map((score, i) => (
-              <td key={i}>
+              <td key={i} className={cellClass(i + 1)}>
                 <div className={styles.scoreAbsolute}>
                   {score > 0 ? score : '-'}
                 </div>
@@ -91,7 +100,9 @@ const Scorecard = ({ course, shotsTaken }: ScorecardProps) => {
             {shotsTaken.map((taken, i) => {
               const putts = taken.filter((s) => s.terrainTo === Terrain.Hole);
               return (
-                <td key={i}>{putts.length === 0 ? '-' : putts[0].strokes}</td>
+                <td key={i} className={cellClass(i + 1)}>
+                  {putts.length === 0 ? '-' : putts[0].strokes}
+                </td>
               );
             })}
             <td>{totalPutts}</td>

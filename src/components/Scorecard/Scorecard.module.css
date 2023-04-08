@@ -19,3 +19,7 @@
 .scoreRelative {
   font-size: 0.7em;
 }
+
+.activeHole {
+  background-color: orange;
+}
