@@ -1,7 +1,7 @@
 import Hole from 'components/Hole';
 import Scorecard from 'components/Scorecard';
 import React, { useState } from 'react';
-import './Round.css';
+import styles from './Round.module.css';
 
 export interface RoundProps {
   bag: Shot[];
@@ -50,7 +50,7 @@ const Round = ({ bag, course }: RoundProps) => {
       <h2>
         {course.name} #{currentHoleNumber} (Par {currentHoleData.par})
       </h2>
-      <div className="RoundToolbar">
+      <div className={styles.roundToolbar}>
         <div onMouseDown={goBack}>{'<'}</div>
         <div onMouseDown={resetHole}>Reset</div>
         <div onMouseDown={goForward}>{'>'}</div>
