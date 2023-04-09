@@ -16,7 +16,7 @@ export interface HoleProps {
   bag: Shot[];
   shotsTaken: ShotHistory[];
   takeShot: (shot: ShotHistory) => void;
-  tees: string;
+  tees: Tees;
   puttingHandicap: number;
 }
 
@@ -30,7 +30,7 @@ const Hole = ({
 }: HoleProps) => {
   // TODO: Select somehow
   const pinLocation = data.pinLocations[0];
-  const teeLocation = data.teeLocations[tees];
+  const teeLocation = data.teeLocations[tees.name];
 
   const [mouseCoords, setMouseCoords] = useState<Coords>({
     xYards: 0,
@@ -209,7 +209,7 @@ const Hole = ({
           <Circle
             loc={teeLocation}
             radiusPixels={teeMarkerRadius}
-            fillColor="white"
+            fillColor={tees.color ?? tees.name}
           />
 
           {

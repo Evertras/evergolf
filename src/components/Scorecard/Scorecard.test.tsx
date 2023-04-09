@@ -8,6 +8,7 @@ const fullHoleCount = 18;
 const genSimple18HoleCourse = (): CourseData => {
   return {
     name: 'testCourse',
+    tees: [{ name: 'white' }],
     holes: [
       ...Array.from({ length: fullHoleCount }).map(
         (_, i: number): HoleData => ({
@@ -96,6 +97,7 @@ test('Scorecard shows basic score on finished hole', () => {
 
   const course: CourseData = {
     name: 'testCourse',
+    tees: [{ name: 'white' }],
     holes: [
       {
         holeNumber: 1,
@@ -173,6 +175,7 @@ test('Scorecard shows penalized score on finished hole', () => {
 
   const course: CourseData = {
     name: 'testCourse',
+    tees: [{ name: 'white' }],
     holes: [
       {
         holeNumber: 1,
@@ -200,6 +203,7 @@ test('Scorecard still shows hole numbers when no shots have been taken', () => {
   const numHoles = 18;
   const course: CourseData = {
     name: 'testCourse',
+    tees: [{ name: 'white' }],
     holes: [
       ...Array.from({ length: numHoles }).map(
         (_, i: number): HoleData => ({
