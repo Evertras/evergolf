@@ -62,7 +62,7 @@ const Round = ({ bag, course, selectedTees, puttingHandicap }: RoundProps) => {
         data={currentHoleData}
         shotsTaken={shotHistoryByHole[currentHoleNumber - 1]}
         takeShot={takeShot}
-        tees={selectedTees.name}
+        tees={selectedTees}
         puttingHandicap={puttingHandicap}
       />
       <Scorecard
