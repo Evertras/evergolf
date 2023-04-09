@@ -3,7 +3,7 @@
 // that I can tell, but close enough for now.  Improve later.
 // https://www.todays-golfer.com/features/instruction-features/january/may/what-is-your-short-game-handicap-/
 
-import { landNear, yardsBetween } from 'lib/coords';
+import { directionDegrees, landNear, yardsBetween } from 'lib/coords';
 
 // (in 5 handicap increments starting from scratch)
 const remainingFeetFrom5Yards = [3, 4, 5, 7, 9];
@@ -38,10 +38,14 @@ export function approachShot(
 
   const landingSpot = landNear(to, remainingFeet / 3);
 
+  const startAndEndDegrees = directionDegrees(from, landingSpot);
+
+  console.log(startAndEndDegrees);
+
   return {
     source: from,
     landingSpot: landingSpot,
-    startDegrees: 0,
-    endDegrees: 0,
+    startDegrees: startAndEndDegrees,
+    endDegrees: startAndEndDegrees,
   };
 }
