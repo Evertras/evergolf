@@ -1,7 +1,7 @@
 import { yardsBetween } from 'lib/coords';
 import { boundDegrees, degreesToRadians, radiansToDegrees } from 'lib/math';
 import { Terrain } from 'lib/terrain';
-import { hitShot, hitShotTowards } from '.';
+import { hitShot, hitShotTowards, putt } from '.';
 
 // Start at a point other than (0, 0) to make sure default 0s aren't being
 // used anywhere and x and y are being treated differently
@@ -342,5 +342,15 @@ describe('a 100y shot that can only draw left 5°', () => {
     const avgOffsetY = totalDistanceOffsetY / iterations;
 
     expect(avgOffsetY).toBeGreaterThan(1);
+  });
+});
+
+describe('putt', () => {
+  test('all putts under 2 feet always go in', () => {
+    for (let i = 0; i < 1000; i++) {
+      const numPutts = putt(1.9, 15);
+
+      expect(numPutts).toEqual(1);
+    }
   });
 });
