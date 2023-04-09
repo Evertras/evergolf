@@ -1,4 +1,4 @@
-import { feetBetween, yardsBetween } from '.';
+import { feetBetween, landNear, yardsBetween } from '.';
 
 describe('yardsBetween', () => {
   test.each`
@@ -50,6 +50,36 @@ describe('feetBetween', () => {
 
       const distance = feetBetween(from, to);
       expect(distance).toBeCloseTo(expectedDistance);
+    }
+  );
+});
+
+describe('landNear', () => {
+  test.each`
+    avgDistanceYards
+    ${3}
+    ${6}
+    ${10}
+    ${100}
+  `(
+    'lands near an average of $avgDistanceYards away after many iterations',
+    ({ avgDistanceYards }) => {
+      let movingAverage = 0;
+
+      const target: Coords = {
+        xYards: 138,
+        yYards: 7,
+      };
+
+      for (let i = 1; i <= 100000; i++) {
+        const landedAt = landNear(target, avgDistanceYards);
+        const distanceYards = yardsBetween(target, landedAt);
+        movingAverage = (movingAverage * (i - 1) + distanceYards) / i;
+      }
+
+      const diff = Math.abs(movingAverage - avgDistanceYards);
+
+      expect(diff).toBeLessThan(0.5);
     }
   );
 });
