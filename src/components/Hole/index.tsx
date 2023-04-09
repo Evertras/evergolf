@@ -40,6 +40,8 @@ const Hole = ({
     yYards: 0,
   });
 
+  const [mouseIsInside, setMouseIsInside] = useState<boolean>(false);
+
   const [selectedShotIndex, setSelectedShotIndex] = useState<number>(0);
 
   const hittableShots = shotsTaken.filter((s) =>
@@ -75,6 +77,14 @@ const Hole = ({
       xYards: x / overallScale,
       yYards: y / overallScale,
     });
+  };
+
+  const handleMouseEnter = () => {
+    setMouseIsInside(true);
+  };
+
+  const handleMouseLeave = () => {
+    setMouseIsInside(false);
   };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -184,6 +194,8 @@ const Hole = ({
         height={holeViewHeightPixels}
         onMouseMove={handleMouseMove}
         onMouseDown={handleMouseDown}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         options={{
           backgroundAlpha: 1,
           backgroundColor: 'darkgrey',
@@ -228,7 +240,7 @@ const Hole = ({
 
           {
             // Measurement lines
-            holeComplete ? null : (
+            holeComplete || !mouseIsInside ? null : (
               <React.Fragment>
                 <YardageMeasurement
                   start={ballLocation}
