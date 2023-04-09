@@ -1,7 +1,7 @@
 import Hole from 'components/Hole';
 import Scorecard from 'components/Scorecard';
 import React, { useState } from 'react';
-import styles from './Round.module.css';
+//import styles from './Round.module.css';
 
 export interface RoundProps {
   bag: Shot[];
@@ -19,26 +19,12 @@ const Round = ({ bag, course, selectedTees, puttingHandicap }: RoundProps) => {
 
   const currentHoleData = course.holes[currentHoleNumber - 1];
 
-  const goBack = () => {
-    if (currentHoleNumber === 1) {
-      setCurrentHoleNumber(course.holes.length);
-    } else {
-      setCurrentHoleNumber(currentHoleNumber - 1);
-    }
-  };
-
   const goForward = () => {
     if (currentHoleNumber === course.holes.length) {
       setCurrentHoleNumber(1);
     } else {
       setCurrentHoleNumber(currentHoleNumber + 1);
     }
-  };
-
-  const resetHole = () => {
-    const copied = [...shotHistoryByHole];
-    copied[currentHoleNumber - 1] = [];
-    setShotHistoryByHole(copied);
   };
 
   const takeShot = (shot: ShotHistory) => {
@@ -52,11 +38,6 @@ const Round = ({ bag, course, selectedTees, puttingHandicap }: RoundProps) => {
       <h2>
         {course.name} #{currentHoleNumber} (Par {currentHoleData.par})
       </h2>
-      <div className={styles.roundToolbar}>
-        <div onMouseDown={goBack}>{'<'}</div>
-        <div onMouseDown={resetHole}>Reset</div>
-        <div onMouseDown={goForward}>{'>'}</div>
-      </div>
       <Hole
         advance={goForward}
         bag={bag}
