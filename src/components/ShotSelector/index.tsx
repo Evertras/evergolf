@@ -24,6 +24,15 @@ const ShotSelector = ({
             onMouseDown={() => onSelectIndex(i)}
           >
             {s.name}
+            <span className={styles.yardage}>
+              {' '}
+              {Math.floor(
+                (s.potentialOutcomes[0].carryYardsMax +
+                  s.potentialOutcomes[0].carryYardsMin) /
+                  2
+              )}
+              yd
+            </span>
           </li>
         ))}
       </ul>

@@ -61,7 +61,6 @@ const Scorecard = ({
 
   return (
     <React.Fragment>
-      <div>Score</div>
       <table
         className={styles.scorecardTable}
         style={{
