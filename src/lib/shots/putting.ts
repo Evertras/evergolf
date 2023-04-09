@@ -47,7 +47,7 @@ function percentMake(distanceFeet: number, handicap: number): number {
   }
 
   // Be nice and make 2 footers... basically gimmes in casual anyway
-  return 1;
+  return 100;
 }
 
 function percent3Putt(distanceFeet: number): number {
