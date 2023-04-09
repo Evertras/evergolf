@@ -2,40 +2,36 @@ import React, { useState } from 'react';
 import { Container, Sprite, Stage } from '@pixi/react';
 
 import Circle from 'components/drawing/Circle';
-import ShotSelector from 'components/ShotSelector';
 import ShotTracer from 'components/drawing/ShotTracer';
 import TerrainSVG from 'components/TerrainSVG';
 import YardageMeasurement from 'components/drawing/YardageMeasurement';
 
-import { isTerrainHittableFrom, Terrain, terrainAtPoint } from 'lib/terrain';
-import { radiansToDegrees } from 'lib/math';
-import { approachShot, hitShot, putt } from 'lib/shots';
-import { feetBetween, yardsBetween } from 'lib/coords';
+import { Terrain } from 'lib/terrain';
 
-import styles from './Hole.module.css';
+import styles from './HoleView.module.css';
 
 export interface HoleProps {
+  // Data to build view
   data: HoleData;
   bag: Shot[];
   shotsTaken: ShotHistory[];
-  takeShot: (shot: ShotHistory) => void;
   tees: Tees;
-  puttingHandicap: number;
-  pinLocationIndex?: number;
-  advance?: () => void;
+  pinLocationIndex: number;
+  ballLocation: Coords;
+
+  // Handlers for interaction
+  onClick: (target: Coords) => void;
 }
 
 const Hole = ({
-  advance,
-  bag,
   data,
-  shotsTaken,
-  takeShot,
   tees,
   pinLocationIndex,
-  puttingHandicap,
+  ballLocation,
+  shotsTaken,
+  onClick,
 }: HoleProps) => {
-  const pinLocation = data.pinLocations[pinLocationIndex ?? 0];
+  const pinLocation = data.pinLocations[pinLocationIndex];
   const teeLocation = data.teeLocations[tees.name];
 
   const [mouseCoords, setMouseCoords] = useState<Coords>({
@@ -44,17 +40,6 @@ const Hole = ({
   });
 
   const [mouseIsInside, setMouseIsInside] = useState<boolean>(false);
-
-  const [selectedShotIndex, setSelectedShotIndex] = useState<number>(0);
-
-  const hittableShots = shotsTaken.filter((s) =>
-    isTerrainHittableFrom(s.terrainTo)
-  );
-
-  const ballLocation: Coords =
-    hittableShots.length > 0
-      ? hittableShots[hittableShots.length - 1].result.landingSpot
-      : teeLocation;
 
   const imgRatio = data.widthYards / data.heightYards;
 
@@ -91,107 +76,20 @@ const Hole = ({
   };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    // We can only hit if we're still playing the hole
-    if (holeComplete) {
-      if (advance) advance();
-      return;
-    }
-
     const rect = e.currentTarget.getBoundingClientRect();
     const target: Coords = {
       xYards: (e.pageX - rect.left) / overallScale,
       yYards: (e.pageY - rect.top) / overallScale,
     };
 
-    const xDiff = target.xYards - ballLocation.xYards;
-    const yDiff = target.yYards - ballLocation.yYards;
-
-    const targetDegrees = radiansToDegrees(Math.atan2(yDiff, xDiff));
-
-    const result = hitShot(bag[selectedShotIndex], ballLocation, targetDegrees);
-
-    let terrainFrom =
-      hittableShots.length > 0
-        ? hittableShots[hittableShots.length - 1].terrainTo
-        : Terrain.Fairway;
-    let terrainTo = terrainAtPoint(result.landingSpot, imgScale);
-    const strokes = terrainTo === Terrain.OutOfBounds ? 2 : 1;
-
-    takeShot({
-      result,
-      strokes,
-      terrainFrom,
-      terrainTo,
-    });
-
-    // TODO: Figure out better from bag, or redo this when we tackle short game
-    const minDistance = 80;
-
-    // Auto approach (with a short circuit safety valve to avoid infinite)
-    let approachAttempts = 0;
-    let approachFrom = result.landingSpot;
-    let location = result.landingSpot;
-
-    while (
-      terrainTo !== Terrain.Green &&
-      yardsBetween(result.landingSpot, pinLocation) < minDistance &&
-      approachAttempts < 10
-    ) {
-      approachAttempts++;
-
-      // TODO: use separate short game handicap for approximating
-      const approachResult = approachShot(
-        approachFrom,
-        pinLocation,
-        puttingHandicap
-      );
-      terrainFrom = terrainAtPoint(location, imgScale);
-      terrainTo = terrainAtPoint(approachResult.landingSpot, imgScale);
-      location = approachResult.landingSpot;
-      approachFrom = location;
-
-      takeShot({
-        result: approachResult,
-        strokes: 1,
-        terrainFrom,
-        terrainTo,
-      });
-    }
-
-    if (terrainTo === Terrain.Green) {
-      // Auto putt out
-      const putts = putt(
-        feetBetween(result.landingSpot, pinLocation),
-        puttingHandicap
-      );
-
-      takeShot({
-        result,
-        strokes: putts,
-        terrainFrom: Terrain.Green,
-        terrainTo: Terrain.Hole,
-      });
-    }
+    onClick(target);
   };
 
   const pinRadius = 5 / overallScale;
   const teeMarkerRadius = 5 / overallScale;
 
-  const selectedShot = bag[selectedShotIndex];
-  const expectedOutcome = selectedShot.potentialOutcomes[0];
-
-  const helpText = holeComplete
-    ? 'Hole complete, click to continue!'
-    : `Hitting ${selectedShot.name} (${expectedOutcome.carryYardsMin} - ${expectedOutcome.carryYardsMax} yd)`;
-
   return (
     <React.Fragment>
-      <div>{helpText}</div>
-      <ShotSelector
-        shots={bag}
-        onSelectIndex={setSelectedShotIndex}
-        currentSelectedIndex={selectedShotIndex}
-      />
       <Stage
         className={styles.HoleView}
         width={holeViewWidthPixels}
@@ -202,7 +100,6 @@ const Hole = ({
         onMouseLeave={handleMouseLeave}
         options={{
           backgroundAlpha: 1,
-          backgroundColor: 'darkgrey',
         }}
       >
         <Container interactiveChildren={false} scale={overallScale}>

@@ -1,6 +1,6 @@
 import { yardsBetween } from 'lib/coords';
 import { boundDegrees, degreesToRadians, radiansToDegrees } from 'lib/math';
-import { hitShot } from '.';
+import { hitShot, hitShotTowards } from '.';
 
 // Start at a point other than (0, 0) to make sure default 0s aren't being
 // used anywhere and x and y are being treated differently
@@ -67,6 +67,36 @@ describe('a perfect 100y straight shot', () => {
       expect(boundDegrees(result.endDegrees)).toBeCloseTo(
         boundDegrees(shotDirectionDegrees)
       );
+      expect(result.landingSpot.xYards).toBeCloseTo(expectedXYards);
+      expect(result.landingSpot.yYards).toBeCloseTo(expectedYYards);
+    }
+  );
+
+  test.each`
+    shotTargetXYards            | shotTargetYYards             | expectedXYards                                     | expectedYYards
+    ${sourceOrigin.xYards + 1}  | ${sourceOrigin.yYards}       | ${sourceOrigin.xYards + carryYards}                | ${sourceOrigin.yYards}
+    ${sourceOrigin.xYards}      | ${sourceOrigin.yYards + 800} | ${sourceOrigin.xYards}                             | ${sourceOrigin.yYards + carryYards}
+    ${sourceOrigin.xYards - 13} | ${sourceOrigin.yYards}       | ${sourceOrigin.xYards - carryYards}                | ${sourceOrigin.yYards}
+    ${sourceOrigin.xYards}      | ${0}                         | ${sourceOrigin.xYards}                             | ${sourceOrigin.yYards - carryYards}
+    ${sourceOrigin.xYards + 17} | ${sourceOrigin.yYards + 17}  | ${sourceOrigin.xYards + carryYards / Math.sqrt(2)} | ${sourceOrigin.yYards + carryYards / Math.sqrt(2)}
+  `(
+    'hitting toward ($shotTargetXYards, $shotTargetYYards) goes to ($expectedXYards, $expectedYYards)',
+    ({
+      shotTargetXYards,
+      shotTargetYYards,
+      expectedXYards,
+      expectedYYards,
+    }) => {
+      const target: Coords = {
+        xYards: shotTargetXYards,
+        yYards: shotTargetYYards,
+      };
+      const result = hitShotTowards(shot, sourceOrigin, target);
+
+      expect(result.source).toEqual(sourceOrigin);
+
+      const totalDistance = yardsBetween(result.landingSpot, result.source);
+      expect(totalDistance).toBeCloseTo(carryYards);
       expect(result.landingSpot.xYards).toBeCloseTo(expectedXYards);
       expect(result.landingSpot.yYards).toBeCloseTo(expectedYYards);
     }

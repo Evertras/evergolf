@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import styles from './App.module.css';
+
 import GitHubLink from 'components/GitHubLink';
-import chibaShimin from 'data/course/chiba-shimin/course.json';
-import { basicBag } from 'lib/shots/basic-bag';
 import Round from 'components/Round';
 import TeeSelector from 'components/TeeSelector';
+
+import chibaShimin from 'data/course/chiba-shimin/course.json';
+import { basicBag } from 'lib/shots/basic-bag';
+
+import styles from './App.module.css';
 
 function App() {
   const [tees, setTees] = useState(chibaShimin.tees[1]);
@@ -23,6 +26,7 @@ function App() {
             bag={basicBag}
             course={chibaShimin}
             selectedTees={tees}
+            pinLocationIndex={0}
             puttingHandicap={15}
           />
           <div className={styles.GitHubLogo}>

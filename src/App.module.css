@@ -23,6 +23,10 @@
   padding: 5px;
 }
 
+.DebugToolbar div {
+  cursor: pointer;
+}
+
 .AppHeader {
   background-color: #282c34;
   min-height: 100vh;
