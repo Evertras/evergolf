@@ -1,14 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { Terrain } from 'lib/terrain';
+import userEvent from '@testing-library/user-event';
 import Scorecard from '.';
 
-test('Scorecard still shows hole numbers when no shots have been taken', () => {
-  const shotHistory: ShotHistory[][] = [];
-  const numHoles = 18;
-  const course: CourseData = {
+const fullHoleCount = 18;
+
+const genSimple18HoleCourse = (): CourseData => {
+  return {
     name: 'testCourse',
     holes: [
-      ...Array.from({ length: numHoles }).map(
+      ...Array.from({ length: fullHoleCount }).map(
         (_, i: number): HoleData => ({
           holeNumber: i + 1,
           par: 4,
@@ -22,15 +23,43 @@ test('Scorecard still shows hole numbers when no shots have been taken', () => {
       ),
     ],
   };
+};
+
+test('Scorecard still shows hole numbers when no shots have been taken', () => {
+  const shotHistory: ShotHistory[][] = [];
+  const course = genSimple18HoleCourse();
 
   render(<Scorecard course={course} shotsTaken={shotHistory} activeHole={1} />);
 
-  for (let holeNumber = 1; holeNumber <= numHoles; holeNumber++) {
+  for (let holeNumber = 1; holeNumber <= fullHoleCount; holeNumber++) {
     // May have overlap with par, just make sure something is there
-    const scoreDiv = screen.getAllByText(holeNumber);
+    const holeDiv = screen.getAllByText(holeNumber);
 
-    expect(scoreDiv.length).not.toEqual(0);
+    expect(holeDiv.length).not.toEqual(0);
   }
+});
+
+test('Scorecard sends back click notifications when asked', () => {
+  const shotHistory: ShotHistory[][] = [];
+  const course = genSimple18HoleCourse();
+
+  let clickedHole = 0;
+
+  const onClickHole = (holeNumber: number) => {
+    clickedHole = holeNumber;
+  };
+
+  render(
+    <Scorecard
+      course={course}
+      onClickHole={onClickHole}
+      shotsTaken={shotHistory}
+      activeHole={1}
+    />
+  );
+
+  userEvent.click(screen.getByText('13'));
+  expect(clickedHole).toEqual(13);
 });
 
 test('Scorecard shows basic score on finished hole', () => {
@@ -164,4 +193,35 @@ test('Scorecard shows penalized score on finished hole', () => {
 
   expect(scoreDivs).toHaveLength(2);
   expect(scoreDivs[0]).toBeInTheDocument();
+});
+
+test('Scorecard still shows hole numbers when no shots have been taken', () => {
+  const shotHistory: ShotHistory[][] = [];
+  const numHoles = 18;
+  const course: CourseData = {
+    name: 'testCourse',
+    holes: [
+      ...Array.from({ length: numHoles }).map(
+        (_, i: number): HoleData => ({
+          holeNumber: i + 1,
+          par: 4,
+          imgSrcURL: 'imgsrc',
+          widthYards: 100,
+          heightYards: 100,
+          imgPixelsPerYard: 10,
+          teeLocations: { white: { xYards: 5, yYards: 5 } },
+          pinLocations: [{ xYards: 95, yYards: 95 }],
+        })
+      ),
+    ],
+  };
+
+  render(<Scorecard course={course} shotsTaken={shotHistory} activeHole={1} />);
+
+  for (let holeNumber = 1; holeNumber <= numHoles; holeNumber++) {
+    // May have overlap with par, just make sure something is there
+    const scoreDiv = screen.getAllByText(holeNumber);
+
+    expect(scoreDiv.length).not.toEqual(0);
+  }
 });

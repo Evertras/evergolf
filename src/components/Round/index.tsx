@@ -69,6 +69,7 @@ const Round = ({ bag, course, tees, puttingHandicap }: RoundProps) => {
         course={course}
         activeHole={currentHoleNumber}
         shotsTaken={shotHistoryByHole}
+        onClickHole={setCurrentHoleNumber}
       />
     </React.Fragment>
   );
