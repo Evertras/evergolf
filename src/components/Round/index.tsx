@@ -6,11 +6,11 @@ import styles from './Round.module.css';
 export interface RoundProps {
   bag: Shot[];
   course: CourseData;
-  tees: string;
+  selectedTees: Tees;
   puttingHandicap: number;
 }
 
-const Round = ({ bag, course, tees, puttingHandicap }: RoundProps) => {
+const Round = ({ bag, course, selectedTees, puttingHandicap }: RoundProps) => {
   const [currentHoleNumber, setCurrentHoleNumber] = useState(1);
 
   const [shotHistoryByHole, setShotHistoryByHole] = useState(
@@ -62,7 +62,7 @@ const Round = ({ bag, course, tees, puttingHandicap }: RoundProps) => {
         data={currentHoleData}
         shotsTaken={shotHistoryByHole[currentHoleNumber - 1]}
         takeShot={takeShot}
-        tees={tees}
+        tees={selectedTees.name}
         puttingHandicap={puttingHandicap}
       />
       <Scorecard

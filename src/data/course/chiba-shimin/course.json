@@ -1,5 +1,6 @@
 {
   "name": "千葉市民ゴルフ",
+  "tees": [{ "name": "red" }, { "name": "white" }, { "name": "blue" }],
   "holes": [
     {
       "imgSrcURL": "course/chiba-shimin/holes/1/bg.png",
