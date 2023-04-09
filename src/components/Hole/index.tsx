@@ -18,6 +18,7 @@ export interface HoleProps {
   takeShot: (shot: ShotHistory) => void;
   tees: Tees;
   puttingHandicap: number;
+  pinLocationIndex?: number;
   advance?: () => void;
 }
 
@@ -28,10 +29,10 @@ const Hole = ({
   shotsTaken,
   takeShot,
   tees,
+  pinLocationIndex,
   puttingHandicap,
 }: HoleProps) => {
-  // TODO: Select somehow
-  const pinLocation = data.pinLocations[0];
+  const pinLocation = data.pinLocations[pinLocationIndex ?? 0];
   const teeLocation = data.teeLocations[tees.name];
 
   const [mouseCoords, setMouseCoords] = useState<Coords>({
