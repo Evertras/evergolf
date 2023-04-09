@@ -13,7 +13,17 @@
   right: 0;
 }
 
-.App-header {
+.DebugToolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: salmon;
+  color: black;
+  border-radius: 0.2em;
+  padding: 5px;
+}
+
+.AppHeader {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
