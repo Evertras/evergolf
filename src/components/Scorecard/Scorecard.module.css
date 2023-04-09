@@ -2,6 +2,7 @@
   background-color: #ffe;
   color: black;
   border-collapse: collapse;
+  border-radius: 0.5em;
 }
 
 .scorecardTable th,

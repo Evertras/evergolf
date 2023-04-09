@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import styles from './Round.module.css';
+import styles from './Round.module.css';
 
 import HoleView from 'components/HoleView';
 import Scorecard from 'components/Scorecard';
@@ -187,12 +187,14 @@ const Round = ({
         pinLocationIndex={pinLocationIndex}
         ballLocation={ballLocation}
       />
-      <Scorecard
-        course={course}
-        activeHole={currentHoleNumber}
-        shotsTaken={shotHistoryByHole}
-        onClickHole={setCurrentHoleNumber}
-      />
+      <div className={styles.scorecard}>
+        <Scorecard
+          course={course}
+          activeHole={currentHoleNumber}
+          shotsTaken={shotHistoryByHole}
+          onClickHole={setCurrentHoleNumber}
+        />
+      </div>
     </React.Fragment>
   );
 };
