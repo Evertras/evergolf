@@ -1,5 +1,5 @@
-import { hitShot } from './hit';
+import { hitShot, hitShotTowards } from './hit';
 import { putt } from './putting';
 import { approachShot } from './approach';
 
-export { putt, hitShot, approachShot };
+export { putt, hitShot, hitShotTowards, approachShot };
