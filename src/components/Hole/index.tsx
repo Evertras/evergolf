@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Container, Sprite, Stage } from '@pixi/react';
-import Circle from 'components/drawing/Circle';
-import YardageMeasurement from 'components/drawing/YardageMeasurement';
-import { isTerrainHittableFrom, Terrain, terrainAtPoint } from 'lib/terrain';
 
-import { radiansToDegrees } from 'lib/math';
-import { approachShot, hitShot, putt } from 'lib/shots';
+import Circle from 'components/drawing/Circle';
 import ShotSelector from 'components/ShotSelector';
 import ShotTracer from 'components/drawing/ShotTracer';
 import TerrainSVG from 'components/TerrainSVG';
+import YardageMeasurement from 'components/drawing/YardageMeasurement';
+
+import { isTerrainHittableFrom, Terrain, terrainAtPoint } from 'lib/terrain';
+import { radiansToDegrees } from 'lib/math';
+import { approachShot, hitShot, putt } from 'lib/shots';
 import { feetBetween, yardsBetween } from 'lib/coords';
+
+import styles from './Hole.module.css';
 
 export interface HoleProps {
   data: HoleData;
@@ -190,6 +193,7 @@ const Hole = ({
         currentSelectedIndex={selectedShotIndex}
       />
       <Stage
+        className={styles.HoleView}
         width={holeViewWidthPixels}
         height={holeViewHeightPixels}
         onMouseMove={handleMouseMove}
