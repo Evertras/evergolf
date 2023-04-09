@@ -1,7 +1,7 @@
 .shotSelectorList {
-  top: 0;
   left: 0;
   position: fixed;
+  text-align: right;
 }
 
 .shotSelectorList > li {
@@ -18,4 +18,9 @@
 .shotSelectorList > li.current {
   background-color: white;
   color: black;
+}
+
+.yardage {
+  font-size: 0.5em;
+  color: #888;
 }
