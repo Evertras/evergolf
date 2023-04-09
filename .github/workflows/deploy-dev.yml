@@ -30,6 +30,9 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
+      - name: Determine build version
+        run: |
+          echo "REACT_APP_BUILD_VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)-dev" >> $GITHUB_ENV
       - name: Build
         env:
           REACT_APP_GTAG: ${{ secrets.REACT_APP_GTAG }}

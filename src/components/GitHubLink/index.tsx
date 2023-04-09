@@ -10,6 +10,9 @@ const GitHubLink = () => {
     <React.Fragment>
       <a target="_blank" href="https://github.com/Evertras/evergolf">
         <div className={styles.gitHubLinkBG}>
+          <div className={styles.version}>
+            {process.env.REACT_APP_BUILD_VERSION}
+          </div>
           <GitHubSVG height={100} />
           <div className={styles.gitHubLink}>Code here!</div>
         </div>
