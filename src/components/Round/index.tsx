@@ -61,9 +61,11 @@ const Round = ({
     ? 'Hole complete, click to continue!'
     : `Hitting ${selectedShot.name} (${expectedOutcome.carryYardsMin} - ${expectedOutcome.carryYardsMax} yd)`;
 
-  const takeShot = (shot: ShotHistory) => {
+  const takeShots = (shots: ShotHistory[]) => {
+    if (shots.length === 0) return;
+
     const copied = [...shotHistoryByHole];
-    copied[currentHoleNumber - 1].push(shot);
+    copied[currentHoleNumber - 1].push(...shots);
     setShotHistoryByHole(copied);
   };
 
@@ -83,17 +85,23 @@ const Round = ({
       return;
     }
 
-    const result = hitShotTowards(bag[selectedShotIndex], ballLocation, target);
+    const shotsTaken: ShotHistory[] = [];
+
+    const initialResult = hitShotTowards(
+      bag[selectedShotIndex],
+      ballLocation,
+      target
+    );
 
     let terrainFrom =
       hittableShots.length > 0
         ? hittableShots[hittableShots.length - 1].terrainTo
         : Terrain.Fairway;
-    let terrainTo = terrainAtPoint(result.landingSpot, imgScale);
+    let terrainTo = terrainAtPoint(initialResult.landingSpot, imgScale);
     const strokes = terrainTo === Terrain.OutOfBounds ? 2 : 1;
 
-    takeShot({
-      result,
+    shotsTaken.push({
+      result: initialResult,
       strokes,
       terrainFrom,
       terrainTo,
@@ -104,12 +112,12 @@ const Round = ({
 
     // Auto approach (with a short circuit safety valve to avoid infinite)
     let approachAttempts = 0;
-    let approachFrom = result.landingSpot;
-    let location = result.landingSpot;
+    let approachFrom = initialResult.landingSpot;
+    let location = initialResult.landingSpot;
 
     while (
       terrainTo !== Terrain.Green &&
-      yardsBetween(result.landingSpot, pinLocation) < minDistance &&
+      yardsBetween(initialResult.landingSpot, pinLocation) < minDistance &&
       approachAttempts < 10
     ) {
       approachAttempts++;
@@ -125,7 +133,7 @@ const Round = ({
       location = approachResult.landingSpot;
       approachFrom = location;
 
-      takeShot({
+      shotsTaken.push({
         result: approachResult,
         strokes: 1,
         terrainFrom,
@@ -134,19 +142,22 @@ const Round = ({
     }
 
     if (terrainTo === Terrain.Green) {
+      const lastShot = shotsTaken[shotsTaken.length - 1];
       // Auto putt out
       const putts = putt(
-        feetBetween(result.landingSpot, pinLocation),
+        feetBetween(lastShot.result.landingSpot, pinLocation),
         puttingHandicap
       );
 
-      takeShot({
-        result,
+      shotsTaken.push({
+        result: lastShot.result,
         strokes: putts,
         terrainFrom: Terrain.Green,
         terrainTo: Terrain.Hole,
       });
     }
+
+    takeShots(shotsTaken);
   };
 
   return (
