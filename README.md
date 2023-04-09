@@ -25,6 +25,13 @@ match that of a scratch golfer?
 
 And finally, it's weirdly fun anyway. Or maybe that's just me.
 
+Real stats are used when possible. The goal over time is to improve these to be
+more and more accurate to actual stats when possible. The ability to select a
+handicap for different portions of the game is coming, for now this is hardcoded
+to be around a 15 handicap's abilities for short game and putting, and the long
+shots are based on my own game in an effort to motivate myself to work on my
+swing.
+
 For more information see the [docs folder](./docs).
 
 ## What course is this?
