@@ -126,13 +126,16 @@ const Round = ({
     ) {
       approachAttempts++;
 
+      terrainFrom = terrainAtPoint(location, imgScale);
+
       // TODO: use separate short game handicap for approximating
       const approachResult = approachShot(
         approachFrom,
         pinLocation,
+        terrainFrom,
         puttingHandicap
       );
-      terrainFrom = terrainAtPoint(location, imgScale);
+
       terrainTo = terrainAtPoint(approachResult.landingSpot, imgScale);
       location = approachResult.landingSpot;
       approachFrom = location;
