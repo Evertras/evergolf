@@ -58,6 +58,7 @@ const Round = ({ bag, course, selectedTees, puttingHandicap }: RoundProps) => {
         <div onMouseDown={goForward}>{'>'}</div>
       </div>
       <Hole
+        advance={goForward}
         bag={bag}
         data={currentHoleData}
         shotsTaken={shotHistoryByHole[currentHoleNumber - 1]}

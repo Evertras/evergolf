@@ -18,9 +18,11 @@ export interface HoleProps {
   takeShot: (shot: ShotHistory) => void;
   tees: Tees;
   puttingHandicap: number;
+  advance?: () => void;
 }
 
 const Hole = ({
+  advance,
   bag,
   data,
   shotsTaken,
@@ -77,6 +79,7 @@ const Hole = ({
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     // We can only hit if we're still playing the hole
     if (holeComplete) {
+      if (advance) advance();
       return;
     }
 
