@@ -4,6 +4,7 @@
 // https://www.todays-golfer.com/features/instruction-features/january/may/what-is-your-short-game-handicap-/
 
 import { directionDegrees, landNear, yardsBetween } from 'lib/coords';
+import { getTerrainUncertaintyMultiplier, Terrain } from 'lib/terrain';
 
 // (in 5 handicap increments starting from scratch)
 const remainingFeetFrom5Yards = [3, 4, 5, 7, 9];
@@ -15,6 +16,7 @@ const remainingFeetFrom50to75Yards = [12.5, 15, 20, 25, 33];
 export function approachShot(
   from: Coords,
   to: Coords,
+  terrain: Terrain,
   handicap: number
 ): ShotResult {
   const distanceYards = yardsBetween(from, to);
@@ -36,7 +38,9 @@ export function approachShot(
     remainingFeet = remainingFeetFrom50to75Yards[handicapBucket];
   }
 
-  const landingSpot = landNear(to, remainingFeet / 3);
+  const terrainModifier = getTerrainUncertaintyMultiplier(terrain);
+
+  const landingSpot = landNear(to, (remainingFeet / 3) * terrainModifier);
 
   const startAndEndDegrees = directionDegrees(from, landingSpot);
 
