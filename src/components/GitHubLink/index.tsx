@@ -14,7 +14,7 @@ const GitHubLink = () => {
             {process.env.REACT_APP_BUILD_VERSION}
           </div>
           <GitHubSVG height={100} />
-          <div className={styles.gitHubLink}>Code here!</div>
+          <div className={styles.gitHubLink}>More info here!</div>
         </div>
       </a>
     </React.Fragment>
