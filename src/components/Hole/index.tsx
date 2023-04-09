@@ -166,12 +166,13 @@ const Hole = ({
   const selectedShot = bag[selectedShotIndex];
   const expectedOutcome = selectedShot.potentialOutcomes[0];
 
+  const helpText = holeComplete
+    ? 'Hole complete, click to continue!'
+    : `Hitting ${selectedShot.name} (${expectedOutcome.carryYardsMin} - ${expectedOutcome.carryYardsMax} yd)`;
+
   return (
     <React.Fragment>
-      <div>
-        Hitting {selectedShot.name} ({expectedOutcome.carryYardsMin} -{' '}
-        {expectedOutcome.carryYardsMax} yd)
-      </div>
+      <div>{helpText}</div>
       <ShotSelector
         shots={bag}
         onSelectIndex={setSelectedShotIndex}
