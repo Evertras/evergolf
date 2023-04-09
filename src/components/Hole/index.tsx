@@ -77,8 +77,6 @@ const Hole = ({
       xYards: x / overallScale,
       yYards: y / overallScale,
     });
-
-    setMouseIsInside(true);
   };
 
   const handleMouseEnter = () => {
