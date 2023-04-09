@@ -42,7 +42,12 @@ function percentMake(distanceFeet: number, handicap: number): number {
     return percentMake6to12ByHandicap[handicapBucket];
   }
 
-  return percentMakeUnder6ByHandicap[handicapBucket];
+  if (distanceFeet >= 2) {
+    return percentMakeUnder6ByHandicap[handicapBucket];
+  }
+
+  // Be nice and make 2 footers... basically gimmes in casual anyway
+  return 1;
 }
 
 function percent3Putt(distanceFeet: number): number {
