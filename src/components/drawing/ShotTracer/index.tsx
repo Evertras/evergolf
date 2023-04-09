@@ -68,8 +68,9 @@ const ShotTracer = ({ shot, pinLocation }: ShotTracerProps) => {
         {shot.terrainTo === Terrain.Hole ? (
           <Text
             text={
-              Math.floor(
-                feetBetween(shot.result.landingSpot, pinLocation)
+              Math.max(
+                1,
+                Math.floor(feetBetween(shot.result.landingSpot, pinLocation))
               ).toFixed(0) + "'"
             }
             x={shot.result.landingSpot.xYards}
