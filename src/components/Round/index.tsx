@@ -100,7 +100,7 @@ const Round = ({
     );
 
     let terrainTo = terrainAtPoint(initialResult.landingSpot, imgScale);
-    const strokes = terrainTo === Terrain.OutOfBounds ? 2 : 1;
+    const strokes = terrainTo === Terrain.OutOfBounds || Terrain.Water ? 2 : 1;
 
     shotsTaken.push({
       result: initialResult,
