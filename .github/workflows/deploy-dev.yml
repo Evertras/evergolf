@@ -32,7 +32,7 @@ jobs:
           cache: 'npm'
       - name: Determine build version
         run: |
-          echo "${GITHUB_REF}"
+          echo "${GITHUB_REF} -> ${GITHUB_REF##*/}"
           echo "REACT_APP_BUILD_VERSION=dev-${GITHUB_REF##*/}" >> $GITHUB_ENV
       - name: Build
         env:
