@@ -87,16 +87,18 @@ const Round = ({
 
     const shotsTaken: ShotHistory[] = [];
 
-    const initialResult = hitShotTowards(
-      bag[selectedShotIndex],
-      ballLocation,
-      target
-    );
-
     let terrainFrom =
       hittableShots.length > 0
         ? hittableShots[hittableShots.length - 1].terrainTo
         : Terrain.Fairway;
+
+    const initialResult = hitShotTowards(
+      bag[selectedShotIndex],
+      ballLocation,
+      terrainFrom,
+      target
+    );
+
     let terrainTo = terrainAtPoint(initialResult.landingSpot, imgScale);
     const strokes = terrainTo === Terrain.OutOfBounds ? 2 : 1;
 
@@ -117,6 +119,7 @@ const Round = ({
 
     while (
       terrainTo !== Terrain.Green &&
+      isTerrainHittableFrom(terrainTo) &&
       yardsBetween(initialResult.landingSpot, pinLocation) < minDistance &&
       approachAttempts < 10
     ) {
