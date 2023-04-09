@@ -112,8 +112,8 @@ const Hole = ({
           {
             // Shot tracers
           }
-          {shotsTaken.map(({ result }, i) => (
-            <ShotTracer key={i} shotResult={result} />
+          {shotsTaken.map((shot, i) => (
+            <ShotTracer key={i} shot={shot} pinLocation={pinLocation} />
           ))}
 
           {
