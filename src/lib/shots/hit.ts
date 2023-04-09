@@ -1,16 +1,12 @@
-import { boundDegrees, degreesToRadians, radiansToDegrees } from 'lib/math';
+import { directionDegrees } from 'lib/coords';
+import { boundDegrees, degreesToRadians } from 'lib/math';
 
 export function hitShotTowards(
   shot: Shot,
   source: Coords,
   target: Coords
 ): ShotResult {
-  const xDiff = target.xYards - source.xYards;
-  const yDiff = target.yYards - source.yYards;
-
-  const targetDegrees = radiansToDegrees(Math.atan2(yDiff, xDiff));
-
-  return hitShot(shot, source, targetDegrees);
+  return hitShot(shot, source, directionDegrees(source, target));
 }
 
 // 0 degrees is straight east, increasing clockwise

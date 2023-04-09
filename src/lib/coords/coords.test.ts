@@ -1,4 +1,4 @@
-import { feetBetween, landNear, yardsBetween } from '.';
+import { directionDegrees, feetBetween, landNear, yardsBetween } from '.';
 
 describe('yardsBetween', () => {
   test.each`
@@ -80,6 +80,33 @@ describe('landNear', () => {
       const diff = Math.abs(movingAverage - avgDistanceYards);
 
       expect(diff).toBeLessThan(0.5);
+    }
+  );
+});
+
+describe('directionDegrees', () => {
+  test.each`
+    ax     | ay   | bx     | by   | expectedDegrees
+    ${0}   | ${0} | ${1}   | ${0} | ${0}
+    ${101} | ${0} | ${307} | ${0} | ${0}
+    ${1}   | ${1} | ${0}   | ${0} | ${225}
+    ${1}   | ${1} | ${5}   | ${5} | ${45}
+  `(
+    '($ax, $ay) to ($bx, $by) points at $expectedDegrees',
+    ({ ax, ay, bx, by, expectedDegrees }) => {
+      const a: Coords = {
+        xYards: ax,
+        yYards: ay,
+      };
+
+      const b: Coords = {
+        xYards: bx,
+        yYards: by,
+      };
+
+      const degrees = directionDegrees(a, b);
+
+      expect(degrees).toBeCloseTo(expectedDegrees);
     }
   );
 });
