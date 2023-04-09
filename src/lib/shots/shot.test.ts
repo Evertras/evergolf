@@ -1,5 +1,6 @@
 import { yardsBetween } from 'lib/coords';
 import { boundDegrees, degreesToRadians, radiansToDegrees } from 'lib/math';
+import { Terrain } from 'lib/terrain';
 import { hitShot, hitShotTowards } from '.';
 
 // Start at a point other than (0, 0) to make sure default 0s aren't being
@@ -17,7 +18,7 @@ describe('a shot with no possible outcomes', () => {
         potentialOutcomes: [],
       };
 
-      hitShot(badShot, sourceOrigin, 0);
+      hitShot(badShot, sourceOrigin, Terrain.Fairway, 0);
     }).toThrow();
   });
 });
@@ -54,7 +55,12 @@ describe('a perfect 100y straight shot', () => {
   `(
     '$shotDirectionDegrees° goes to ($expectedXYards, $expectedYYards)',
     ({ shotDirectionDegrees, expectedXYards, expectedYYards }) => {
-      const result = hitShot(shot, sourceOrigin, shotDirectionDegrees);
+      const result = hitShot(
+        shot,
+        sourceOrigin,
+        Terrain.Fairway,
+        shotDirectionDegrees
+      );
 
       expect(result.source).toEqual(sourceOrigin);
 
@@ -91,7 +97,12 @@ describe('a perfect 100y straight shot', () => {
         xYards: shotTargetXYards,
         yYards: shotTargetYYards,
       };
-      const result = hitShotTowards(shot, sourceOrigin, target);
+      const result = hitShotTowards(
+        shot,
+        sourceOrigin,
+        Terrain.Fairway,
+        target
+      );
 
       expect(result.source).toEqual(sourceOrigin);
 
@@ -134,7 +145,12 @@ describe('a 100y shot that can be pushed or pulled 5 degrees', () => {
   `(
     'going $shotDirectionDegrees° always goes the expected carry distance',
     ({ shotDirectionDegrees }) => {
-      const result = hitShot(shot, sourceOrigin, shotDirectionDegrees);
+      const result = hitShot(
+        shot,
+        sourceOrigin,
+        Terrain.Fairway,
+        shotDirectionDegrees
+      );
 
       expect(result.source).toEqual(sourceOrigin);
 
@@ -165,7 +181,7 @@ describe('a 100y shot that can be pushed or pulled 5 degrees', () => {
     expect(minYardsY).toBeLessThan(maxYardsY);
 
     for (let i = 0; i < 1000; i++) {
-      const result = hitShot(shot, sourceOrigin, 0);
+      const result = hitShot(shot, sourceOrigin, Terrain.Fairway, 0);
       expect(result.landingSpot.yYards).toBeGreaterThanOrEqual(minYardsY);
       expect(result.landingSpot.yYards).toBeLessThanOrEqual(maxYardsY);
 
@@ -224,7 +240,12 @@ describe('a 100y shot that can be spun 5° in either direction', () => {
       let totalDistance = 0;
 
       for (let i = 0; i < iterations; i++) {
-        const result = hitShot(shot, sourceOrigin, shotDirectionDegrees);
+        const result = hitShot(
+          shot,
+          sourceOrigin,
+          Terrain.Fairway,
+          shotDirectionDegrees
+        );
 
         expect(result.source).toEqual(sourceOrigin);
         expect(result.startDegrees).toBeCloseTo(
@@ -264,7 +285,7 @@ describe('a 100y shot that can be spun 5° in either direction', () => {
     expect(minYardsY).toBeLessThan(maxYardsY);
 
     for (let i = 0; i < 1000; i++) {
-      const result = hitShot(shot, sourceOrigin, 0);
+      const result = hitShot(shot, sourceOrigin, Terrain.Fairway, 0);
       expect(result.landingSpot.yYards).toBeGreaterThanOrEqual(minYardsY);
       expect(result.landingSpot.yYards).toBeLessThanOrEqual(maxYardsY);
 
@@ -309,7 +330,7 @@ describe('a 100y shot that can only draw left 5°', () => {
     let totalDistanceOffsetY = 0;
 
     for (let i = 0; i < iterations; i++) {
-      const result = hitShot(shot, sourceOrigin, 0);
+      const result = hitShot(shot, sourceOrigin, Terrain.Fairway, 0);
 
       expect(result.landingSpot.yYards).toBeLessThanOrEqual(
         sourceOrigin.yYards

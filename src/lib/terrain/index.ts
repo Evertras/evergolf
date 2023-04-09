@@ -77,6 +77,33 @@ export function isTerrainHittableFrom(terrain: Terrain): boolean {
   return terrain !== Terrain.OutOfBounds && terrain !== Terrain.Water;
 }
 
+export function getTerrainUncertaintyMultiplier(terrain: Terrain): number {
+  // Based on these values for now
+  // https://shotscope.com/blog/stats/approach-shots-average-proximity/
+  switch (terrain) {
+    case Terrain.Fairway:
+      return 1;
+
+    case Terrain.Rough:
+      return 1.1;
+
+    case Terrain.Bunker:
+      return 1.3;
+
+    case Terrain.Trees:
+      return 1.5;
+
+    case Terrain.BigTree:
+      return 1.5;
+  }
+
+  // Shouldn't get here through normal logic, but...
+  console.warn(
+    `Unexpected terrain when checking uncertainty multiplier: ${terrain}`
+  );
+  return 1;
+}
+
 // TODO: This is brittle but works for now...
 export function terrainAtPoint(
   coords: Coords,
