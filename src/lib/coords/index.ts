@@ -16,11 +16,7 @@ export function feetBetween(a: Coords, b: Coords): number {
 
 export function landNear(spot: Coords, avgDistanceYards: number): Coords {
   const randRadian = Math.random() * Math.PI * 2;
-
-  // This is not a good formula for this, but it's close enough for now.
-  // TODO: Better distribution math
-  const actualDistance =
-    Math.random() * avgDistanceYards + Math.random() * (avgDistanceYards * 0.5);
+  const actualDistance = Math.random() * avgDistanceYards * 2;
 
   return {
     xYards: Math.cos(randRadian) * actualDistance + spot.xYards,
