@@ -27,6 +27,15 @@ And finally, it's weirdly fun anyway. Or maybe that's just me.
 
 For more information see the [docs folder](./docs).
 
+## What course is this?
+
+[Chiba Shimin Golf (千葉市民ゴルフ)](https://chibashimin-golf.jp/courseguide/) -
+a relatively simple, flat-ish 9 hole course.
+
+I'd like to add more courses in the future, but for now this was enough work to
+get in and I'd rather not mess with terrain elevations in 2d Google Earth views
+for now.
+
 ## Contributing
 
 For now this is purely a solo project, but if for some reason you've found
