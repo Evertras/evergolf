@@ -40,8 +40,6 @@ export function approachShot(
 
   const startAndEndDegrees = directionDegrees(from, landingSpot);
 
-  console.log(startAndEndDegrees);
-
   return {
     source: from,
     landingSpot: landingSpot,
