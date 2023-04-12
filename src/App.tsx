@@ -8,6 +8,7 @@ import chibaShimin from 'data/course/chiba-shimin/course.json';
 import { basicBag } from 'lib/shots/basic-bag';
 
 import styles from './App.module.css';
+import TopToolbar from 'components/TopToolbar';
 
 function App() {
   const [tees, setTees] = useState(chibaShimin.tees[1]);
@@ -19,30 +20,29 @@ function App() {
 
   return (
     <React.Fragment>
-      <div className="App">
-        <header className={styles.AppHeader}>
-          <Round
-            key={roundNumber}
-            bag={basicBag}
-            course={chibaShimin}
-            selectedTees={tees}
-            pinLocationIndex={0}
-            puttingHandicap={15}
+      <div className={styles.App}>
+        <TopToolbar />
+        <Round
+          key={roundNumber}
+          bag={basicBag}
+          course={chibaShimin}
+          selectedTees={tees}
+          pinLocationIndex={0}
+          puttingHandicap={15}
+        />
+        <div className={styles.GitHubLogo}>
+          <GitHubLink />
+        </div>
+        <div className={styles.TeeSelector}>
+          <TeeSelector
+            tees={chibaShimin.tees}
+            currentSelection={tees}
+            onSelect={setTees}
           />
-          <div className={styles.GitHubLogo}>
-            <GitHubLink />
-          </div>
-          <div className={styles.TeeSelector}>
-            <TeeSelector
-              tees={chibaShimin.tees}
-              currentSelection={tees}
-              onSelect={setTees}
-            />
-          </div>
-          <div className={styles.DebugToolbar}>
-            <div onMouseDown={resetRound}>Reset</div>
-          </div>
-        </header>
+        </div>
+        <div className={styles.DebugToolbar}>
+          <div onMouseDown={resetRound}>Reset</div>
+        </div>
       </div>
     </React.Fragment>
   );
