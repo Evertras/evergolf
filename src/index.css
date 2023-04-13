@@ -17,6 +17,7 @@ code {
 
 a {
   text-decoration: none;
+  color: white;
 }
 
 a:active {
@@ -29,4 +30,25 @@ a:visited {
 
 a:hover {
   color: white;
+}
+
+article {
+  min-width: 20em;
+  max-width: 40em;
+}
+
+article h1 {
+  margin: 0;
+  margin-top: 1em;
+}
+
+article h2.subtitle {
+  margin: 0;
+  margin-top: 0.2em;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+article p {
+  font-size: 0.8em;
 }

@@ -5,15 +5,11 @@ const TopToolbar = () => {
   const choices = [
     {
       name: 'Play',
-      link: 'play',
-    },
-    {
-      name: 'My Bag',
-      link: 'bag',
+      link: '/',
     },
     {
       name: 'About',
-      link: 'about',
+      link: '/about',
     },
   ];
 
@@ -23,7 +19,7 @@ const TopToolbar = () => {
         <ul>
           {choices.map((c) => (
             <li className={styles.unselected}>
-              <div>{c.name}</div>
+              <a href={c.link}>{c.name}</a>
             </li>
           ))}
         </ul>
