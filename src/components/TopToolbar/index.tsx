@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from './TopToolbar.module.css';
 
 const TopToolbar = () => {
@@ -19,7 +20,14 @@ const TopToolbar = () => {
         <ul>
           {choices.map((c) => (
             <li className={styles.unselected}>
-              <a href={c.link}>{c.name}</a>
+              <NavLink
+                to={c.link}
+                className={({ isActive, isPending }) =>
+                  isActive ? styles.selected : styles.unselected
+                }
+              >
+                {c.name}
+              </NavLink>
             </li>
           ))}
         </ul>

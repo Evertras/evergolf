@@ -7,7 +7,6 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
-  overflow: hidden;
 }
 
 .TopToolbar > ul li {
@@ -15,18 +14,19 @@
   border-left: 2px solid white;
   border-bottom: 2px solid white;
   cursor: pointer;
+  overflow: hidden;
 }
 
-.TopToolbar > ul li:first-of-type {
+.TopToolbar > ul > li:first-of-type {
   border-bottom-left-radius: 0.5em;
 }
 
-.TopToolbar > ul li:last-of-type {
+.TopToolbar > ul > li:last-of-type {
   border-right: 2px solid white;
   border-bottom-right-radius: 0.5em;
 }
 
-.TopToolbar > ul li > a {
+.TopToolbar > ul > li > a {
   display: block;
   padding: 0.3em 0.65em;
 }
