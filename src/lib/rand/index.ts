@@ -6,7 +6,7 @@ export default class rand {
   readonly value: number;
 
   inRange(min: number, max: number): number {
-    if (max < min) throw '???';
+    if (max < min) throw new Error('max < min');
 
     const diff = max - min;
 
