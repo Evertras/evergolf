@@ -3,20 +3,31 @@
   flex-direction: row;
 }
 
-.TopToolbar > div {
-  padding: 0.5em 0.65em;
+.TopToolbar > ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.TopToolbar > ul li {
+  display: inline-block;
   border-left: 2px solid white;
   border-bottom: 2px solid white;
   cursor: pointer;
 }
 
-.TopToolbar > div:first-of-type {
+.TopToolbar > ul li:first-of-type {
   border-bottom-left-radius: 0.5em;
 }
 
-.TopToolbar > div:last-of-type {
+.TopToolbar > ul li:last-of-type {
   border-right: 2px solid white;
   border-bottom-right-radius: 0.5em;
+}
+
+.TopToolbar > ul li > div {
+  padding: 0.3em 0.65em;
 }
 
 .unselected:hover {

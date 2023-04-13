@@ -2,13 +2,32 @@ import React from 'react';
 import styles from './TopToolbar.module.css';
 
 const TopToolbar = () => {
+  const choices = [
+    {
+      name: 'Play',
+      link: 'play',
+    },
+    {
+      name: 'My Bag',
+      link: 'bag',
+    },
+    {
+      name: 'About',
+      link: 'about',
+    },
+  ];
+
   return (
     <React.Fragment>
-      <div className={styles.TopToolbar}>
-        <div className={styles.selected}>Play</div>
-        <div className={styles.unselected}>My Bag</div>
-        <div className={styles.unselected}>About</div>
-      </div>
+      <nav className={styles.TopToolbar}>
+        <ul>
+          {choices.map((c) => (
+            <li className={styles.unselected}>
+              <div>{c.name}</div>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </React.Fragment>
   );
 };
