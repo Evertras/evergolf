@@ -1,6 +1,9 @@
 // Using these links for rough chances, modifying to make more linear but these
 // could be greatly improved by real data.
 // https://shotscope.com/blog/stats/putting-make-percentages-by-handicap-how-do-you-compare/
+
+import { Rand } from 'lib/rand';
+
 // (in 5 handicap increments starting from scratch)
 const percentMakeOver30ByHandicap = [4.3, 4.3, 3, 2.5, 1.9, 1.9];
 const percentMake24to30ByHandicap = [10, 8, 8, 7, 6, 6];
@@ -61,17 +64,16 @@ function percent3Putt(distanceFeet: number): number {
   return 0;
 }
 
-export function putt(distanceFeet: number, handicap: number): number {
-  const r = Math.random() * 100;
-
+export function putt(distanceFeet: number, handicap: number, r: Rand): number {
+  const randPercent = r.inRange(0, 100);
   const percentMakeChance = percentMake(distanceFeet, handicap);
   const percent3PuttChance = percent3Putt(distanceFeet);
 
-  if (r <= percentMakeChance) {
+  if (randPercent <= percentMakeChance) {
     return 1;
   }
 
-  if (r - percentMakeChance <= percent3PuttChance) {
+  if (randPercent - percentMakeChance <= percent3PuttChance) {
     return 3;
   }
 

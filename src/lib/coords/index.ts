@@ -1,4 +1,5 @@
 import { boundDegrees, radiansToDegrees } from 'lib/math';
+import { Rand2 } from 'lib/rand';
 
 export interface Coords {
   xYards: number;
@@ -16,9 +17,13 @@ export function feetBetween(a: Coords, b: Coords): number {
   return yardsBetween(a, b) * 3;
 }
 
-export function landNear(spot: Coords, avgDistanceYards: number): Coords {
-  const randRadian = Math.random() * Math.PI * 2;
-  const actualDistance = Math.random() * avgDistanceYards * 2;
+export function landNear(
+  spot: Coords,
+  avgDistanceYards: number,
+  rands: Rand2
+): Coords {
+  const randRadian = rands[0].value * Math.PI * 2;
+  const actualDistance = rands[1].value * avgDistanceYards * 2;
 
   return {
     xYards: Math.cos(randRadian) * actualDistance + spot.xYards,
