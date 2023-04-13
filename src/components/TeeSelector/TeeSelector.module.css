@@ -1,6 +1,9 @@
 .TeeSelector {
   display: flex;
+  position: fixed;
   flex-direction: column;
+  right: 0;
+  top: 0;
 }
 
 .entry {

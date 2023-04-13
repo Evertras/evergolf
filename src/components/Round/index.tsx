@@ -169,31 +169,33 @@ const Round = ({
 
   return (
     <React.Fragment>
-      <h2>
-        {course.name} #{currentHoleNumber} (Par {currentHoleData.par})
-      </h2>
-      <ShotSelector
-        shots={bag}
-        onSelectIndex={setSelectedShotIndex}
-        currentSelectedIndex={selectedShotIndex}
-      />
-      <div>{helpText}</div>
-      <HoleView
-        bag={bag}
-        data={currentHoleData}
-        shotsTaken={shotHistoryByHole[currentHoleNumber - 1]}
-        onClick={onClickHole}
-        tees={selectedTees}
-        pinLocationIndex={pinLocationIndex}
-        ballLocation={ballLocation}
-      />
-      <div className={styles.scorecard}>
-        <Scorecard
-          course={course}
-          activeHole={currentHoleNumber}
-          shotsTaken={shotHistoryByHole}
-          onClickHole={setCurrentHoleNumber}
+      <div className={styles.Round}>
+        <h3>
+          {course.name} #{currentHoleNumber} (Par {currentHoleData.par})
+        </h3>
+        <ShotSelector
+          shots={bag}
+          onSelectIndex={setSelectedShotIndex}
+          currentSelectedIndex={selectedShotIndex}
         />
+        <HoleView
+          bag={bag}
+          data={currentHoleData}
+          shotsTaken={shotHistoryByHole[currentHoleNumber - 1]}
+          onClick={onClickHole}
+          tees={selectedTees}
+          pinLocationIndex={pinLocationIndex}
+          ballLocation={ballLocation}
+        />
+        <div>{helpText}</div>
+        <div className={styles.scorecard}>
+          <Scorecard
+            course={course}
+            activeHole={currentHoleNumber}
+            shotsTaken={shotHistoryByHole}
+            onClickHole={setCurrentHoleNumber}
+          />
+        </div>
       </div>
     </React.Fragment>
   );

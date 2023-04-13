@@ -1,0 +1,41 @@
+.TopToolbar {
+  display: flex;
+  flex-direction: row;
+}
+
+.TopToolbar > ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.TopToolbar > ul li {
+  display: inline-block;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.TopToolbar > ul > li:first-of-type {
+  border-bottom-left-radius: 0.5em;
+}
+
+.TopToolbar > ul > li:last-of-type {
+  border-right: 2px solid white;
+  border-bottom-right-radius: 0.5em;
+}
+
+.TopToolbar > ul > li > a {
+  display: block;
+  padding: 0.3em 0.65em;
+}
+
+.unselected:hover {
+  background-color: #444;
+}
+
+.selected {
+  background-color: #fee;
+  color: black;
+}
