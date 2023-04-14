@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './index.css';
+
+import App from './App';
 import About from 'views/About';
 import Play from 'views/Play';
+import BagEditor from 'views/BagEditor';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Play />,
+      },
+      {
+        path: '/bag',
+        element: <BagEditor />,
       },
       {
         path: '/about',

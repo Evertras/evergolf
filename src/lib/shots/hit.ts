@@ -19,6 +19,34 @@ export function hitShotTowards(
   );
 }
 
+export function hitShotWithParameters(
+  source: Coords,
+  startDegrees: number,
+  endDegrees: number,
+  baseCarryYards: number
+): ShotResult {
+  // For now, we cheat a little in figuring out an exact path in favor of getting
+  // something that's close enough and easy to draw later.
+  const endRadians = degreesToRadians(endDegrees);
+  const totalDistanceYards =
+    baseCarryYards * Math.cos(degreesToRadians(startDegrees - endDegrees) * 2);
+
+  const xDistanceYards = Math.cos(endRadians) * totalDistanceYards;
+  const yDistanceYards = Math.sin(endRadians) * totalDistanceYards;
+
+  const landingSpot = {
+    xYards: source.xYards + xDistanceYards,
+    yYards: source.yYards + yDistanceYards,
+  };
+
+  return {
+    source,
+    landingSpot,
+    startDegrees,
+    endDegrees,
+  };
+}
+
 // 0 degrees is straight east, increasing clockwise
 export function hitShot(
   shot: Shot,
@@ -56,30 +84,10 @@ export function hitShot(
       startDegrees
   );
 
-  // For now, we cheat a little in figuring out an exact path in favor of getting
-  // something that's close enough and easy to draw later.
-  const endRadians = degreesToRadians(endDegrees);
-  const distanceModifier = Math.cos(
-    degreesToRadians(startDegrees - endDegrees) * 2
-  );
   const totalDistanceSpread =
     (outcome.carryYardsMax - outcome.carryYardsMin) * terrainMultiplier;
-  const totalDistanceYards =
-    (rands[3].value * totalDistanceSpread + outcome.carryYardsMin) *
-    distanceModifier;
+  const carryYards =
+    rands[3].value * totalDistanceSpread + outcome.carryYardsMin;
 
-  const xDistanceYards = Math.cos(endRadians) * totalDistanceYards;
-  const yDistanceYards = Math.sin(endRadians) * totalDistanceYards;
-
-  const landingSpot = {
-    xYards: source.xYards + xDistanceYards,
-    yYards: source.yYards + yDistanceYards,
-  };
-
-  return {
-    source,
-    landingSpot,
-    startDegrees,
-    endDegrees,
-  };
+  return hitShotWithParameters(source, startDegrees, endDegrees, carryYards);
 }
