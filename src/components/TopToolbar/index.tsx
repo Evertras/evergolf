@@ -9,6 +9,10 @@ const TopToolbar = () => {
       link: '/',
     },
     {
+      name: 'My Bag',
+      link: '/bag',
+    },
+    {
       name: 'About',
       link: '/about',
     },
