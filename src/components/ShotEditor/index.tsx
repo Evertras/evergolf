@@ -43,13 +43,24 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
     origin,
     avgStartDegrees,
     avgStartDegrees + avgSidespinDegrees,
+    0,
     avgCarry
   );
+
+  const maxLeftOffDegrees =
+    outcome.startDegreesLeftmost -
+    avgStartDegrees +
+    (outcome.sidespinDegreeLeftmost - avgSidespinDegrees);
+  const maxRightOffDegrees =
+    outcome.startDegreesRightmost -
+    avgStartDegrees +
+    (outcome.sidespinDegreeRightmost - avgSidespinDegrees);
 
   const maxLeftShot = hitShotWithParameters(
     origin,
     outcome.startDegreesLeftmost,
     outcome.startDegreesLeftmost + outcome.sidespinDegreeLeftmost,
+    maxLeftOffDegrees,
     outcome.carryYardsMax
   );
 
@@ -57,6 +68,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
     origin,
     outcome.startDegreesLeftmost,
     outcome.startDegreesLeftmost + outcome.sidespinDegreeLeftmost,
+    maxLeftOffDegrees,
     outcome.carryYardsMin
   );
 
@@ -64,6 +76,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
     origin,
     outcome.startDegreesRightmost,
     outcome.startDegreesRightmost + outcome.sidespinDegreeRightmost,
+    maxRightOffDegrees,
     outcome.carryYardsMax
   );
 
@@ -71,6 +84,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
     origin,
     outcome.startDegreesRightmost,
     outcome.startDegreesRightmost + outcome.sidespinDegreeRightmost,
+    maxRightOffDegrees,
     outcome.carryYardsMin
   );
 
@@ -78,6 +92,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
     origin,
     avgStartDegrees,
     avgStartDegrees + avgSidespinDegrees,
+    0,
     outcome.carryYardsMax
   );
 
@@ -85,6 +100,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
     origin,
     avgStartDegrees,
     avgStartDegrees + avgSidespinDegrees,
+    0,
     outcome.carryYardsMin
   );
 

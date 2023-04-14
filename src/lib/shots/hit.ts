@@ -23,13 +23,24 @@ export function hitShotWithParameters(
   source: Coords,
   startDegrees: number,
   endDegrees: number,
+  offDegrees: number,
   baseCarryYards: number
 ): ShotResult {
+  const endRadians = degreesToRadians(endDegrees);
+
   // For now, we cheat a little in figuring out an exact path in favor of getting
   // something that's close enough and easy to draw later.
-  const endRadians = degreesToRadians(endDegrees);
-  const totalDistanceYards =
-    baseCarryYards * Math.cos(degreesToRadians(startDegrees - endDegrees) * 2);
+  const spinMultiplier = Math.cos(
+    degreesToRadians(startDegrees - endDegrees) * 2
+  );
+
+  // Account for the face being more open or closed... this isn't a great formula
+  // because technically you can fade or draw depending on a number of factors
+  // that may not be the face opening or closing, but for now... close enough!
+  // This is how we can approximate missing short right for a RH player.
+  const openMultiplier = Math.min(1.15, 1 - 0.005 * offDegrees);
+
+  const totalDistanceYards = baseCarryYards * spinMultiplier * openMultiplier;
 
   const xDistanceYards = Math.cos(endRadians) * totalDistanceYards;
   const yDistanceYards = Math.sin(endRadians) * totalDistanceYards;
@@ -69,19 +80,17 @@ export function hitShot(
   const startSpreadDegrees =
     (outcome.startDegreesRightmost - outcome.startDegreesLeftmost) *
     terrainMultiplier;
+  const offStartDegrees = rands[1].value * startSpreadDegrees;
   const startDegrees = boundDegrees(
-    rands[1].value * startSpreadDegrees +
-      outcome.startDegreesLeftmost +
-      initialDirectionDegrees
+    offStartDegrees + outcome.startDegreesLeftmost + initialDirectionDegrees
   );
 
   const sidespinSpreadDegrees =
     (outcome.sidespinDegreeRightmost - outcome.sidespinDegreeLeftmost) *
     terrainMultiplier;
+  const offSideDegrees = rands[2].value * sidespinSpreadDegrees;
   const endDegrees = boundDegrees(
-    rands[2].value * sidespinSpreadDegrees +
-      outcome.sidespinDegreeLeftmost +
-      startDegrees
+    offSideDegrees + outcome.sidespinDegreeLeftmost + startDegrees
   );
 
   const totalDistanceSpread =
@@ -89,5 +98,11 @@ export function hitShot(
   const carryYards =
     rands[3].value * totalDistanceSpread + outcome.carryYardsMin;
 
-  return hitShotWithParameters(source, startDegrees, endDegrees, carryYards);
+  return hitShotWithParameters(
+    source,
+    startDegrees,
+    endDegrees,
+    offSideDegrees + offStartDegrees,
+    carryYards
+  );
 }

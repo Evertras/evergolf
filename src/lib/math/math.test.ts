@@ -2,6 +2,7 @@ import {
   avgDegrees,
   boundDegrees,
   degreesToRadians,
+  isFirstLeftOfSecondDegrees,
   radiansToDegrees,
 } from '.';
 
@@ -67,4 +68,22 @@ describe('avgDegrees (for angles 180° or less close to each other)', () => {
 
     expect(actualAvg).toBeCloseTo(avg);
   });
+});
+
+describe('isFirstLeftOfSecondDegrees', () => {
+  test.each`
+    first  | second | isLeft
+    ${0}   | ${1}   | ${true}
+    ${1}   | ${0}   | ${false}
+    ${1}   | ${-1}  | ${false}
+    ${90}  | ${-1}  | ${false}
+    ${180} | ${179} | ${false}
+    ${181} | ${182} | ${true}
+  `(
+    '$first° is left of $second° should be $isLeft',
+    ({ first, second, isLeft }) => {
+      const result = isFirstLeftOfSecondDegrees(first, second);
+      expect(result).toEqual(isLeft);
+    }
+  );
 });
