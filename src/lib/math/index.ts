@@ -20,3 +20,10 @@ export function avgDegrees(a: number, b: number): number {
 
   return avg;
 }
+
+export function isFirstLeftOfSecondDegrees(
+  firstDegrees: number,
+  secondDegrees: number
+): boolean {
+  return firstDegrees < secondDegrees;
+}

@@ -1,5 +1,10 @@
 import { yardsBetween } from 'lib/coords';
-import { boundDegrees, degreesToRadians, radiansToDegrees } from 'lib/math';
+import {
+  boundDegrees,
+  degreesToRadians,
+  isFirstLeftOfSecondDegrees,
+  radiansToDegrees,
+} from 'lib/math';
 import { makeRand, makeRand4 } from 'lib/rand';
 import { Terrain } from 'lib/terrain';
 import { hitShot, hitShotTowards, putt } from '.';
@@ -146,20 +151,28 @@ describe('a 100y shot that can be pushed or pulled 5 degrees', () => {
     ${45}
     ${77}
   `(
-    'going $shotDirectionDegrees° always goes the expected carry distance',
+    'going $shotDirectionDegrees° tends vary between a few yards of distance',
     ({ shotDirectionDegrees }) => {
-      const result = hitShot(
-        shot,
-        sourceOrigin,
-        Terrain.Fairway,
-        shotDirectionDegrees,
-        makeRand4()
-      );
+      for (let i = 0; i < 100; i++) {
+        const result = hitShot(
+          shot,
+          sourceOrigin,
+          Terrain.Fairway,
+          shotDirectionDegrees,
+          makeRand4()
+        );
 
-      expect(result.source).toEqual(sourceOrigin);
+        expect(result.source).toEqual(sourceOrigin);
 
-      const totalDistance = yardsBetween(result.landingSpot, result.source);
-      expect(totalDistance).toBeCloseTo(carryYards);
+        const totalDistance = yardsBetween(result.landingSpot, result.source);
+
+        const expectedMin = 95;
+        const expectedMax = 105;
+
+        // Sanity check total distance
+        expect(totalDistance).toBeGreaterThan(expectedMin);
+        expect(totalDistance).toBeLessThan(expectedMax);
+      }
     }
   );
 
