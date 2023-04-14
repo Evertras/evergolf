@@ -1,5 +1,6 @@
 import { yardsBetween } from 'lib/coords';
 import { boundDegrees, degreesToRadians, radiansToDegrees } from 'lib/math';
+import { makeRand, makeRand4 } from 'lib/rand';
 import { Terrain } from 'lib/terrain';
 import { hitShot, hitShotTowards, putt } from '.';
 
@@ -18,7 +19,7 @@ describe('a shot with no possible outcomes', () => {
         potentialOutcomes: [],
       };
 
-      hitShot(badShot, sourceOrigin, Terrain.Fairway, 0);
+      hitShot(badShot, sourceOrigin, Terrain.Fairway, 0, makeRand4());
     }).toThrow();
   });
 });
@@ -59,7 +60,8 @@ describe('a perfect 100y straight shot', () => {
         shot,
         sourceOrigin,
         Terrain.Fairway,
-        shotDirectionDegrees
+        shotDirectionDegrees,
+        makeRand4()
       );
 
       expect(result.source).toEqual(sourceOrigin);
@@ -101,7 +103,8 @@ describe('a perfect 100y straight shot', () => {
         shot,
         sourceOrigin,
         Terrain.Fairway,
-        target
+        target,
+        makeRand4()
       );
 
       expect(result.source).toEqual(sourceOrigin);
@@ -149,7 +152,8 @@ describe('a 100y shot that can be pushed or pulled 5 degrees', () => {
         shot,
         sourceOrigin,
         Terrain.Fairway,
-        shotDirectionDegrees
+        shotDirectionDegrees,
+        makeRand4()
       );
 
       expect(result.source).toEqual(sourceOrigin);
@@ -181,7 +185,13 @@ describe('a 100y shot that can be pushed or pulled 5 degrees', () => {
     expect(minYardsY).toBeLessThan(maxYardsY);
 
     for (let i = 0; i < 1000; i++) {
-      const result = hitShot(shot, sourceOrigin, Terrain.Fairway, 0);
+      const result = hitShot(
+        shot,
+        sourceOrigin,
+        Terrain.Fairway,
+        0,
+        makeRand4()
+      );
       expect(result.landingSpot.yYards).toBeGreaterThanOrEqual(minYardsY);
       expect(result.landingSpot.yYards).toBeLessThanOrEqual(maxYardsY);
 
@@ -244,7 +254,8 @@ describe('a 100y shot that can be spun 5° in either direction', () => {
           shot,
           sourceOrigin,
           Terrain.Fairway,
-          shotDirectionDegrees
+          shotDirectionDegrees,
+          makeRand4()
         );
 
         expect(result.source).toEqual(sourceOrigin);
@@ -285,7 +296,13 @@ describe('a 100y shot that can be spun 5° in either direction', () => {
     expect(minYardsY).toBeLessThan(maxYardsY);
 
     for (let i = 0; i < 1000; i++) {
-      const result = hitShot(shot, sourceOrigin, Terrain.Fairway, 0);
+      const result = hitShot(
+        shot,
+        sourceOrigin,
+        Terrain.Fairway,
+        0,
+        makeRand4()
+      );
       expect(result.landingSpot.yYards).toBeGreaterThanOrEqual(minYardsY);
       expect(result.landingSpot.yYards).toBeLessThanOrEqual(maxYardsY);
 
@@ -330,7 +347,13 @@ describe('a 100y shot that can only draw left 5°', () => {
     let totalDistanceOffsetY = 0;
 
     for (let i = 0; i < iterations; i++) {
-      const result = hitShot(shot, sourceOrigin, Terrain.Fairway, 0);
+      const result = hitShot(
+        shot,
+        sourceOrigin,
+        Terrain.Fairway,
+        0,
+        makeRand4()
+      );
 
       expect(result.landingSpot.yYards).toBeLessThanOrEqual(
         sourceOrigin.yYards
@@ -348,7 +371,7 @@ describe('a 100y shot that can only draw left 5°', () => {
 describe('putt', () => {
   test('all putts under 2 feet always go in', () => {
     for (let i = 0; i < 1000; i++) {
-      const numPutts = putt(1.9, 15);
+      const numPutts = putt(1.9, 15, makeRand());
 
       expect(numPutts).toEqual(1);
     }

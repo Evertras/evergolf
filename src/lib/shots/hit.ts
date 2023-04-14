@@ -1,14 +1,22 @@
 import { directionDegrees } from 'lib/coords';
 import { boundDegrees, degreesToRadians } from 'lib/math';
+import { Rand4 } from 'lib/rand';
 import { getTerrainUncertaintyMultiplier, Terrain } from 'lib/terrain';
 
 export function hitShotTowards(
   shot: Shot,
   source: Coords,
   terrain: Terrain,
-  target: Coords
+  target: Coords,
+  rands: Rand4
 ): ShotResult {
-  return hitShot(shot, source, terrain, directionDegrees(source, target));
+  return hitShot(
+    shot,
+    source,
+    terrain,
+    directionDegrees(source, target),
+    rands
+  );
 }
 
 // 0 degrees is straight east, increasing clockwise
@@ -16,7 +24,8 @@ export function hitShot(
   shot: Shot,
   source: Coords,
   terrain: Terrain,
-  initialDirectionDegrees: number
+  initialDirectionDegrees: number,
+  rands: Rand4
 ): ShotResult {
   if (shot.potentialOutcomes.length === 0) {
     throw new Error('shot has no outcomes');
@@ -26,14 +35,14 @@ export function hitShot(
 
   const outcome =
     shot.potentialOutcomes[
-      Math.floor(Math.random() * shot.potentialOutcomes.length)
+      Math.floor(rands[0].value * shot.potentialOutcomes.length)
     ];
 
   const startSpreadDegrees =
     (outcome.startDegreesRightmost - outcome.startDegreesLeftmost) *
     terrainMultiplier;
   const startDegrees = boundDegrees(
-    Math.random() * startSpreadDegrees +
+    rands[1].value * startSpreadDegrees +
       outcome.startDegreesLeftmost +
       initialDirectionDegrees
   );
@@ -42,7 +51,7 @@ export function hitShot(
     (outcome.sidespinDegreeRightmost - outcome.sidespinDegreeLeftmost) *
     terrainMultiplier;
   const endDegrees = boundDegrees(
-    Math.random() * sidespinSpreadDegrees +
+    rands[2].value * sidespinSpreadDegrees +
       outcome.sidespinDegreeLeftmost +
       startDegrees
   );
@@ -56,7 +65,7 @@ export function hitShot(
   const totalDistanceSpread =
     (outcome.carryYardsMax - outcome.carryYardsMin) * terrainMultiplier;
   const totalDistanceYards =
-    (Math.random() * totalDistanceSpread + outcome.carryYardsMin) *
+    (rands[3].value * totalDistanceSpread + outcome.carryYardsMin) *
     distanceModifier;
 
   const xDistanceYards = Math.cos(endRadians) * totalDistanceYards;

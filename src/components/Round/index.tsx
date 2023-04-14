@@ -9,6 +9,7 @@ import { approachShot, putt } from 'lib/shots';
 import { feetBetween, yardsBetween } from 'lib/coords';
 import { isTerrainHittableFrom, Terrain, terrainAtPoint } from 'lib/terrain';
 import { hitShotTowards } from 'lib/shots/hit';
+import { makeRand2, makeRand, makeRand4 } from 'lib/rand';
 
 export interface RoundProps {
   bag: Shot[];
@@ -96,7 +97,8 @@ const Round = ({
       bag[selectedShotIndex],
       ballLocation,
       terrainFrom,
-      target
+      target,
+      makeRand4()
     );
 
     let terrainTo = terrainAtPoint(initialResult.landingSpot, imgScale);
@@ -129,11 +131,13 @@ const Round = ({
       terrainFrom = terrainAtPoint(location, imgScale);
 
       // TODO: use separate short game handicap for approximating
+      const rands = makeRand2();
       const approachResult = approachShot(
         approachFrom,
         pinLocation,
         terrainFrom,
-        puttingHandicap
+        puttingHandicap,
+        rands
       );
 
       terrainTo = terrainAtPoint(approachResult.landingSpot, imgScale);
@@ -151,9 +155,11 @@ const Round = ({
     if (terrainTo === Terrain.Green) {
       const lastShot = shotsTaken[shotsTaken.length - 1];
       // Auto putt out
+      const r = makeRand();
       const putts = putt(
         feetBetween(lastShot.result.landingSpot, pinLocation),
-        puttingHandicap
+        puttingHandicap,
+        r
       );
 
       shotsTaken.push({

@@ -1,3 +1,4 @@
+import { makeRand2, Rand } from 'lib/rand';
 import { directionDegrees, feetBetween, landNear, yardsBetween } from '.';
 
 describe('yardsBetween', () => {
@@ -72,7 +73,8 @@ describe('landNear', () => {
       };
 
       for (let i = 1; i <= 100000; i++) {
-        const landedAt = landNear(target, avgDistanceYards);
+        const rands = makeRand2();
+        const landedAt = landNear(target, avgDistanceYards, rands);
         const distanceYards = yardsBetween(target, landedAt);
         movingAverage = (movingAverage * (i - 1) + distanceYards) / i;
       }
@@ -82,6 +84,22 @@ describe('landNear', () => {
       expect(diff).toBeLessThan(0.5);
     }
   );
+
+  test('uses different values from rands', () => {
+    const constantRand = new Rand();
+    const target = {
+      xYards: 0,
+      yYards: 0,
+    };
+
+    const seen: Coords[] = [];
+
+    for (let i = 0; i < 100; i++) {
+      const landedAt = landNear(target, 10, [constantRand, new Rand()]);
+
+      expect(seen).not.toContain<Coords>(landedAt);
+    }
+  });
 });
 
 describe('directionDegrees', () => {
