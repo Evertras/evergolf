@@ -117,6 +117,7 @@ const Hole = ({
             <ShotTracer
               key={i}
               result={shot.result}
+              showDistance={true}
               destinationText={
                 shot.terrainTo === Terrain.Hole
                   ? Math.max(
