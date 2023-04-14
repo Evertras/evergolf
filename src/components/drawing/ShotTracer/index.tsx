@@ -4,21 +4,19 @@ import { TextStyle } from 'pixi.js';
 import Bezier from '../Bezier';
 import Circle from '../Circle';
 import { degreesToRadians } from 'lib/math';
-import { Terrain } from 'lib/terrain';
-import { feetBetween } from 'lib/coords';
 
 export interface ShotTracerProps {
-  shot: ShotHistory;
-  pinLocation: Coords;
+  result: ShotResult;
+  destinationText?: string;
 }
 
-const ShotTracer = ({ shot, pinLocation }: ShotTracerProps) => {
-  const diffX = shot.result.source.xYards - shot.result.landingSpot.xYards;
-  const diffY = shot.result.source.yYards - shot.result.landingSpot.yYards;
+const ShotTracer = ({ result, destinationText }: ShotTracerProps) => {
+  const diffX = result.source.xYards - result.landingSpot.xYards;
+  const diffY = result.source.yYards - result.landingSpot.yYards;
   const distance = Math.sqrt(diffX * diffX + diffY * diffY);
   const rotation = Math.atan(diffY / diffX);
 
-  const startRadians = degreesToRadians(shot.result.startDegrees);
+  const startRadians = degreesToRadians(result.startDegrees);
   const startingDirectionUnit = {
     xYards: Math.cos(startRadians),
     yYards: Math.sin(startRadians),
@@ -26,9 +24,9 @@ const ShotTracer = ({ shot, pinLocation }: ShotTracerProps) => {
 
   const controlPoint: Coords = {
     xYards:
-      startingDirectionUnit.xYards * distance * 0.5 + shot.result.source.xYards,
+      startingDirectionUnit.xYards * distance * 0.5 + result.source.xYards,
     yYards:
-      startingDirectionUnit.yYards * distance * 0.5 + shot.result.source.yYards,
+      startingDirectionUnit.yYards * distance * 0.5 + result.source.yYards,
   };
 
   const color = 'orange';
@@ -37,14 +35,14 @@ const ShotTracer = ({ shot, pinLocation }: ShotTracerProps) => {
     <React.Fragment>
       <Container>
         <Bezier
-          start={shot.result.source}
-          end={shot.result.landingSpot}
+          start={result.source}
+          end={result.landingSpot}
           controlPoint={controlPoint}
           color={color}
           thickness={2}
         />
         <Circle
-          loc={shot.result.source}
+          loc={result.source}
           radiusPixels={2}
           fillColor={color}
           strokeColor={'gray'}
@@ -65,16 +63,11 @@ const ShotTracer = ({ shot, pinLocation }: ShotTracerProps) => {
           }
         />
 
-        {shot.terrainTo === Terrain.Hole ? (
+        {destinationText ? (
           <Text
-            text={
-              Math.max(
-                1,
-                Math.floor(feetBetween(shot.result.landingSpot, pinLocation))
-              ).toFixed(0) + "'"
-            }
-            x={shot.result.landingSpot.xYards}
-            y={shot.result.landingSpot.yYards}
+            text={destinationText}
+            x={result.landingSpot.xYards}
+            y={result.landingSpot.yYards}
             anchor={[0.5, 0]}
             style={
               new TextStyle({
@@ -85,22 +78,7 @@ const ShotTracer = ({ shot, pinLocation }: ShotTracerProps) => {
               })
             }
           />
-        ) : (
-          <Text
-            text={shot.terrainTo}
-            x={shot.result.landingSpot.xYards}
-            y={shot.result.landingSpot.yYards}
-            anchor={[0.5, 1]}
-            style={
-              new TextStyle({
-                fill: color,
-                stroke: 'black',
-                strokeThickness: 2,
-                fontSize: '6pt',
-              })
-            }
-          />
-        )}
+        ) : null}
       </Container>
     </React.Fragment>
   );

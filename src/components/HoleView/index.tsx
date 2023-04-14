@@ -9,6 +9,7 @@ import YardageMeasurement from 'components/drawing/YardageMeasurement';
 import { Terrain } from 'lib/terrain';
 
 import styles from './HoleView.module.css';
+import { feetBetween } from 'lib/coords';
 
 export interface HoleProps {
   // Data to build view
@@ -113,7 +114,20 @@ const Hole = ({
             // Shot tracers
           }
           {shotsTaken.map((shot, i) => (
-            <ShotTracer key={i} shot={shot} pinLocation={pinLocation} />
+            <ShotTracer
+              key={i}
+              result={shot.result}
+              destinationText={
+                shot.terrainTo === Terrain.Hole
+                  ? Math.max(
+                      1,
+                      Math.floor(
+                        feetBetween(shot.result.landingSpot, pinLocation)
+                      )
+                    ).toFixed(0) + "'"
+                  : shot.terrainTo
+              }
+            />
           ))}
 
           {
