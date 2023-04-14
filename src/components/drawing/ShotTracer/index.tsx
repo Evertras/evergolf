@@ -8,9 +8,14 @@ import { degreesToRadians } from 'lib/math';
 export interface ShotTracerProps {
   result: ShotResult;
   destinationText?: string;
+  showDistance: boolean;
 }
 
-const ShotTracer = ({ result, destinationText }: ShotTracerProps) => {
+const ShotTracer = ({
+  result,
+  destinationText,
+  showDistance,
+}: ShotTracerProps) => {
   const diffX = result.source.xYards - result.landingSpot.xYards;
   const diffY = result.source.yYards - result.landingSpot.yYards;
   const distance = Math.sqrt(diffX * diffX + diffY * diffY);
@@ -47,21 +52,24 @@ const ShotTracer = ({ result, destinationText }: ShotTracerProps) => {
           fillColor={color}
           strokeColor={'gray'}
         />
-        <Text
-          text={distance.toFixed(0) + ' yd'}
-          rotation={rotation}
-          x={controlPoint.xYards}
-          y={controlPoint.yYards}
-          anchor={[0.5, 0.5]}
-          style={
-            new TextStyle({
-              fill: color,
-              stroke: 'black',
-              strokeThickness: 2,
-              fontSize: '6pt',
-            })
-          }
-        />
+
+        {showDistance ? (
+          <Text
+            text={distance.toFixed(0) + ' yd'}
+            rotation={rotation}
+            x={controlPoint.xYards}
+            y={controlPoint.yYards}
+            anchor={[0.5, 0.5]}
+            style={
+              new TextStyle({
+                fill: color,
+                stroke: 'black',
+                strokeThickness: 2,
+                fontSize: '6pt',
+              })
+            }
+          />
+        ) : null}
 
         {destinationText ? (
           <Text
