@@ -117,24 +117,37 @@ const Hole = ({
           {
             // Shot tracers
           }
-          {shotsTaken.map((shot, i) => (
-            <ShotTracer
-              key={i}
-              result={shot.result}
-              showDistance={true}
-              pixelsPerYard={pixelsPerYard}
-              destinationText={
-                shot.terrainTo === Terrain.Hole
-                  ? Math.max(
-                      1,
-                      Math.floor(
-                        feetBetween(shot.result.landingSpot, pinLocation)
-                      )
-                    ).toFixed(0) + "'"
-                  : shot.terrainTo
-              }
-            />
-          ))}
+          {shotsTaken.map((shot, i) => {
+            let destinationText = '';
+
+            switch (shot.terrainTo) {
+              case Terrain.Green:
+                break;
+
+              case Terrain.Hole:
+                destinationText =
+                  Math.max(
+                    1,
+                    Math.floor(
+                      feetBetween(shot.result.landingSpot, pinLocation)
+                    )
+                  ).toFixed(0) + "'";
+                break;
+
+              default:
+                destinationText = shot.terrainTo;
+            }
+
+            return (
+              <ShotTracer
+                key={i}
+                result={shot.result}
+                showDistance={true}
+                pixelsPerYard={pixelsPerYard}
+                destinationText={destinationText}
+              />
+            );
+          })}
 
           {
             // Pin
