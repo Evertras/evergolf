@@ -12,7 +12,7 @@ export interface ShotEditorProps {
 const ShotEditor = ({ shot }: ShotEditorProps) => {
   const [editedOutcome, setEditedOutcome] = useState(shot.potentialOutcomes[0]);
 
-  const maxDegreeDispersion = 15;
+  const maxDegreeDispersion = 20;
   const leftmostDegrees = -maxDegreeDispersion;
   const rightmostDegrees = maxDegreeDispersion;
   const degreesStep = 0.5;
@@ -83,7 +83,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
               Leftmost {editedOutcome.sidespinDegreeLeftmost.toFixed(1)}°
             </div>
             <Slider
-              min={-10}
+              min={leftmostDegrees}
               max={editedOutcome.sidespinDegreeRightmost}
               step={degreesStep}
               startingValue={editedOutcome.sidespinDegreeLeftmost}
