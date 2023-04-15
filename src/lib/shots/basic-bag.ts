@@ -4,7 +4,7 @@ const spinVariance = 15;
 // A sample bag to play with, not based on anything but rough playable yardages
 // and a bit of variance.  Replace with actual stats later.
 export const basicBag: Bag = {
-  name: 'Evertras',
+  name: 'Basic',
   approachHandicap: 15,
   puttingHandicap: 15,
   shots: [
