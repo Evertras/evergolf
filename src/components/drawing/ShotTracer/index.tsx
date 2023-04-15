@@ -44,6 +44,8 @@ const ShotTracer = ({
   const sourcePixels = scaledByPixels(result.source, pixelsPerYard);
   const landingSpotPixels = scaledByPixels(result.landingSpot, pixelsPerYard);
 
+  const textStrokeThickness = 4;
+
   return (
     <React.Fragment>
       <Container>
@@ -52,7 +54,7 @@ const ShotTracer = ({
           end={landingSpotPixels}
           controlPoint={controlPoint}
           color={color}
-          thickness={2}
+          thickness={4}
         />
         <Circle
           loc={sourcePixels}
@@ -72,7 +74,7 @@ const ShotTracer = ({
               new TextStyle({
                 fill: color,
                 stroke: 'black',
-                strokeThickness: 2,
+                strokeThickness: textStrokeThickness,
                 fontSize: '14pt',
               })
             }
@@ -89,7 +91,7 @@ const ShotTracer = ({
               new TextStyle({
                 fill: color,
                 stroke: 'black',
-                strokeThickness: 2,
+                strokeThickness: textStrokeThickness,
                 fontSize: '14pt',
               })
             }

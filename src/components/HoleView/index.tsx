@@ -187,7 +187,7 @@ const Hole = ({
                   color="white"
                   textColor="white"
                   showRings={true}
-                  thickness={1}
+                  thickness={3}
                 />
                 <YardageMeasurement
                   start={pinLocation}
