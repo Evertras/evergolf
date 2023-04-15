@@ -12,6 +12,13 @@ export interface ShotEditorProps {
 const ShotEditor = ({ shot }: ShotEditorProps) => {
   const [editedOutcome, setEditedOutcome] = useState(shot.potentialOutcomes[0]);
 
+  const maxDegreeDispersion = 15;
+  const leftmostDegrees = -maxDegreeDispersion;
+  const rightmostDegrees = maxDegreeDispersion;
+  const degreesStep = 0.5;
+
+  const maxDistance = 350;
+
   return (
     <React.Fragment>
       <div className={styles.controls}>
@@ -30,10 +37,74 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
             <div>Max {editedOutcome.carryYardsMax}</div>
             <Slider
               min={editedOutcome.carryYardsMin}
-              max={350}
+              max={maxDistance}
               startingValue={editedOutcome.carryYardsMax}
               onChange={(val: number) => {
                 setEditedOutcome({ ...editedOutcome, carryYardsMax: val });
+              }}
+            />
+          </div>
+        </div>
+        <div className={styles.controlGroup}>
+          <div className={styles.controlGroupHeader}>Start Direction</div>
+          <div className={styles.controlGroupItem}>
+            <div>Leftmost {editedOutcome.startDegreesLeftmost.toFixed(1)}°</div>
+            <Slider
+              min={leftmostDegrees}
+              max={editedOutcome.startDegreesRightmost}
+              step={degreesStep}
+              startingValue={editedOutcome.startDegreesLeftmost}
+              onChange={(val: number) => {
+                setEditedOutcome({
+                  ...editedOutcome,
+                  startDegreesLeftmost: val,
+                });
+              }}
+            />
+            <div>Rightmost {editedOutcome.startDegreesRightmost}°</div>
+            <Slider
+              min={editedOutcome.startDegreesLeftmost}
+              max={rightmostDegrees}
+              step={degreesStep}
+              startingValue={editedOutcome.startDegreesRightmost}
+              onChange={(val: number) => {
+                setEditedOutcome({
+                  ...editedOutcome,
+                  startDegreesRightmost: val,
+                });
+              }}
+            />
+          </div>
+        </div>
+        <div className={styles.controlGroup}>
+          <div className={styles.controlGroupHeader}>Spin Direction</div>
+          <div className={styles.controlGroupItem}>
+            <div>
+              Leftmost {editedOutcome.sidespinDegreeLeftmost.toFixed(1)}°
+            </div>
+            <Slider
+              min={-10}
+              max={editedOutcome.sidespinDegreeRightmost}
+              step={degreesStep}
+              startingValue={editedOutcome.sidespinDegreeLeftmost}
+              onChange={(val: number) => {
+                setEditedOutcome({
+                  ...editedOutcome,
+                  sidespinDegreeLeftmost: val,
+                });
+              }}
+            />
+            <div>Rightmost {editedOutcome.sidespinDegreeRightmost}°</div>
+            <Slider
+              min={editedOutcome.sidespinDegreeLeftmost}
+              max={rightmostDegrees}
+              step={degreesStep}
+              startingValue={editedOutcome.sidespinDegreeRightmost}
+              onChange={(val: number) => {
+                setEditedOutcome({
+                  ...editedOutcome,
+                  sidespinDegreeRightmost: val,
+                });
               }}
             />
           </div>

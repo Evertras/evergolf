@@ -9,9 +9,10 @@ export interface SliderProps {
   max: number;
   onChange: (n: number) => void;
   startingValue: number;
+  step?: number;
 }
 
-const Slider = ({ min, max, startingValue, onChange }: SliderProps) => {
+const Slider = ({ min, max, startingValue, onChange, step }: SliderProps) => {
   return (
     <React.Fragment>
       <ReactSlider
@@ -22,6 +23,7 @@ const Slider = ({ min, max, startingValue, onChange }: SliderProps) => {
         max={max}
         defaultValue={startingValue}
         onChange={onChange}
+        step={step}
       />
     </React.Fragment>
   );
