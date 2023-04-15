@@ -1,0 +1,23 @@
+.evergolf-slider {
+  margin: auto;
+  margin-bottom: 1em;
+  width: 200px;
+}
+
+.evergolf-slider-track {
+  top: 8px;
+  height: 8px;
+  background: var(--slider-track-color);
+}
+
+.evergolf-slider-track.evergolf-slider-track-0 {
+  background: salmon;
+}
+
+.evergolf-slider-thumb {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background: salmon;
+}

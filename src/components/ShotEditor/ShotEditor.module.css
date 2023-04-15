@@ -1,3 +1,31 @@
-.stage {
-  border-radius: 1em;
+.controls {
+  width: 60vw;
+  display: flex;
+  margin-bottom: 1em;
+}
+
+.controlGroup {
+  display: flex;
+
+  align-items: stretch;
+
+  font-size: 0.8em;
+  text-align: right;
+
+  border: 2px solid white;
+  border-right: 0;
+}
+
+.controlGroup:last-of-type {
+  border-right: 2px solid white;
+}
+
+.controlGroupHeader {
+  font-size: 1.2em;
+  padding: 0.5em;
+  border-right: 1px dashed white;
+}
+
+.controlGroupItem {
+  padding: 0.5em;
 }
