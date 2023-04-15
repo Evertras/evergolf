@@ -11,15 +11,17 @@ const BagEditor = () => {
     setCurrentShotIndex(i);
   };
 
-  const shot = basicBag[currentShotIndex];
+  const shot = basicBag.shots[currentShotIndex];
 
   return (
     <React.Fragment>
+      <div>Approach game handicap: {basicBag.approachHandicap}</div>
+      <div>Putting handicap: {basicBag.puttingHandicap}</div>
       <ShotEditor key={shot.name} shot={shot} />
       <ShotSelector
         currentSelectedIndex={currentShotIndex}
         onSelectIndex={onSelectIndex}
-        shots={basicBag}
+        shots={basicBag.shots}
       />
     </React.Fragment>
   );
