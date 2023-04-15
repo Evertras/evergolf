@@ -22,7 +22,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
   // Temporarily just say this is a shot viewer for a prod deploy
   return (
     <React.Fragment>
-      <div>Shot viewer</div>
+      <div>Shot dispersion viewer</div>
       <div className={styles.controls}>
         <div className={styles.controlGroup}>
           <div className={styles.controlGroupHeader}>Carry</div>

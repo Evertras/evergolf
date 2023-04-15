@@ -12,20 +12,13 @@ import { hitShotTowards } from 'lib/shots/hit';
 import { makeRand2, makeRand, makeRand4 } from 'lib/rand';
 
 export interface RoundProps {
-  bag: Shot[];
+  bag: Bag;
   course: CourseData;
   selectedTees: Tees;
-  puttingHandicap: number;
   pinLocationIndex: number;
 }
 
-const Round = ({
-  bag,
-  course,
-  selectedTees,
-  pinLocationIndex,
-  puttingHandicap,
-}: RoundProps) => {
+const Round = ({ bag, course, selectedTees, pinLocationIndex }: RoundProps) => {
   const [currentHoleNumber, setCurrentHoleNumber] = useState(1);
 
   const [shotHistoryByHole, setShotHistoryByHole] = useState(
@@ -48,7 +41,7 @@ const Round = ({
 
   const shotsTaken = shotHistoryByHole[currentHoleNumber - 1];
 
-  const selectedShot = bag[selectedShotIndex];
+  const selectedShot = bag.shots[selectedShotIndex];
   const expectedOutcome = selectedShot.potentialOutcomes[0];
 
   const imgScale = 1 / currentHoleData.imgPixelsPerYard;
@@ -94,7 +87,7 @@ const Round = ({
         : Terrain.Fairway;
 
     const initialResult = hitShotTowards(
-      bag[selectedShotIndex],
+      bag.shots[selectedShotIndex],
       ballLocation,
       terrainFrom,
       target,
@@ -136,7 +129,7 @@ const Round = ({
         approachFrom,
         pinLocation,
         terrainFrom,
-        puttingHandicap,
+        bag.approachHandicap,
         rands
       );
 
@@ -158,7 +151,7 @@ const Round = ({
       const r = makeRand();
       const putts = putt(
         feetBetween(lastShot.result.landingSpot, pinLocation),
-        puttingHandicap,
+        bag.puttingHandicap,
         r
       );
 
@@ -180,12 +173,12 @@ const Round = ({
           {course.name} #{currentHoleNumber} (Par {currentHoleData.par})
         </h3>
         <ShotSelector
-          shots={bag}
+          shots={bag.shots}
           onSelectIndex={setSelectedShotIndex}
           currentSelectedIndex={selectedShotIndex}
         />
         <HoleView
-          bag={bag}
+          bag={bag.shots}
           data={currentHoleData}
           shotsTaken={shotHistoryByHole[currentHoleNumber - 1]}
           onClick={onClickHole}

@@ -25,7 +25,6 @@ const Play = () => {
           course={chibaShimin}
           selectedTees={tees}
           pinLocationIndex={0}
-          puttingHandicap={15}
         />
         <TeeSelector
           tees={chibaShimin.tees}
