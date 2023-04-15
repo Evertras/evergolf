@@ -61,7 +61,7 @@ const YardageMeasurement = ({
               loc={startPixels}
               radiusPixels={(i + 1) * 50 * pixelsPerYard}
               strokeColor={color}
-              strokeThickness={1}
+              strokeThickness={thickness / 2}
               startAngle={startAngle}
               endAngle={endAngle}
             />
@@ -71,7 +71,7 @@ const YardageMeasurement = ({
             loc={startPixels}
             radiusPixels={distance * pixelsPerYard}
             strokeColor={color}
-            strokeThickness={3}
+            strokeThickness={thickness * 1.5}
             startAngle={startAngle}
             endAngle={endAngle}
           />
