@@ -1,20 +1,20 @@
-.slider {
+.evergolf-slider {
   margin: auto;
   margin-bottom: 1em;
   width: 200px;
 }
 
-.sliderTrack {
+.evergolf-slider-track {
   top: 8px;
   height: 8px;
   background: var(--slider-track-color);
 }
 
-.sliderTrack.sliderTrack-0 {
+.evergolf-slider-track.evergolf-slider-track-0 {
   background: salmon;
 }
 
-.sliderThumb {
+.evergolf-slider-thumb {
   cursor: pointer;
   width: 20px;
   height: 20px;

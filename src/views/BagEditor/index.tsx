@@ -15,7 +15,7 @@ const BagEditor = () => {
 
   return (
     <React.Fragment>
-      <ShotEditor shot={shot} />
+      <ShotEditor key={shot.name} shot={shot} />
       <ShotSelector
         currentSelectedIndex={currentShotIndex}
         onSelectIndex={onSelectIndex}
