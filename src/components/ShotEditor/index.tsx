@@ -25,7 +25,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
         <div className={styles.controlGroup}>
           <div className={styles.controlGroupHeader}>Carry</div>
           <div className={styles.controlGroupItem}>
-            <div>Min {editedOutcome.carryYardsMin}</div>
+            <div>{editedOutcome.carryYardsMin} - {editedOutcome.carryYardsMax} yards</div>
             <Slider
               min={0}
               max={editedOutcome.carryYardsMax}
