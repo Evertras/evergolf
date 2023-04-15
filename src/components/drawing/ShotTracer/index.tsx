@@ -4,17 +4,20 @@ import { TextStyle } from 'pixi.js';
 import Bezier from '../Bezier';
 import Circle from '../Circle';
 import { degreesToRadians } from 'lib/math';
+import { scaledByPixels } from 'lib/coords';
 
 export interface ShotTracerProps {
   result: ShotResult;
   destinationText?: string;
   showDistance: boolean;
+  pixelsPerYard: number;
 }
 
 const ShotTracer = ({
   result,
   destinationText,
   showDistance,
+  pixelsPerYard,
 }: ShotTracerProps) => {
   const diffX = result.source.xYards - result.landingSpot.xYards;
   const diffY = result.source.yYards - result.landingSpot.yYards;
@@ -27,27 +30,32 @@ const ShotTracer = ({
     yYards: Math.sin(startRadians),
   };
 
-  const controlPoint: Coords = {
-    xYards:
-      startingDirectionUnit.xYards * distance * 0.5 + result.source.xYards,
-    yYards:
-      startingDirectionUnit.yYards * distance * 0.5 + result.source.yYards,
+  const controlPoint: CoordsPixels = {
+    xPixels:
+      (startingDirectionUnit.xYards * distance * 0.5 + result.source.xYards) *
+      pixelsPerYard,
+    yPixels:
+      (startingDirectionUnit.yYards * distance * 0.5 + result.source.yYards) *
+      pixelsPerYard,
   };
 
   const color = 'orange';
+
+  const sourcePixels = scaledByPixels(result.source, pixelsPerYard);
+  const landingSpotPixels = scaledByPixels(result.landingSpot, pixelsPerYard);
 
   return (
     <React.Fragment>
       <Container>
         <Bezier
-          start={result.source}
-          end={result.landingSpot}
+          start={sourcePixels}
+          end={landingSpotPixels}
           controlPoint={controlPoint}
           color={color}
           thickness={2}
         />
         <Circle
-          loc={result.source}
+          loc={sourcePixels}
           radiusPixels={2}
           fillColor={color}
           strokeColor={'gray'}
@@ -57,15 +65,15 @@ const ShotTracer = ({
           <Text
             text={distance.toFixed(0) + ' yd'}
             rotation={rotation}
-            x={controlPoint.xYards}
-            y={controlPoint.yYards}
+            x={controlPoint.xPixels}
+            y={controlPoint.yPixels}
             anchor={[0.5, 0.5]}
             style={
               new TextStyle({
                 fill: color,
                 stroke: 'black',
                 strokeThickness: 2,
-                fontSize: '6pt',
+                fontSize: '14pt',
               })
             }
           />
@@ -74,15 +82,15 @@ const ShotTracer = ({
         {destinationText ? (
           <Text
             text={destinationText}
-            x={result.landingSpot.xYards}
-            y={result.landingSpot.yYards}
+            x={result.landingSpot.xYards * pixelsPerYard}
+            y={result.landingSpot.yYards * pixelsPerYard}
             anchor={[0.5, 0]}
             style={
               new TextStyle({
                 fill: color,
                 stroke: 'black',
                 strokeThickness: 2,
-                fontSize: '6pt',
+                fontSize: '14pt',
               })
             }
           />

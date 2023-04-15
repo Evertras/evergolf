@@ -3,8 +3,8 @@ import { Graphics } from '@pixi/react';
 import { useCallback } from 'react';
 
 export interface LineProps {
-  start: Coords;
-  end: Coords;
+  start: CoordsPixels;
+  end: CoordsPixels;
   color: ColorSource;
   thickness: number;
 }
@@ -14,8 +14,8 @@ const Line = (props: LineProps) => {
     (g: PIXIGraphics) => {
       g.clear();
       g.lineStyle(props.thickness, props.color);
-      g.moveTo(props.start.xYards, props.start.yYards);
-      g.lineTo(props.end.xYards, props.end.yYards);
+      g.moveTo(props.start.xPixels, props.start.yPixels);
+      g.lineTo(props.end.xPixels, props.end.yPixels);
       g.endFill();
     },
     [props]

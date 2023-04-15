@@ -9,7 +9,7 @@ import YardageMeasurement from 'components/drawing/YardageMeasurement';
 import { Terrain } from 'lib/terrain';
 
 import styles from './HoleView.module.css';
-import { feetBetween } from 'lib/coords';
+import { feetBetween, scaledByPixels } from 'lib/coords';
 
 export interface HoleProps {
   // Data to build view
@@ -51,11 +51,15 @@ const Hole = ({
     shotsTaken.length > 0 &&
     shotsTaken[shotsTaken.length - 1].terrainTo === Terrain.Hole;
 
-  const imgScale = 1 / data.imgPixelsPerYard;
-  const overallScale = Math.min(
+  const pixelsPerYard = Math.min(
     holeViewWidthPixels / data.widthYards,
     holeViewHeightPixels / data.heightYards
   );
+  const imgScale = (1 / data.imgPixelsPerYard) * pixelsPerYard;
+
+  const ballLocationPixels = scaledByPixels(ballLocation, pixelsPerYard);
+  const pinLocationPixels = scaledByPixels(pinLocation, pixelsPerYard);
+  const teeLocationPixels = scaledByPixels(teeLocation, pixelsPerYard);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -63,8 +67,8 @@ const Hole = ({
     const y = e.pageY - rect.top;
 
     setMouseCoords({
-      xYards: x / overallScale,
-      yYards: y / overallScale,
+      xYards: x / pixelsPerYard,
+      yYards: y / pixelsPerYard,
     });
   };
 
@@ -79,15 +83,15 @@ const Hole = ({
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const target: Coords = {
-      xYards: (e.pageX - rect.left) / overallScale,
-      yYards: (e.pageY - rect.top) / overallScale,
+      xYards: (e.pageX - rect.left) / pixelsPerYard,
+      yYards: (e.pageY - rect.top) / pixelsPerYard,
     };
 
     onClick(target);
   };
 
-  const pinRadius = 5 / overallScale;
-  const teeMarkerRadius = 5 / overallScale;
+  const pinRadiusPixels = 5;
+  const teeMarkerRadius = 5;
 
   return (
     <React.Fragment>
@@ -103,7 +107,7 @@ const Hole = ({
           backgroundAlpha: 1,
         }}
       >
-        <Container interactiveChildren={false} scale={overallScale}>
+        <Container interactiveChildren={false}>
           <Sprite
             image={data.imgSrcURL}
             anchor={{ x: 0, y: 0 }}
@@ -118,6 +122,7 @@ const Hole = ({
               key={i}
               result={shot.result}
               showDistance={true}
+              pixelsPerYard={pixelsPerYard}
               destinationText={
                 shot.terrainTo === Terrain.Hole
                   ? Math.max(
@@ -134,13 +139,17 @@ const Hole = ({
           {
             // Pin
           }
-          <Circle loc={pinLocation} radiusPixels={pinRadius} fillColor="cyan" />
+          <Circle
+            loc={pinLocationPixels}
+            radiusPixels={pinRadiusPixels}
+            fillColor="cyan"
+          />
 
           {
             // Tees
           }
           <Circle
-            loc={teeLocation}
+            loc={teeLocationPixels}
             radiusPixels={teeMarkerRadius}
             fillColor={tees.color ?? tees.name}
           />
@@ -149,7 +158,7 @@ const Hole = ({
             // Ball
           }
           <Circle
-            loc={ballLocation}
+            loc={ballLocationPixels}
             radiusPixels={teeMarkerRadius}
             fillColor="white"
           />
@@ -161,6 +170,7 @@ const Hole = ({
                 <YardageMeasurement
                   start={ballLocation}
                   end={mouseCoords}
+                  pixelsPerYard={pixelsPerYard}
                   color="white"
                   textColor="white"
                   showRings={true}
@@ -169,6 +179,7 @@ const Hole = ({
                 <YardageMeasurement
                   start={pinLocation}
                   end={mouseCoords}
+                  pixelsPerYard={pixelsPerYard}
                   color="cyan"
                   textColor="cyan"
                   showRings={false}

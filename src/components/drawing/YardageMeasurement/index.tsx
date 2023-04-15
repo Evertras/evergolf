@@ -1,20 +1,34 @@
 import React from 'react';
 import { Container, Text } from '@pixi/react';
-import { TextStyle, TextStyleFill } from 'pixi.js';
-import Line, { LineProps } from '../Line';
+import { ColorSource, TextStyle, TextStyleFill } from 'pixi.js';
+import Line from '../Line';
 import Arc from '../Arc';
+import { scaledByPixels } from 'lib/coords';
 
-export interface YardageMeasurementProps extends LineProps {
+export interface YardageMeasurementProps {
+  start: Coords;
+  end: Coords;
+  pixelsPerYard: number;
+  color: ColorSource;
+  thickness: number;
   textColor: TextStyleFill;
   showRings: boolean;
 }
 
-const YardageMeasurement = (props: YardageMeasurementProps) => {
-  const midpointXYards = (props.start.xYards + props.end.xYards) / 2;
-  const midpointYYards = (props.start.yYards + props.end.yYards) / 2;
+const YardageMeasurement = ({
+  start,
+  end,
+  pixelsPerYard,
+  color,
+  thickness,
+  textColor,
+  showRings,
+}: YardageMeasurementProps) => {
+  const midpointXYards = (start.xYards + end.xYards) / 2;
+  const midpointYYards = (start.yYards + end.yYards) / 2;
 
-  const diffX = props.start.xYards - props.end.xYards;
-  const diffY = props.start.yYards - props.end.yYards;
+  const diffX = start.xYards - end.xYards;
+  const diffY = start.yYards - end.yYards;
   const distance = Math.sqrt(diffX * diffX + diffY * diffY);
   const rotation = Math.atan(diffY / diffX);
 
@@ -22,6 +36,9 @@ const YardageMeasurement = (props: YardageMeasurementProps) => {
   const radiansOff = degreesOff * (Math.PI / 180);
   let startAngle = rotation - radiansOff;
   let endAngle = rotation + radiansOff;
+
+  const startPixels = scaledByPixels(start, pixelsPerYard);
+  const endPixels = scaledByPixels(end, pixelsPerYard);
 
   if (diffX > 0) {
     startAngle = startAngle + Math.PI;
@@ -31,24 +48,29 @@ const YardageMeasurement = (props: YardageMeasurementProps) => {
   return (
     <React.Fragment>
       <Container>
-        <Line {...props} />
-        {props.showRings &&
+        <Line
+          start={startPixels}
+          end={endPixels}
+          color={color}
+          thickness={thickness}
+        />
+        {showRings &&
           [...Array(Math.floor(distance / 50))].map((_, i) => (
             <Arc
               key={i}
-              loc={props.start}
-              radiusPixels={(i + 1) * 50}
-              strokeColor={props.color}
+              loc={startPixels}
+              radiusPixels={(i + 1) * 50 * pixelsPerYard}
+              strokeColor={color}
               strokeThickness={1}
               startAngle={startAngle}
               endAngle={endAngle}
             />
           ))}
-        {props.showRings && (
+        {showRings && (
           <Arc
-            loc={props.start}
-            radiusPixels={distance}
-            strokeColor={props.color}
+            loc={startPixels}
+            radiusPixels={distance * pixelsPerYard}
+            strokeColor={color}
             strokeThickness={3}
             startAngle={startAngle}
             endAngle={endAngle}
@@ -57,15 +79,15 @@ const YardageMeasurement = (props: YardageMeasurementProps) => {
         <Text
           text={distance.toFixed(0) + ' yd'}
           rotation={rotation}
-          x={midpointXYards}
-          y={midpointYYards}
+          x={midpointXYards * pixelsPerYard}
+          y={midpointYYards * pixelsPerYard}
           anchor={[0.5, 0]}
           style={
             new TextStyle({
-              fill: props.textColor,
+              fill: textColor,
               stroke: 'black',
               strokeThickness: 2,
-              fontSize: '10pt',
+              fontSize: '16pt',
             })
           }
         />

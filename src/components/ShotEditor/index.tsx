@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Stage, Text } from '@pixi/react';
 import { TextStyle } from 'pixi.js';
 
-import { yardsBetween } from 'lib/coords';
+import { scaledByPixels, yardsBetween } from 'lib/coords';
 import { hitShotWithParameters } from 'lib/shots/hit';
 
 import Circle from 'components/drawing/Circle';
@@ -28,10 +28,12 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
   const pixelsPerYard = widthPixels / maxYardageVisible;
   const heightYards = heightPixels / pixelsPerYard;
 
-  const origin = {
+  const originYards = {
     xYards: 50,
     yYards: heightYards / 2,
   };
+
+  const originPixels = scaledByPixels(originYards, pixelsPerYard);
 
   const avgStartDegrees =
     (outcome.startDegreesLeftmost + outcome.startDegreesRightmost) / 2;
@@ -40,7 +42,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
   const avgCarry = (outcome.carryYardsMin + outcome.carryYardsMax) / 2;
 
   const avgShot = hitShotWithParameters(
-    origin,
+    originYards,
     avgStartDegrees,
     avgStartDegrees + avgSidespinDegrees,
     0,
@@ -57,7 +59,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
     (outcome.sidespinDegreeRightmost - avgSidespinDegrees);
 
   const maxLeftShot = hitShotWithParameters(
-    origin,
+    originYards,
     outcome.startDegreesLeftmost,
     outcome.startDegreesLeftmost + outcome.sidespinDegreeLeftmost,
     maxLeftOffDegrees,
@@ -65,7 +67,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
   );
 
   const minLeftShot = hitShotWithParameters(
-    origin,
+    originYards,
     outcome.startDegreesLeftmost,
     outcome.startDegreesLeftmost + outcome.sidespinDegreeLeftmost,
     maxLeftOffDegrees,
@@ -73,7 +75,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
   );
 
   const maxRightShot = hitShotWithParameters(
-    origin,
+    originYards,
     outcome.startDegreesRightmost,
     outcome.startDegreesRightmost + outcome.sidespinDegreeRightmost,
     maxRightOffDegrees,
@@ -81,7 +83,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
   );
 
   const minRightShot = hitShotWithParameters(
-    origin,
+    originYards,
     outcome.startDegreesRightmost,
     outcome.startDegreesRightmost + outcome.sidespinDegreeRightmost,
     maxRightOffDegrees,
@@ -89,7 +91,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
   );
 
   const maxStraightShot = hitShotWithParameters(
-    origin,
+    originYards,
     avgStartDegrees,
     avgStartDegrees + avgSidespinDegrees,
     0,
@@ -97,7 +99,7 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
   );
 
   const minStraightShot = hitShotWithParameters(
-    origin,
+    originYards,
     avgStartDegrees,
     avgStartDegrees + avgSidespinDegrees,
     0,
@@ -113,13 +115,18 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
       <ShotTracer
         result={result}
         showDistance={showDistance}
+        pixelsPerYard={pixelsPerYard}
         destinationText={
           showDistance
             ? undefined
-            : yardsBetween(origin, result.landingSpot).toFixed(0)
+            : yardsBetween(originYards, result.landingSpot).toFixed(0)
         }
       />
-      <Circle loc={result.landingSpot} radiusPixels={3} fillColor="orange" />
+      <Circle
+        loc={scaledByPixels(result.landingSpot, pixelsPerYard)}
+        radiusPixels={3}
+        fillColor="orange"
+      />
     </React.Fragment>
   );
 
@@ -133,14 +140,15 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
           backgroundColor: 'darkolivegreen',
         }}
       >
-        <Container interactiveChildren={false} scale={pixelsPerYard}>
-          <Circle loc={origin} radiusPixels={5} fillColor="orange" />
+        <Container interactiveChildren={false}>
+          <Circle loc={originPixels} radiusPixels={5} fillColor="orange" />
 
           {straightShots.map((s) => displayShot(s, false))}
 
           <YardageMeasurement
             start={maxRightShot.landingSpot}
             end={maxLeftShot.landingSpot}
+            pixelsPerYard={pixelsPerYard}
             color="cyan"
             textColor="cyan"
             thickness={1}
@@ -154,8 +162,8 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
           <Text
             text={shot.name}
             anchor={[0.5, 1]}
-            x={origin.xYards}
-            y={origin.yYards - 5}
+            x={originPixels.xPixels}
+            y={originPixels.yPixels - 5}
             style={
               new TextStyle({
                 fill: 'white',

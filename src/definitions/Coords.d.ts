@@ -4,6 +4,7 @@ interface Coords {
   yYards: number;
 }
 
+// CoordsPixels represents a point on the actual display.
 interface CoordsPixels {
   xPixels: number;
   yPixels: number;
