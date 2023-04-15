@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Key } from 'react';
 import { Container, Stage, Text } from '@pixi/react';
 import { TextStyle } from 'pixi.js';
 
@@ -110,8 +110,8 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
 
   const straightShots = [minStraightShot, maxStraightShot];
 
-  const displayShot = (result: ShotResult, showDistance: boolean) => (
-    <React.Fragment>
+  const displayShot = (key: Key, result: ShotResult, showDistance: boolean) => (
+    <React.Fragment key={key}>
       <ShotTracer
         result={result}
         showDistance={showDistance}
@@ -132,18 +132,11 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
 
   return (
     <React.Fragment>
-      <Stage
-        className={styles.stage}
-        width={widthPixels}
-        height={heightPixels}
-        options={{
-          backgroundColor: 'darkolivegreen',
-        }}
-      >
+      <Stage className={styles.stage} width={widthPixels} height={heightPixels}>
         <Container interactiveChildren={false}>
           <Circle loc={originPixels} radiusPixels={5} fillColor="orange" />
 
-          {straightShots.map((s) => displayShot(s, false))}
+          {straightShots.map((s, i) => displayShot(i, s, false))}
 
           <YardageMeasurement
             start={maxRightShot.landingSpot}
@@ -155,9 +148,9 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
             showRings={false}
           />
 
-          {sideShots.map((s) => displayShot(s, false))}
+          {sideShots.map((s, i) => displayShot(i, s, false))}
 
-          {displayShot(avgShot, true)}
+          {displayShot(0, avgShot, true)}
 
           <Text
             text={shot.name}

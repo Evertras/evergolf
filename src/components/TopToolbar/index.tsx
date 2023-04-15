@@ -22,8 +22,8 @@ const TopToolbar = () => {
     <React.Fragment>
       <nav className={styles.TopToolbar}>
         <ul>
-          {choices.map((c) => (
-            <li className={styles.unselected}>
+          {choices.map((c, i) => (
+            <li key={i} className={styles.unselected}>
               <NavLink
                 to={c.link}
                 className={({ isActive, isPending }) =>
