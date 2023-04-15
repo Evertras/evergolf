@@ -132,7 +132,14 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
 
   return (
     <React.Fragment>
-      <Stage className={styles.stage} width={widthPixels} height={heightPixels}>
+      <Stage
+        className={styles.stage}
+        width={widthPixels}
+        height={heightPixels}
+        options={{
+          background: 'darkolivegreen',
+        }}
+      >
         <Container interactiveChildren={false}>
           <Circle loc={originPixels} radiusPixels={5} fillColor="orange" />
 
