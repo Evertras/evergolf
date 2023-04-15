@@ -1,23 +1,20 @@
-.slider {
-  margin: auto;
-  margin-bottom: 1em;
-  width: 200px;
+.controls {
+  display: flex;
 }
 
-.sliderTrack {
-  top: 8px;
-  height: 8px;
-  background: var(--slider-track-color);
+.controlGroup {
+  display: flex;
+
+  align-items: stretch;
+  border: 2px solid white;
 }
 
-.sliderTrack.sliderTrack-0 {
-  background: salmon;
+.controlGroupHeader {
+  font-size: 1.2em;
+  padding: 0.5em;
+  border-right: 1px dashed white;
 }
 
-.sliderThumb {
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  background: salmon;
+.controlGroupItem {
+  padding: 0.5em;
 }
