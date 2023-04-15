@@ -10,6 +10,7 @@ import ShotTracer from 'components/drawing/ShotTracer';
 import YardageMeasurement from 'components/drawing/YardageMeasurement';
 
 import styles from './ShotEditorDispersionView.module.css';
+import Line from 'components/drawing/Line';
 
 export interface ShotEditorDispersionViewProps {
   shot: Shot;
@@ -110,6 +111,21 @@ const ShotEditorDispersionView = ({ shot }: ShotEditorDispersionViewProps) => {
 
   const straightShots = [minStraightShot, maxStraightShot];
 
+  const furthestSideShotLocationXYards: number =
+    maxStraightShot.landingSpot.xYards + 10;
+
+  const horizontalDispersionTop: Coords = {
+    xYards: furthestSideShotLocationXYards,
+    yYards: maxLeftShot.landingSpot.yYards,
+  };
+
+  const horizontalDispersionBottom: Coords = {
+    xYards: furthestSideShotLocationXYards,
+    yYards: maxRightShot.landingSpot.yYards,
+  };
+
+  const horizontalDispersionColor = 'cyan';
+
   const displayShot = (key: Key, result: ShotResult, showDistance: boolean) => (
     <React.Fragment key={key}>
       <ShotTracer
@@ -146,13 +162,27 @@ const ShotEditorDispersionView = ({ shot }: ShotEditorDispersionViewProps) => {
           {straightShots.map((s, i) => displayShot(i, s, false))}
 
           <YardageMeasurement
-            start={maxRightShot.landingSpot}
-            end={maxLeftShot.landingSpot}
+            start={horizontalDispersionTop}
+            end={horizontalDispersionBottom}
             pixelsPerYard={pixelsPerYard}
-            color="cyan"
-            textColor="cyan"
+            color={horizontalDispersionColor}
+            textColor={horizontalDispersionColor}
             thickness={1}
             showRings={false}
+          />
+
+          <Line
+            start={scaledByPixels(maxLeftShot.landingSpot, pixelsPerYard)}
+            end={scaledByPixels(horizontalDispersionTop, pixelsPerYard)}
+            color={horizontalDispersionColor}
+            thickness={1}
+          />
+
+          <Line
+            start={scaledByPixels(maxRightShot.landingSpot, pixelsPerYard)}
+            end={scaledByPixels(horizontalDispersionBottom, pixelsPerYard)}
+            color={horizontalDispersionColor}
+            thickness={1}
           />
 
           {sideShots.map((s, i) => displayShot(i, s, false))}

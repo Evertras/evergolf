@@ -19,8 +19,10 @@ const ShotEditor = ({ shot }: ShotEditorProps) => {
 
   const maxDistance = 350;
 
+  // Temporarily just say this is a shot viewer for a prod deploy
   return (
     <React.Fragment>
+      <div>Shot viewer</div>
       <div className={styles.controls}>
         <div className={styles.controlGroup}>
           <div className={styles.controlGroupHeader}>Carry</div>
