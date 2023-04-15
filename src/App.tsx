@@ -10,6 +10,9 @@ function App() {
   return (
     <React.Fragment>
       <div className={styles.App}>
+        <div className={styles.warningLabel}>
+          This is a messy WIP hobby project, more to come!
+        </div>
         <TopToolbar />
         <Outlet />
         <div className={styles.GitHubLogo}>
