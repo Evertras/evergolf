@@ -56,7 +56,7 @@ const ShotTracer = ({
         />
         <Circle
           loc={sourcePixels}
-          radiusPixels={2}
+          radiusPixels={5}
           fillColor={color}
           strokeColor={'gray'}
         />
