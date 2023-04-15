@@ -3,7 +3,7 @@ import { Graphics } from '@pixi/react';
 import { useCallback } from 'react';
 
 export interface CircleProps {
-  loc: Coords;
+  loc: CoordsPixels;
   radiusPixels: number;
   fillColor?: ColorSource;
   strokeColor?: ColorSource;
@@ -16,7 +16,7 @@ const Circle = (props: CircleProps) => {
       g.clear();
       g.beginFill(props.fillColor || 'white', props.fillColor ? 1 : 0);
       g.lineStyle(props.strokeThickness || 1, props.strokeColor || 'black');
-      g.drawCircle(props.loc.xYards, props.loc.yYards, props.radiusPixels);
+      g.drawCircle(props.loc.xPixels, props.loc.yPixels, props.radiusPixels);
       g.endFill();
     },
     [props]

@@ -3,7 +3,7 @@ import { Graphics } from '@pixi/react';
 import { useCallback } from 'react';
 
 export interface ArcProps {
-  loc: Coords;
+  loc: CoordsPixels;
   radiusPixels: number;
   fillColor?: ColorSource;
   strokeColor?: ColorSource;
@@ -19,8 +19,8 @@ const Arc = (props: ArcProps) => {
       g.beginFill(props.fillColor || 'white', props.fillColor ? 1 : 0);
       g.lineStyle(props.strokeThickness || 1, props.strokeColor || 'black');
       g.arc(
-        props.loc.xYards,
-        props.loc.yYards,
+        props.loc.xPixels,
+        props.loc.yPixels,
         props.radiusPixels,
         props.startAngle,
         props.endAngle

@@ -3,9 +3,9 @@ import { Graphics } from '@pixi/react';
 import { useCallback } from 'react';
 
 export interface BezierProps {
-  start: Coords;
-  end: Coords;
-  controlPoint: Coords;
+  start: CoordsPixels;
+  end: CoordsPixels;
+  controlPoint: CoordsPixels;
   color: ColorSource;
   thickness: number;
 }
@@ -15,14 +15,14 @@ const Bezier = (props: BezierProps) => {
     (g: PIXIGraphics) => {
       g.clear();
       g.lineStyle(props.thickness, props.color);
-      g.moveTo(props.start.xYards, props.start.yYards);
+      g.moveTo(props.start.xPixels, props.start.yPixels);
       g.bezierCurveTo(
-        props.controlPoint.xYards,
-        props.controlPoint.yYards,
-        props.controlPoint.xYards,
-        props.controlPoint.yYards,
-        props.end.xYards,
-        props.end.yYards
+        props.controlPoint.xPixels,
+        props.controlPoint.yPixels,
+        props.controlPoint.xPixels,
+        props.controlPoint.yPixels,
+        props.end.xPixels,
+        props.end.yPixels
       );
       g.endFill();
     },
