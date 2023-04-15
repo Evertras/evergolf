@@ -1,5 +1,11 @@
 import { makeRand2, Rand } from 'lib/rand';
-import { directionDegrees, feetBetween, landNear, yardsBetween } from '.';
+import {
+  directionDegrees,
+  feetBetween,
+  landNear,
+  scaledByPixels,
+  yardsBetween,
+} from '.';
 
 describe('yardsBetween', () => {
   test.each`
@@ -127,4 +133,18 @@ describe('directionDegrees', () => {
       expect(degrees).toBeCloseTo(expectedDegrees);
     }
   );
+});
+
+describe('scaledByPixels', () => {
+  const point: Coords = {
+    xYards: 3,
+    yYards: 7,
+  };
+
+  const pixelsPerYard = 4;
+
+  const pixelPoint = scaledByPixels(point, pixelsPerYard);
+
+  expect(pixelPoint.xPixels).toEqual(12);
+  expect(pixelPoint.yPixels).toEqual(28);
 });

@@ -6,6 +6,11 @@ export interface Coords {
   yYards: number;
 }
 
+export interface CoordsPixels {
+  xPixels: number;
+  yPixels: number;
+}
+
 export function yardsBetween(a: Coords, b: Coords): number {
   const xDiff = a.xYards - b.xYards;
   const yDiff = a.yYards - b.yYards;
@@ -31,13 +36,23 @@ export function landNear(
   };
 }
 
+export function directionDegrees(source: Coords, target: Coords): number {
+  return boundDegrees(radiansToDegrees(directionRadians(source, target)));
+}
+
+export function scaledByPixels(
+  point: Coords,
+  pixelsPerYard: number
+): CoordsPixels {
+  return {
+    xPixels: point.xYards * pixelsPerYard,
+    yPixels: point.yYards * pixelsPerYard,
+  };
+}
+
 function directionRadians(source: Coords, target: Coords): number {
   const xDiff = target.xYards - source.xYards;
   const yDiff = target.yYards - source.yYards;
 
   return Math.atan2(yDiff, xDiff);
-}
-
-export function directionDegrees(source: Coords, target: Coords): number {
-  return boundDegrees(radiansToDegrees(directionRadians(source, target)));
 }
