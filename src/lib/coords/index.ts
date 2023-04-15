@@ -1,16 +1,6 @@
 import { boundDegrees, radiansToDegrees } from 'lib/math';
 import { Rand2 } from 'lib/rand';
 
-export interface Coords {
-  xYards: number;
-  yYards: number;
-}
-
-export interface CoordsPixels {
-  xPixels: number;
-  yPixels: number;
-}
-
 export function yardsBetween(a: Coords, b: Coords): number {
   const xDiff = a.xYards - b.xYards;
   const yDiff = a.yYards - b.yYards;

@@ -3,3 +3,8 @@ interface Coords {
   xYards: number;
   yYards: number;
 }
+
+interface CoordsPixels {
+  xPixels: number;
+  yPixels: number;
+}
