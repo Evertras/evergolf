@@ -1,6 +1,6 @@
 .controls {
   width: 60vw;
-  display: none;
+  display: flex;
   margin-bottom: 1em;
 }
 
